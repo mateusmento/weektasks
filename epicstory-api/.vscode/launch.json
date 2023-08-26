@@ -1,0 +1,19 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    // https://code.visualstudio.com/docs/nodejs/nodejs-debugging
+    // https://dev.to/gentax/nestjs-right-settings-for-debugging-kl0
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug Derbel Api",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "start:debug", "--", "--inspect-brk"],
+      "autoAttachChildProcesses": true,
+      "restart": true,
+      "sourceMaps": true,
+      "stopOnEntry": false,
+      "console": "integratedTerminal"
+    }
+  ]
+}
