@@ -15,7 +15,7 @@ import { IssuesModule } from './issues/issues.module';
 import { ProductsModule } from './products/products.module';
 import { SprintsModule } from './sprints/sprints.module';
 import { TimelineModule } from './timeline/timeline.module';
-import { ProfileModule } from './users/users.module';
+import { ProfileModule } from './profile/profile.module';
 
 @Module({
   imports: [
