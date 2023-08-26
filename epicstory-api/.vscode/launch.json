@@ -6,7 +6,7 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Debug Derbel Api",
+      "name": "Debug EpicStory Api",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "start:debug", "--", "--inspect-brk"],
       "autoAttachChildProcesses": true,
