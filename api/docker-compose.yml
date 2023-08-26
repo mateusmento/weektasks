@@ -49,7 +49,7 @@ services:
     build: .
     image: epicstory-api
     volumes:
-      - .:/user/app
+      - .:/usr/app
     labels:
       - 'traefik.http.routers.derbel.rule=PathPrefix(`/`)'
       - traefik.http.services.derbel.loadBalancer.sticky.cookie.name=server_id
