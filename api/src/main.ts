@@ -6,6 +6,7 @@ import * as cookieParser from 'cookie-parser';
 import { RedisSocketIoAdapter } from './redis-socket.io-adapter';
 
 async function bootstrap() {
+  process.env.TZ = 'America/Sao_Paulo';
   const app = await NestFactory.create(AppModule);
   const config = app.get(AppConfig);
   app.enableCors({ origin: config.CORS_ORIGINS, credentials: true });
