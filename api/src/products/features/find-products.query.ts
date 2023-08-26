@@ -1,6 +1,6 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserEntity } from 'src/users/user.entity';
+import { UserEntity } from 'src/auth/domain/user.entity';
 import { Repository } from 'typeorm';
 import { Product } from '../entities/product.entity';
 

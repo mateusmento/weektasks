@@ -1,6 +1,6 @@
 import { IsString, MinLength } from 'class-validator';
 import { CommandHandler, ICommand, ICommandHandler } from '@nestjs/cqrs';
-import { UserEntity } from '../user.entity';
+import { UserEntity } from '../../auth/domain/user.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcryptjs';

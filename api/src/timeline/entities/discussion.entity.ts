@@ -1,6 +1,6 @@
 import { Expose } from 'class-transformer';
 import { patchObject } from 'src/object.functions';
-import { UserEntity } from 'src/users/user.entity';
+import { UserEntity } from 'src/auth/domain/user.entity';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()

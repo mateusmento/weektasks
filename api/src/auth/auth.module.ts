@@ -7,7 +7,7 @@ import { LocalStrategy } from './application/passport/local.strategy';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { JwtStrategy } from './application/passport/jwt.strategy';
-import { UserEntity } from '../users/user.entity';
+import { UserEntity } from './domain/user.entity';
 
 @Module({
   imports: [

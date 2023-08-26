@@ -3,7 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { AuthGuard, PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy, StrategyOptions } from 'passport-jwt';
 import { AuthService } from 'src/auth/domain/auth.service';
-import { UserEntity } from 'src/users/user.entity';
+import { UserEntity } from 'src/auth/domain/user.entity';
 
 @Injectable()
 export class JwtAuthGuard extends AuthGuard('jwt') {}

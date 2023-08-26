@@ -3,7 +3,7 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CreateUserHandler } from './features/create-user.command';
 import { FindUsersHandler } from './features/find-users.command';
-import { UserEntity } from './user.entity';
+import { UserEntity } from '../auth/domain/user.entity';
 import { UsersController } from './users.controller';
 import { MulterModule } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';

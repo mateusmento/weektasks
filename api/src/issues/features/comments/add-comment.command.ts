@@ -3,7 +3,7 @@ import { IsString } from 'class-validator';
 import { Repository } from 'typeorm';
 import { IssueComment } from '../../entities/issue-comment.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserEntity } from 'src/users/user.entity';
+import { UserEntity } from 'src/auth/domain/user.entity';
 import { patchObject } from 'src/object.functions';
 
 export class AddComment {

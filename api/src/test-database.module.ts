@@ -4,7 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Issue } from 'src/issues/entities/issue.entity';
 import { Product } from 'src/products/entities/product.entity';
 import { Sprint } from 'src/sprints/entities/sprint.entity';
-import { UserEntity } from 'src/users/user.entity';
+import { UserEntity } from 'src/auth/domain/user.entity';
 import { DataSource } from 'typeorm';
 import { addTransactionalDataSource } from 'typeorm-transactional';
 import { BacklogItem } from './backlog/entities/backlog-item.entity';

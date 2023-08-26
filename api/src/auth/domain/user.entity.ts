@@ -5,8 +5,8 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { CredentialEntity } from '../auth/domain/credential.entity';
-import { patchObject } from '../functions';
+import { CredentialEntity } from './credential.entity';
+import { patchObject } from '../../functions';
 
 @Entity({ name: 'users' })
 export class UserEntity {

@@ -13,7 +13,7 @@ import { AuthService } from '../domain/auth.service';
 import { LocalAuthGuard } from './passport/local.strategy';
 import { Request, Response } from 'express';
 import { JwtAuthGuard } from './passport/jwt.strategy';
-import { UserEntity } from '../../users/user.entity';
+import { UserEntity } from '../domain/user.entity';
 
 @Controller('auth')
 export class AuthController {

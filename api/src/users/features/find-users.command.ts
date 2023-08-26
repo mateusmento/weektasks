@@ -2,7 +2,7 @@ import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Exclude, Expose, TransformPlainToInstance } from 'class-transformer';
 import { Like, Repository } from 'typeorm';
-import { UserEntity } from '../user.entity';
+import { UserEntity } from '../../auth/domain/user.entity';
 import { Allow } from 'class-validator';
 
 export class FindUsers {

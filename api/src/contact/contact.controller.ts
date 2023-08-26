@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/application/passport/jwt.strategy';
-import { UserEntity } from 'src/users/user.entity';
+import { UserEntity } from 'src/auth/domain/user.entity';
 import { AuthUser } from 'src/auth/utils/auth-user';
 import { ContactService } from './contact.service';
 import { CreateContactDto } from './create-contact.dto';
