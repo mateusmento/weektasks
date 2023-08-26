@@ -2,8 +2,8 @@ import { config as dotenv } from 'dotenv';
 import { DataSource, DataSourceOptions } from 'typeorm';
 import { AppConfig } from './app.config';
 import { ConfigService } from '@nestjs/config';
-import { readdirSync } from 'fs';
-import path from 'path';
+import { existsSync, mkdirSync, readdirSync } from 'fs';
+import * as path from 'path';
 
 dotenv();
 
@@ -29,6 +29,7 @@ export default new DataSource({
 
 function migrations(): any[] {
   const migrationPath = path.resolve(__dirname, '../migrations');
+  if (!existsSync(migrationPath)) mkdirSync(migrationPath);
   return readdirSync(migrationPath)
     .filter((filename) => /[0-9]*-Migration.*(?<!\.d)\.(ts|js)/.test(filename))
     .map((filename) => path.parse(filename).name)
