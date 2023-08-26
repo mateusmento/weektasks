@@ -14,16 +14,12 @@ export class AppConfig {
   REDIS_URL: string = '';
 
   constructor(private config: ConfigService) {
-    function get(key: string) {
-      return config.get(key);
-    }
-
     const keys = Object.getOwnPropertyNames(this).filter(
       (k) => !['config'].includes(k)
     );
 
     for (const key of keys)
-      Object.defineProperty(this, key, { get: () => get(key) });
+      Object.defineProperty(this, key, { get: () => config.get(key) });
   }
 
   get CORS_ORIGINS(): string[] {
