@@ -15,4 +15,8 @@ export class AppConfig {
       .split(',')
       .map((url) => url.trim());
   }
+
+  get COOKIE_SECRET(): string {
+    return this.config.get('COOKIE_SECRET');
+  }
 }
