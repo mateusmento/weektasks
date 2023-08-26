@@ -14,7 +14,6 @@ import { IssueComment } from './entities/issue-comment.entity';
 import { AddCommentHandler } from './features/comments/add-comment.command';
 import { RemoveCommentHandler } from './features/comments/remove-comment.command';
 import { UpdateCommentHandler } from './features/comments/update-comment.comment';
-import { UsersModule } from 'src/users/users.module';
 import { FindCommentsHandler } from './features/comments/find-comments.query';
 import { IssueCommentsController } from './issue-comments.controller';
 import { SubTask } from './entities/subtask.entity';
@@ -24,13 +23,14 @@ import { RemoveSubTaskCommand } from './features/subtasks/remove-subtask.command
 import { ToggleSubTaskCompletionCommand } from './features/subtasks/toggle-subtask-completion.command';
 import { SubTasksController } from './subtasks.controller';
 import { RemoveAssigneeCommand } from './features/issues/remove-assignee.command';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Issue, SubTask, IssueComment]),
     CqrsModule,
     ProductsModule,
-    UsersModule,
+    AuthModule,
   ],
   controllers: [IssuesController, SubTasksController, IssueCommentsController],
   providers: [

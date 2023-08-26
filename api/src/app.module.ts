@@ -15,7 +15,7 @@ import { IssuesModule } from './issues/issues.module';
 import { ProductsModule } from './products/products.module';
 import { SprintsModule } from './sprints/sprints.module';
 import { TimelineModule } from './timeline/timeline.module';
-import { UsersModule } from './users/users.module';
+import { ProfileModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -35,9 +35,9 @@ import { UsersModule } from './users/users.module';
     MeetingModule,
     MessagingModule,
     ProductsModule,
+    ProfileModule,
     SprintsModule,
     TimelineModule,
-    UsersModule,
   ],
   providers: [AppConfig],
 })

@@ -3,7 +3,7 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { FindUsersHandler } from './features/find-users.command';
 import { UserEntity } from '../auth/domain/user.entity';
-import { UsersController } from './users.controller';
+import { ProfileController } from './users.controller';
 import { MulterModule } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 
@@ -18,8 +18,8 @@ import { diskStorage } from 'multer';
       }),
     }),
   ],
-  controllers: [UsersController],
+  controllers: [ProfileController],
   providers: [FindUsersHandler],
   exports: [TypeOrmModule],
 })
-export class UsersModule {}
+export class ProfileModule {}

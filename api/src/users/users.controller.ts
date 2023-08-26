@@ -1,27 +1,22 @@
 import {
-  Body,
   Controller,
   Get,
   Param,
-  Post,
   Put,
   Query,
   StreamableFile,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { CommandBus, QueryBus } from '@nestjs/cqrs';
+import { QueryBus } from '@nestjs/cqrs';
 import { JwtAuthGuard } from 'src/auth/application/passport/jwt.strategy';
 import { FindUsers } from './features/find-users.command';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { createReadStream } from 'fs';
 
 @Controller('users')
-export class UsersController {
-  constructor(
-    private queryBus: QueryBus,
-    private commandBus: CommandBus
-  ) {}
+export class ProfileController {
+  constructor(private queryBus: QueryBus) {}
 
   @UseGuards(JwtAuthGuard)
   @Get()
