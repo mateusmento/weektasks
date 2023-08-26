@@ -44,5 +44,6 @@ async function bootstrap() {
 
   app.use(cookieParser(config.COOKIE_SECRET));
 
+  app.enableShutdownHooks();
   await app.listen(config.APP_PORT);
 }
