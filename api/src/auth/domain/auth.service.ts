@@ -10,7 +10,7 @@ import { Repository } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { UserEntity } from './user.entity';
+import { UserEntity } from '../../users/user.entity';
 import { CreateCredentialDto } from '../application/dtos/create-credential.dto';
 
 @Injectable()

@@ -1,4 +1,4 @@
-import { User } from 'src/users/user.entity';
+import { UserEntity } from 'src/users/user.entity';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Product } from './product.entity';
 
@@ -10,8 +10,8 @@ export class Collaborator {
   @Column()
   userId: number;
 
-  @ManyToOne(() => User)
-  user: User;
+  @ManyToOne(() => UserEntity)
+  user: UserEntity;
 
   @Column()
   productId: number;

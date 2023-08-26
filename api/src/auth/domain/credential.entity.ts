@@ -2,7 +2,7 @@ import { Exclude } from 'class-transformer';
 import { patchObject } from '../../functions';
 import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
-import { UserEntity } from './user.entity';
+import { UserEntity } from '../../users/user.entity';
 
 @Entity({ name: 'credentials' })
 export class CredentialEntity {

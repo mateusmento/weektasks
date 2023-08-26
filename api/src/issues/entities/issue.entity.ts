@@ -1,4 +1,4 @@
-import { User } from 'src/users/user.entity';
+import { UserEntity } from 'src/users/user.entity';
 import {
   Column,
   CreateDateColumn,
@@ -42,16 +42,16 @@ export class Issue {
   @Column({ nullable: true })
   assignedToId: number;
 
-  @ManyToOne(() => User)
-  assignedTo: User;
+  @ManyToOne(() => UserEntity)
+  assignedTo: UserEntity;
 
-  @ManyToMany(() => User)
+  @ManyToMany(() => UserEntity)
   @JoinTable({
     name: 'assignee',
     joinColumn: { name: 'issue_id' },
     inverseJoinColumn: { name: 'user_id' },
   })
-  assignees: User[];
+  assignees: UserEntity[];
 
   @CreateDateColumn()
   createdAt: string;

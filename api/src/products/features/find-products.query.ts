@@ -1,11 +1,11 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from 'src/users/user.entity';
+import { UserEntity } from 'src/users/user.entity';
 import { Repository } from 'typeorm';
 import { Product } from '../entities/product.entity';
 
 export class FindProductsQuery {
-  owner: User;
+  owner: UserEntity;
 }
 
 @QueryHandler(FindProductsQuery)

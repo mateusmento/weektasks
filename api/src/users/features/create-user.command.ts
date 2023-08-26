@@ -1,6 +1,6 @@
 import { IsString, MinLength } from 'class-validator';
 import { CommandHandler, ICommand, ICommandHandler } from '@nestjs/cqrs';
-import { User } from '../user.entity';
+import { UserEntity } from '../user.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcryptjs';
@@ -28,8 +28,8 @@ export class CreateUser implements ICommand {
 @CommandHandler(CreateUser)
 export class CreateUserHandler implements ICommandHandler<CreateUser> {
   constructor(
-    @InjectRepository(User)
-    private userRepo: Repository<User>,
+    @InjectRepository(UserEntity)
+    private userRepo: Repository<UserEntity>,
     private configService: ConfigService
   ) {}
 
@@ -45,6 +45,6 @@ export class CreateUserHandler implements ICommandHandler<CreateUser> {
       command.password,
       this.configService.get<string>('PASSWORD_ROUNDS')
     );
-    return this.userRepo.save(new User({ ...command, password }));
+    return this.userRepo.save(new UserEntity({ ...command, password }));
   }
 }

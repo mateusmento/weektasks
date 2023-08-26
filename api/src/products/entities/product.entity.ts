@@ -1,4 +1,4 @@
-import { User } from 'src/users/user.entity';
+import { UserEntity } from 'src/users/user.entity';
 import {
   Column,
   Entity,
@@ -19,8 +19,8 @@ export class Product {
   @Column()
   ownerId: number;
 
-  @ManyToOne(() => User)
-  owner: User;
+  @ManyToOne(() => UserEntity)
+  owner: UserEntity;
 
   @OneToMany(() => Collaborator, (c) => c.product)
   collaborators: Collaborator[];

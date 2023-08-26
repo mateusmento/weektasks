@@ -1,6 +1,6 @@
 import { Expose } from 'class-transformer';
 import { patchObject } from 'src/object.functions';
-import { User } from 'src/users/user.entity';
+import { UserEntity } from 'src/users/user.entity';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
@@ -26,8 +26,8 @@ export class Discussion {
   @Column()
   authorId: number;
 
-  @ManyToOne(() => User)
-  author: User;
+  @ManyToOne(() => UserEntity)
+  author: UserEntity;
 
   @Expose()
   liked = false;

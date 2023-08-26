@@ -8,7 +8,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { ContactEntity } from '../contact/contact.entity';
-import { UserEntity } from '../auth/domain/user.entity';
+import { UserEntity } from '../users/user.entity';
 
 @Entity({ name: 'meetings' })
 export class MeetingEntity {

@@ -1,4 +1,4 @@
-import { User } from 'src/users/user.entity';
+import { UserEntity } from 'src/users/user.entity';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
@@ -15,6 +15,6 @@ export class IssueComment {
   @Column()
   authorId: number;
 
-  @ManyToOne(() => User)
-  author: User;
+  @ManyToOne(() => UserEntity)
+  author: UserEntity;
 }

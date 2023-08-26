@@ -2,7 +2,7 @@ import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Exclude, Expose, TransformPlainToInstance } from 'class-transformer';
 import { Like, Repository } from 'typeorm';
-import { User } from '../user.entity';
+import { UserEntity } from '../user.entity';
 import { Allow } from 'class-validator';
 
 export class FindUsers {
@@ -23,8 +23,8 @@ export class UserDto {
 @QueryHandler(FindUsers)
 export class FindUsersHandler implements IQueryHandler {
   constructor(
-    @InjectRepository(User)
-    private userRepo: Repository<User>
+    @InjectRepository(UserEntity)
+    private userRepo: Repository<UserEntity>
   ) {}
 
   @TransformPlainToInstance(UserDto)

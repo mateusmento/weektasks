@@ -1,30 +1,26 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import * as bcrypt from 'bcryptjs';
-import { Exclude } from 'class-transformer';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { CredentialEntity } from '../auth/domain/credential.entity';
+import { patchObject } from '../functions';
 
-@Entity()
-export class User {
-  @PrimaryGeneratedColumn()
+@Entity({ name: 'users' })
+export class UserEntity {
+  @PrimaryGeneratedColumn('identity', { generatedIdentity: 'ALWAYS' })
   id: number;
 
   @Column()
   name: string;
 
-  @Column({ unique: true })
-  email: string;
+  @OneToOne(() => CredentialEntity, { cascade: ['insert'] })
+  @JoinColumn()
+  credential: CredentialEntity;
 
-  @Exclude()
-  @Column()
-  password: string;
-
-  constructor(partials: Partial<User> = {}) {
-    this.id = partials.id;
-    this.name = partials.name;
-    this.email = partials.email;
-    this.password = partials.password;
-  }
-
-  verifyPassword(password: string) {
-    return bcrypt.compare(password, this.password);
+  constructor(partial: Partial<UserEntity>) {
+    patchObject(this, partial);
   }
 }

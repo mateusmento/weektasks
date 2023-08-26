@@ -1,5 +1,5 @@
 import { Expose } from 'class-transformer';
-import { User } from 'src/users/user.entity';
+import { UserEntity } from 'src/users/user.entity';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
@@ -22,6 +22,6 @@ export class Reply {
   @Column()
   authorId: number;
 
-  @ManyToOne(() => User)
-  author: User;
+  @ManyToOne(() => UserEntity)
+  author: UserEntity;
 }

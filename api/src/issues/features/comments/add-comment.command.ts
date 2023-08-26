@@ -3,7 +3,7 @@ import { IsString } from 'class-validator';
 import { Repository } from 'typeorm';
 import { IssueComment } from '../../entities/issue-comment.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from 'src/users/user.entity';
+import { UserEntity } from 'src/users/user.entity';
 import { patchObject } from 'src/object.functions';
 
 export class AddComment {
@@ -22,8 +22,8 @@ export class AddCommentHandler implements ICommandHandler<AddComment> {
   constructor(
     @InjectRepository(IssueComment)
     private commentRepo: Repository<IssueComment>,
-    @InjectRepository(User)
-    private userRepo: Repository<User>
+    @InjectRepository(UserEntity)
+    private userRepo: Repository<UserEntity>
   ) {}
 
   async execute({ issueId, text, authorId }: AddComment): Promise<any> {
