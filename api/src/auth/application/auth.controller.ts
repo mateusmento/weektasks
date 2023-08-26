@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Post,
   Req,
@@ -36,7 +37,13 @@ export class AuthController {
     @Res({ passthrough: true }) res: Response
   ) {
     const token = await this.authService.token(req.user as UserEntity);
-    res.cookie('token', token);
+    res.cookie('token', token, { httpOnly: true, sameSite: 'lax' });
     return { token, user: req.user };
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete('access')
+  async signout(@Res({ passthrough: true }) res: Response) {
+    res.clearCookie('token');
   }
 }
