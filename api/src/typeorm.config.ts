@@ -1,5 +1,5 @@
 import { config as dotenv } from 'dotenv';
-import { DataSourceOptions } from 'typeorm';
+import { DataSource, DataSourceOptions } from 'typeorm';
 import { AppConfig } from './app.config';
 import { ConfigService } from '@nestjs/config';
 import { readdirSync } from 'fs';
@@ -21,6 +21,11 @@ export const typeormConfig: DataSourceOptions = {
   entities: [],
   migrations: migrations(),
 };
+
+export default new DataSource({
+  ...typeormConfig,
+  host: config.DATABASE_MIGRATION_HOST ?? config.DATABASE_HOST,
+});
 
 function migrations(): any[] {
   const migrationPath = path.resolve(__dirname, '../migrations');

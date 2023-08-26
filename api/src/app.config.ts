@@ -6,6 +6,7 @@ export class AppConfig {
   APP_PORT: number = 0;
   COOKIE_SECRET: string = '';
   DATABASE_HOST: string = '';
+  DATABASE_MIGRATION_HOST: string = '';
   DATABASE_PORT: number = 0;
   POSTGRES_DB: string = '';
   POSTGRES_USER: string = '';
