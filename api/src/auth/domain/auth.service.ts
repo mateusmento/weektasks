@@ -33,7 +33,7 @@ export class AuthService {
         credential: data,
       });
     } catch (ex) {
-      throw new ConflictException('Username already exists');
+      throw new ConflictException('Username is being used by another user');
     }
   }
 
