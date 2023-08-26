@@ -6,6 +6,9 @@ import { typeormConfig } from './typeorm.config';
 import { DataSource } from 'typeorm';
 import { addTransactionalDataSource } from 'typeorm-transactional';
 import { AuthModule } from './auth/auth.module';
+import { ContactModule } from './contact/contact.module';
+import { MessagingModule } from './messaging/messaging.module';
+import { MeetingModule } from './meeting/meeting.module';
 
 @Module({
   imports: [
@@ -18,6 +21,9 @@ import { AuthModule } from './auth/auth.module';
         addTransactionalDataSource(new DataSource(config)),
     }),
     AuthModule,
+    ContactModule,
+    MessagingModule,
+    MeetingModule,
   ],
   providers: [AppConfig],
 })
