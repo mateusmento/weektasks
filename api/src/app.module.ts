@@ -4,6 +4,7 @@ import { AppConfig } from './app.config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeormConfig } from './typeorm.config';
 import { DataSource } from 'typeorm';
+import { addTransactionalDataSource } from 'typeorm-transactional';
 
 @Module({
   imports: [
@@ -12,7 +13,8 @@ import { DataSource } from 'typeorm';
     }),
     TypeOrmModule.forRootAsync({
       useFactory: () => typeormConfig,
-      dataSourceFactory: async (config) => new DataSource(config),
+      dataSourceFactory: async (config) =>
+        addTransactionalDataSource(new DataSource(config)),
     }),
   ],
   providers: [AppConfig],
