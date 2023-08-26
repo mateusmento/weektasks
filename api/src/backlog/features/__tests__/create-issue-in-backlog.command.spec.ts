@@ -1,9 +1,9 @@
 import { CommandBus } from '@nestjs/cqrs';
 import { Test, TestingModule } from '@nestjs/testing';
 import { TestDatabaseModule } from 'src/test-database.module';
-import { BacklogModule } from '../../backlog.module';
+import { BacklogModule } from 'src/backlog/backlog.module';
 import { patchObject } from 'src/object.functions';
-import { CreateIssueInBacklogCommand } from '../create-issue-in-backlog.command';
+import { CreateIssueInBacklogCommand } from 'src/backlog/features/create-issue-in-backlog.command';
 import { ProductsModule } from 'src/products/products.module';
 import { CreateProductCommand } from 'src/products/features/create-product.command';
 import { Product } from 'src/products/entities/product.entity';
@@ -12,14 +12,16 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { initializeTransactionalContext } from 'typeorm-transactional';
 import { IssuesModule } from 'src/issues/issues.module';
-import { CreateUser } from 'src/users/features/create-user.command';
-import { UsersModule } from 'src/users/users.module';
+import { AuthModule } from 'src/auth/auth.module';
+import { AuthService } from 'src/auth/domain/auth.service';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 
 describe('Create issue command', () => {
   let module: TestingModule;
   let commandBus: CommandBus;
   let issueRepo: Repository<Issue>;
   let productRepo: Repository<Product>;
+  let authService: AuthService;
 
   let product: Product;
 
@@ -32,7 +34,8 @@ describe('Create issue command', () => {
         BacklogModule,
         ProductsModule,
         IssuesModule,
-        UsersModule,
+        AuthModule,
+        EventEmitterModule.forRoot(),
       ],
     }).compile();
 
@@ -41,16 +44,15 @@ describe('Create issue command', () => {
     commandBus = module.get(CommandBus);
     issueRepo = module.get(getRepositoryToken(Issue));
     productRepo = module.get(getRepositoryToken(Product));
+    authService = module.get(AuthService);
   });
 
   beforeEach(async () => {
-    const user = await commandBus.execute(
-      new CreateUser({
-        name: 'User 1',
-        email: 'user1@email.com',
-        password: 'user123',
-      })
-    );
+    const user = await authService.createCredential({
+      name: 'User 1',
+      username: 'user1@email.com',
+      password: 'user123',
+    });
 
     product = await commandBus.execute(
       patchObject(new CreateProductCommand(), {

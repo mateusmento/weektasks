@@ -13,6 +13,7 @@ import { SubTask } from './issues/entities/subtask.entity';
 import { Collaborator } from './products/entities/collaborator.entity';
 import { SprintBacklogItem } from './sprints/entities/sprint-backlog-item.entity';
 import { Reply } from './timeline/entities/reply.entity';
+import { CredentialEntity } from './auth/domain/credential.entity';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { Reply } from './timeline/entities/reply.entity';
           Issue,
           Sprint,
           UserEntity,
+          CredentialEntity,
           Product,
           SprintBacklogItem,
           BacklogItem,

@@ -10,7 +10,8 @@ import { patchObject } from '../../functions';
 
 @Entity({ name: 'users' })
 export class UserEntity {
-  @PrimaryGeneratedColumn('identity', { generatedIdentity: 'ALWAYS' })
+  @PrimaryGeneratedColumn()
+  // @PrimaryGeneratedColumn('identity', { generatedIdentity: 'ALWAYS' })
   id: number;
 
   @Column()

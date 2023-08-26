@@ -15,7 +15,7 @@ import { UpdateIssueCommand } from './features/issues/update-issue.command';
 import { patchObject } from 'src/object.functions';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { RemoveIssueCommand } from './features/issues/remove-issue.command';
-import { AuthUser } from 'src/auth/auth-user.decorator';
+import { AuthUser } from 'src/auth/utils/auth-user';
 import { AssignUser as AssignUser } from './features/issues/assign-user.command';
 import { FindIssueQuery } from './features/issues/find-issue.query';
 import { FindIssues } from './features/issues/find-issues.query';

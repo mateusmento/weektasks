@@ -6,7 +6,8 @@ import { UserEntity } from './user.entity';
 
 @Entity({ name: 'credentials' })
 export class CredentialEntity {
-  @PrimaryGeneratedColumn('identity', { generatedIdentity: 'ALWAYS' })
+  @PrimaryGeneratedColumn()
+  // @PrimaryGeneratedColumn('identity', { generatedIdentity: 'ALWAYS' })
   id: number;
 
   @Column({ unique: true })

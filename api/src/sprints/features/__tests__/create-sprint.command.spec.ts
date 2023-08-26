@@ -9,17 +9,19 @@ import { ProductsModule } from 'src/products/products.module';
 import { Sprint } from 'src/sprints/entities/sprint.entity';
 import { SprintsModule } from 'src/sprints/sprints.module';
 import { TestDatabaseModule } from 'src/test-database.module';
-import { CreateUser } from 'src/users/features/create-user.command';
-import { UsersModule } from 'src/users/users.module';
 import { Repository } from 'typeorm';
 import { initializeTransactionalContext } from 'typeorm-transactional';
-import { CreateSprintCommand } from '../create-sprint.command';
+import { CreateSprintCommand } from 'src/sprints/features/create-sprint.command';
+import { AuthModule } from 'src/auth/auth.module';
+import { AuthService } from 'src/auth/domain/auth.service';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 
 describe('Create sprint command', () => {
   let module: TestingModule;
   let commandBus: CommandBus;
   let sprintRepo: Repository<Sprint>;
   let productRepo: Repository<Product>;
+  let authService: AuthService;
 
   let product: Product;
 
@@ -27,7 +29,13 @@ describe('Create sprint command', () => {
     initializeTransactionalContext();
 
     module = await Test.createTestingModule({
-      imports: [TestDatabaseModule, SprintsModule, ProductsModule, UsersModule],
+      imports: [
+        TestDatabaseModule,
+        EventEmitterModule.forRoot(),
+        SprintsModule,
+        ProductsModule,
+        AuthModule,
+      ],
     }).compile();
 
     await module.init();
@@ -35,16 +43,15 @@ describe('Create sprint command', () => {
     commandBus = module.get(CommandBus);
     sprintRepo = module.get(getRepositoryToken(Sprint));
     productRepo = module.get(getRepositoryToken(Product));
+    authService = module.get(AuthService);
   });
 
   beforeEach(async () => {
-    const user = await commandBus.execute(
-      new CreateUser({
-        name: 'User 1',
-        email: 'user1@email.com',
-        password: 'user123',
-      })
-    );
+    const user = await authService.createCredential({
+      name: 'User 1',
+      username: 'user1@email.com',
+      password: 'user123',
+    });
 
     product = await commandBus.execute(
       patchObject(new CreateProductCommand(), {
