@@ -16,7 +16,7 @@ export const typeormConfig: DataSourceOptions = {
   database: config.POSTGRES_DB,
   username: config.POSTGRES_USER,
   password: config.POSTGRES_PASSWORD,
-  logging: true,
+  logging: 'all',
   logger: 'advanced-console',
   entities: [],
   migrations: migrations(),
