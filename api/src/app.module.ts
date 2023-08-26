@@ -10,6 +10,12 @@ import { ContactModule } from './contact/contact.module';
 import { MessagingModule } from './messaging/messaging.module';
 import { MeetingModule } from './meeting/meeting.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
+import { BacklogModule } from './backlog/backlog.module';
+import { IssuesModule } from './issues/issues.module';
+import { ProductsModule } from './products/products.module';
+import { SprintsModule } from './sprints/sprints.module';
+import { TimelineModule } from './timeline/timeline.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -23,9 +29,15 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
     }),
     EventEmitterModule.forRoot(),
     AuthModule,
+    BacklogModule,
     ContactModule,
-    MessagingModule,
+    IssuesModule,
     MeetingModule,
+    MessagingModule,
+    ProductsModule,
+    SprintsModule,
+    TimelineModule,
+    UsersModule,
   ],
   providers: [AppConfig],
 })
