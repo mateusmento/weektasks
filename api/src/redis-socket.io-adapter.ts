@@ -15,7 +15,7 @@ export class RedisSocketIoAdapter extends IoAdapter {
   }
 
   static async create(app: INestApplication, config: AppConfig) {
-    const pub = createClient();
+    const pub = createClient({ url: config.REDIS_URL });
     const sub = pub.duplicate();
     await Promise.all([pub.connect(), sub.connect()]);
     const redisAdapter = createAdapter(pub, sub);

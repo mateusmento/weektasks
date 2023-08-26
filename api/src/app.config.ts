@@ -11,6 +11,7 @@ export class AppConfig {
   POSTGRES_DB: string = '';
   POSTGRES_USER: string = '';
   POSTGRES_PASSWORD: string = '';
+  REDIS_URL: string = '';
 
   constructor(private config: ConfigService) {
     function get(key: string) {
