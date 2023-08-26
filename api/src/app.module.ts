@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeormConfig } from './typeorm.config';
 import { DataSource } from 'typeorm';
 import { addTransactionalDataSource } from 'typeorm-transactional';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { addTransactionalDataSource } from 'typeorm-transactional';
       dataSourceFactory: async (config) =>
         addTransactionalDataSource(new DataSource(config)),
     }),
+    AuthModule,
   ],
   providers: [AppConfig],
 })
