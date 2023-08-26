@@ -10,7 +10,7 @@ import {
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { patchObject } from 'src/object.functions';
 import { AuthUser } from 'src/auth/auth-user.decorator';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { JwtAuthGuard } from 'src/auth/application/passport/jwt.strategy';
 import { CreateProductCommand } from './features/create-product.command';
 import { FindProductsQuery } from './features/find-products.query';
 import { FindProductQuery } from './features/find-product.query';

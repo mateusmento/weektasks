@@ -11,7 +11,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { JwtAuthGuard } from 'src/auth/application/passport/jwt.strategy';
 import { CreateUser } from './features/create-user.command';
 import { FindUsers } from './features/find-users.command';
 import { FileInterceptor } from '@nestjs/platform-express';

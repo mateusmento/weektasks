@@ -10,7 +10,7 @@ import {
   Query,
   Post,
 } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { JwtAuthGuard } from 'src/auth/application/passport/jwt.strategy';
 import { UpdateIssueCommand } from './features/issues/update-issue.command';
 import { patchObject } from 'src/object.functions';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';

@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { AuthUser } from 'src/auth/auth-user.decorator';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { JwtAuthGuard } from 'src/auth/application/passport/jwt.strategy';
 import { patchObject } from 'src/object.functions';
 import { CreateDiscussion } from './features/discussion/create-discussion.command';
 import { FindDiscussion } from './features/discussion/find-discussion.query';

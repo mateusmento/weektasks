@@ -11,7 +11,7 @@ import {
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { JwtAuthGuard } from 'src/auth/application/passport/jwt.strategy';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { patchObject } from 'src/object.functions';
 import { RemoveSprintBacklogItemComand } from './features/remove-sprint-backlog-item.command';

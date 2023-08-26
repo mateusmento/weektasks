@@ -1,7 +1,7 @@
 import { Controller, Get, Param, UseGuards } from '@nestjs/common';
 import { FindBoard } from './features/find-board.query';
 import { QueryBus } from '@nestjs/cqrs';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { JwtAuthGuard } from 'src/auth/application/passport/jwt.strategy';
 
 @UseGuards(JwtAuthGuard)
 @Controller('/products/:id/board')

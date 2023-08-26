@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { patchObject } from 'src/object.functions';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { JwtAuthGuard } from 'src/auth/application/passport/jwt.strategy';
 import { CreateIssueInBacklogCommand } from './features/create-issue-in-backlog.command';
 import { FindBacklogItemsQuery } from './features/find-backlog-items.query';
 import { MoveBacklogItemCommand } from './features/move-backlog-item.command';
