@@ -1,0 +1,33 @@
+# @api=http://localhost:3000
+@api=http://54.233.236.18:3000
+
+GET {{api}}/hello-world
+
+###
+
+GET {{api}}/backlog/items
+
+###
+
+POST {{api}}/users
+Content-Type: application/json
+
+{
+    "name": "Mateus Sarmento",
+    "email": "omateusmento@gmail.com",
+    "password": "admin123"
+}
+
+###
+
+POST {{api}}/auth/signin
+Content-Type: application/json
+
+{
+    "email": "omateusmento@gmail.com",
+    "password": "admin123"
+}
+
+###
+
+DELETE {{api}}/auth/signin

@@ -9,6 +9,7 @@ import { AuthModule } from './auth/auth.module';
 import { ContactModule } from './contact/contact.module';
 import { MessagingModule } from './messaging/messaging.module';
 import { MeetingModule } from './meeting/meeting.module';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { MeetingModule } from './meeting/meeting.module';
       dataSourceFactory: async (config) =>
         addTransactionalDataSource(new DataSource(config)),
     }),
+    EventEmitterModule.forRoot(),
     AuthModule,
     ContactModule,
     MessagingModule,

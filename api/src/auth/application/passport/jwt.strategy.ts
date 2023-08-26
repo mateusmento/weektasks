@@ -10,7 +10,10 @@ export class JwtAuthGuard extends AuthGuard('jwt') {}
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-  constructor(private authService: AuthService, config: ConfigService) {
+  constructor(
+    private authService: AuthService,
+    config: ConfigService
+  ) {
     super({
       secretOrKey: config.get('JWT_SECRET'),
       jwtFromRequest: ExtractJwt.fromExtractors([
