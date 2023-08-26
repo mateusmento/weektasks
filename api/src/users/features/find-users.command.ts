@@ -28,7 +28,7 @@ export class FindUsersHandler implements IQueryHandler {
   ) {}
 
   @TransformPlainToInstance(UserDto)
-  async execute(query: FindUsers): Promise<UserDto[]> {
+  async execute(query: FindUsers) {
     return this.userRepo.findBy({
       name: Like(`%${query.name}%`),
     });
