@@ -26,7 +26,7 @@ export class ProfileController {
 
   @Get(':id/photo')
   async getFile(@Param('id') id: number) {
-    const stream = createReadStream(`./storage/user-photo/${id}`);
+    const stream = createReadStream(`./storage/user-photo/${id}.png`);
     return new StreamableFile(stream);
   }
 
