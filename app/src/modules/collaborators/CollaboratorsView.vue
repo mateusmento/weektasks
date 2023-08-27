@@ -3,9 +3,9 @@ import WkComboBox from '@/lib/components/form/WkComboBox.vue';
 import { onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { createUsersRepository } from '@/lib/service/users.service';
-import { createProductsRepository } from "@/lib/service/products.service";
+import { createProductsRepository } from '@/lib/service/products.service';
 import type { Collaborator } from '../products/product.model';
-import type { User } from "@/lib/models/user.model";
+import type { User } from '@/lib/models/user.model';
 
 const route = useRoute();
 
@@ -47,12 +47,19 @@ function removeCollaborator(collabId: number) {
         <li v-for="collab in collaborators" :key="collab.id">
           <div class="collaborator-name">{{ collab.user.name }}</div>
           <div>
-            <el-icon @click="removeCollaborator(collab.id)"><Delete/></el-icon>
+            <el-icon @click="removeCollaborator(collab.id)"><Delete /></el-icon>
           </div>
         </li>
       </ul>
       <form class="form-group" @submit.prevent="includeCollaborator">
-        <WkComboBox v-model:text="userName" v-model:value="selectedUser" :search="searchUsers" :trackby="'id'" :labelBy="'name'" placeholder="Search for collaborators..."/>
+        <WkComboBox
+          v-model:text="userName"
+          v-model:value="selectedUser"
+          :search="searchUsers"
+          :trackby="'id'"
+          :labelBy="'name'"
+          placeholder="Search for collaborators..."
+        />
         <button type="submit">Include</button>
       </form>
     </div>

@@ -1,17 +1,13 @@
-import { axios } from "@/lib/axios";
-import type { Sprint } from "@/lib/models/sprint.model";
+import { axios } from '@/lib/axios';
+import type { Sprint } from '@/lib/models/sprint.model';
 
 export const createSprintsRepository = () => ({
   fetchSprints(productId: number) {
-    return axios
-      .get<any[]>(`/products/${productId}/sprints`)
-      .then((res) => res.data);
+    return axios.get<any[]>(`/products/${productId}/sprints`).then((res) => res.data);
   },
 
   fetchPastSprints(productId: number) {
-    return axios
-      .get<Sprint[]>(`/products/${productId}/past-sprints`)
-      .then((res) => res.data);
+    return axios.get<Sprint[]>(`/products/${productId}/past-sprints`).then((res) => res.data);
   },
 
   createSprint(productId: number, sprint: any) {
@@ -20,11 +16,11 @@ export const createSprintsRepository = () => ({
   },
 
   patchSprint(id: number, partial: Partial<Sprint>) {
-    return axios.patch("/sprints/" + id, partial).then((res) => res.data);
+    return axios.patch('/sprints/' + id, partial).then((res) => res.data);
   },
 
   removeSprint(id: number) {
-    return axios.delete("/sprints/" + id);
+    return axios.delete('/sprints/' + id);
   },
 
   moveSprint(id: number, order: number) {
@@ -48,9 +44,7 @@ export const createSprintsRepository = () => ({
   },
 
   includeItem(id: number, item: any) {
-    return axios
-      .post(`/sprints/${id}/backlog-items`, item)
-      .then((res) => res.data);
+    return axios.post(`/sprints/${id}/backlog-items`, item).then((res) => res.data);
   },
 
   removeItem(id: number, itemId: number) {

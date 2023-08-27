@@ -11,9 +11,12 @@ function createCalendarMonth() {
   const startOfWeekOfLastMonth = () => startOfMonth().startOf('week');
   const endOfLastMonth = () => startOfWeekOfLastMonth().endOf('month');
   const endOfCalendar = () => endOfMonth().endOf('week');
-  const lastMonthDays = range(+startOfWeekOfLastMonth().format("D"), +endOfLastMonth().format("D")+1);
-  const monthDays = range(+startOfMonth().format("D"), +endOfMonth().format("D")+1);
-  const nextMonthDays = range(1, +endOfCalendar().format("D")+1);
+  const lastMonthDays = range(
+    +startOfWeekOfLastMonth().format('D'),
+    +endOfLastMonth().format('D') + 1
+  );
+  const monthDays = range(+startOfMonth().format('D'), +endOfMonth().format('D') + 1);
+  const nextMonthDays = range(1, +endOfCalendar().format('D') + 1);
   const weekdays = moment.weekdaysShort();
   return {
     weekdays,
@@ -26,11 +29,18 @@ function createCalendarMonth() {
 
 <template>
   <div class="calendar-view">
-    <div>Today: {{ moment().format("ddd, MMM DD, YYYY") }}</div>
+    <div>Today: {{ moment().format('ddd, MMM DD, YYYY') }}</div>
     <div class="days-grid">
       <div v-for="day of calendar.weekdays" :key="day" class="day">{{ day }}</div>
       <div v-for="day of calendar.lastMonthDays" :key="day" class="day last-month">{{ day }}</div>
-      <div v-for="day of calendar.monthDays" :key="day" class="day" :class="{today: day === today}">{{ day }}</div>
+      <div
+        v-for="day of calendar.monthDays"
+        :key="day"
+        class="day"
+        :class="{ today: day === today }"
+      >
+        {{ day }}
+      </div>
       <div v-for="day of calendar.nextMonthDays" :key="day" class="day next-month">{{ day }}</div>
     </div>
   </div>
@@ -56,7 +66,8 @@ function createCalendarMonth() {
   background-color: var(--light-purple-bg);
 }
 
-.last-month, .next-month {
+.last-month,
+.next-month {
   background-color: #eee;
 }
 </style>

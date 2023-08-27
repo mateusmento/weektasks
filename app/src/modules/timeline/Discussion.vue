@@ -10,7 +10,7 @@ const route = useRoute();
 const discussionService = new DiscussionService();
 
 const props = defineProps<{
-  discussion: any
+  discussion: any;
 }>();
 
 const emit = defineEmits(['update:discussion']);
@@ -35,13 +35,13 @@ async function toggleLiked([liked, count]: any) {
         Maintain issues ordering in sprint
       </div>
     </div>
-    <p class="text-content">
-    <pre>{{ discussion.text }}</pre>
-    </p>
+    <p class="text-content"><pre>{{ discussion.text }}</pre></p>
     <div class="footer">
       <LikeButton :liked="discussion.liked" :count="discussion.likes" @toggled="toggleLiked" />
       <div>Reply</div>
-      <RouterLink :to="{ name: 'discussion', params: { id: route.params.id, discussionId: discussion.id } }">
+      <RouterLink
+        :to="{ name: 'discussion', params: { id: route.params.id, discussionId: discussion.id } }"
+      >
         <button class="light-purple" hover>See Discussion</button>
       </RouterLink>
     </div>
@@ -81,7 +81,7 @@ async function toggleLiked([liked, count]: any) {
 
 .text-content {
   grid-area: content;
-  color: #5B5B5B;
+  color: #5b5b5b;
 }
 
 .footer {

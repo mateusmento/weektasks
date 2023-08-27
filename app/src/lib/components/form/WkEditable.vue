@@ -14,7 +14,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { computed, useAttrs, withDefaults } from "vue";
+import { computed, useAttrs, withDefaults } from 'vue';
 
 withDefaults(
   defineProps<{
@@ -25,12 +25,12 @@ withDefaults(
   }
 );
 
-let emit = defineEmits(["update:modelValue"]);
+let emit = defineEmits(['update:modelValue']);
 
 let $attrs = useAttrs();
 
 let modelValue = computed({
   get: () => $attrs.modelValue,
-  set: (v: any) => emit("update:modelValue", v),
+  set: (v: any) => emit('update:modelValue', v),
 });
 </script>

@@ -4,8 +4,8 @@ import Discussion from './Discussion.vue';
 import { DiscussionService } from './discussion.service';
 
 const props = defineProps<{
-  id: string,
-  discussionId: string,
+  id: string;
+  discussionId: string;
 }>();
 
 const discussion = ref<any>(null);
@@ -19,7 +19,7 @@ onMounted(async () => {
 
 async function createReply(reply: any) {
   reply = await discussionService.createReply(+props.discussionId, reply);
-  reply.type = 'feedback'
+  reply.type = 'feedback';
   replies.value.push(reply);
   console.log(replies);
 }

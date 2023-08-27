@@ -1,4 +1,4 @@
-import type { Issue } from "./issue.model";
+import type { Issue } from './issue.model';
 
 export interface Sprint {
   id: number;

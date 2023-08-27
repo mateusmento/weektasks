@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import { DiscussionService } from "@/modules/timeline/discussion.service";
+import { DiscussionService } from '@/modules/timeline/discussion.service';
 import { vOnClickOutside } from '@vueuse/components';
-import { ref } from "vue";
-import { useRoute } from "vue-router";
-import DiscussionType from "./DiscussionType.vue";
+import { ref } from 'vue';
+import { useRoute } from 'vue-router';
+import DiscussionType from './DiscussionType.vue';
 
 const emit = defineEmits(['created']);
 const route = useRoute();
@@ -17,7 +17,7 @@ async function createDiscussion() {
   const data = { text: text.value, type: type.value };
   const discussion = await discussionService.createDiscussion(+route.params.id, data);
   emit('created', discussion);
-  text.value = "";
+  text.value = '';
 }
 
 function selectDiscussionType(t: string) {
@@ -33,7 +33,11 @@ function selectDiscussionType(t: string) {
       <button>Send</button>
     </form>
     <div class="footer">
-      <div class="dropdown" :class="{ active: showStatusOptions }" v-on-click-outside="() => showStatusOptions = false">
+      <div
+        class="dropdown"
+        :class="{ active: showStatusOptions }"
+        v-on-click-outside="() => (showStatusOptions = false)"
+      >
         <DiscussionType :type="type" @click="showStatusOptions = !showStatusOptions" />
         <ul class="dropdown-menu menu list">
           <li class="menu-item" @click="selectDiscussionType('decision')">
@@ -55,7 +59,7 @@ function selectDiscussionType(t: string) {
 .create-discussion {
   display: flex;
   align-items: flex-start;
-  background: #E7E8FF;
+  background: #e7e8ff;
   border-radius: 10px;
   padding: 15px;
   gap: 10px;
@@ -63,13 +67,13 @@ function selectDiscussionType(t: string) {
 }
 
 .create-discussion:focus-within {
-  border-color: #8459FF;
+  border-color: #8459ff;
 }
 
 textarea {
   padding: 0;
   border: none;
-  color: #8459FF;
+  color: #8459ff;
   background-color: unset;
   flex: 1;
   font-size: 14px;
@@ -78,11 +82,11 @@ textarea {
 }
 
 textarea::placeholder {
-  color: #8459FF;
+  color: #8459ff;
 }
 
 button {
-  background: #8459FF;
+  background: #8459ff;
   color: #fff;
   border: none;
   border-radius: 10px;

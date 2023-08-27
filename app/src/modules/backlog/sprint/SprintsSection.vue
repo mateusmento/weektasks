@@ -1,36 +1,40 @@
 <template>
   <div class="sprints">
-
-    <draggable v-model="sprints" class="sprint-list" item-key="id" tag="ul" group="sprints" handle=".draggable-handle" @change="moveSprint">
+    <draggable
+      v-model="sprints"
+      class="sprint-list"
+      item-key="id"
+      tag="ul"
+      group="sprints"
+      handle=".draggable-handle"
+      @change="moveSprint"
+    >
       <template #item="{ element: sprint, index: i }">
         <li>
-          <Sprint
-            v-model:sprint="sprints[i]"
-            @remove="removeSprint(sprint.id)"
-          />
+          <Sprint v-model:sprint="sprints[i]" @remove="removeSprint(sprint.id)" />
         </li>
       </template>
     </draggable>
 
     <div class="add-sprint" @click="createSprint">
-      <IconBigPlus/>
+      <IconBigPlus />
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { computed, ref, onMounted } from "vue";
-import Sprint from "./Sprint.vue";
-import draggable from "vuedraggable";
-import { useRoute } from "vue-router";
-import { AxiosError } from "axios";
-import IconBigPlus from "@/lib/components/icons/IconBigPlus.vue";
-import { createSprintsRepository } from "@/lib/service/sprints.service";
+import { computed, ref, onMounted } from 'vue';
+import Sprint from './Sprint.vue';
+import draggable from 'vuedraggable';
+import { useRoute } from 'vue-router';
+import { AxiosError } from 'axios';
+import IconBigPlus from '@/lib/components/icons/IconBigPlus.vue';
+import { createSprintsRepository } from '@/lib/service/sprints.service';
 
 const route = useRoute();
 const productId = computed(() => route.params.id);
 
-const sprintTitle = ref("");
+const sprintTitle = ref('');
 const sprints = ref<any[]>([]);
 
 const sprintsRepo = createSprintsRepository();
@@ -44,10 +48,9 @@ async function createSprint() {
     const sprint = await sprintsRepo.createSprint(+productId.value, { title: sprintTitle.value });
     sprint.issues = [];
     sprints.value.push(sprint);
-    sprintTitle.value = "";
+    sprintTitle.value = '';
   } catch (ex) {
-    if (ex instanceof AxiosError)
-      alert(ex.response?.data.message);
+    if (ex instanceof AxiosError) alert(ex.response?.data.message);
   }
 }
 
@@ -75,7 +78,7 @@ function moveSprint({ moved }: any) {
   width: fit-content;
   margin: auto;
   margin-top: 40px;
-  background-color: #BBCBDF;
+  background-color: #bbcbdf;
   padding: 10px;
   border-radius: 20px;
   line-height: 0;

@@ -1,19 +1,19 @@
 <script lang="ts" setup>
-import { createUsersRepository } from "@/lib/service/users.service";
-import WkComboBox from "@/lib/components/form/WkComboBox.vue";
+import { createUsersRepository } from '@/lib/service/users.service';
+import WkComboBox from '@/lib/components/form/WkComboBox.vue';
 import { vOnClickOutside } from '@vueuse/components';
-import IconAssignUser from "@/lib/components/icons/IconAssignUser.vue";
-import { ref, watch } from "vue";
-import { createIssuesRepository } from "../service/issues.service";
-import type { User } from "../models/user.model";
-import type { Issue } from "../models/issue.model";
-import IconTrash from "./icons/IconTrash.vue";
+import IconAssignUser from '@/lib/components/icons/IconAssignUser.vue';
+import { ref, watch } from 'vue';
+import { createIssuesRepository } from '../service/issues.service';
+import type { User } from '../models/user.model';
+import type { Issue } from '../models/issue.model';
+import IconTrash from './icons/IconTrash.vue';
 
 let props = defineProps<{
   issue: Issue;
 }>();
 
-let emit = defineEmits(["update:issue"]);
+let emit = defineEmits(['update:issue']);
 
 const showUsers = ref(false);
 
@@ -40,17 +40,17 @@ async function assignUser() {
   if (!selectedUser.value) return;
   const issue = await issuesRepo.assignUser(props.issue.id, selectedUser.value.id);
   showUsers.value = false;
-  emit("update:issue", issue);
+  emit('update:issue', issue);
 }
 
 async function removeAssignee(assigneeId: number) {
   const issue = await issuesRepo.removeAssignee(props.issue.id, assigneeId);
-  emit("update:issue", issue);
+  emit('update:issue', issue);
 }
 </script>
 
 <template>
-  <span class="assign-user-to" v-on-click-outside="() => showUsers = false">
+  <span class="assign-user-to" v-on-click-outside="() => (showUsers = false)">
     <span @click="toggleUserAssigning" title="Assign a collaborator">
       <IconAssignUser class="hover-hidden" />
     </span>
@@ -60,8 +60,14 @@ async function removeAssignee(assigneeId: number) {
         <b>Assign a collaborator</b>
       </div>
       <div>
-        <WkComboBox class="small" v-model:value="selectedUser" v-model:text="userName" trackby="id" label-by="name"
-          :search="searchUsers" />
+        <WkComboBox
+          class="small"
+          v-model:value="selectedUser"
+          v-model:text="userName"
+          trackby="id"
+          label-by="name"
+          :search="searchUsers"
+        />
         <button class="small" type="submit">Assign</button>
       </div>
       <div>
@@ -82,7 +88,7 @@ async function removeAssignee(assigneeId: number) {
 
 .assign-user-to-title {
   margin-bottom: 20px;
-  margin-left: 5px
+  margin-left: 5px;
 }
 
 .assign-user-to .users {

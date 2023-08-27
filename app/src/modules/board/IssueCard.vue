@@ -1,18 +1,18 @@
 <script lang="ts" setup>
-import Checkbox from "@/lib/components/form/Checkbox.vue";
-import IconMore from "@/lib/components/icons/IconMore.vue";
-import type { Issue, SubTask } from "@/lib/models/issue.model";
-import { createIssuesRepository } from "@/lib/service/issues.service";
-import { useIssueModalStore } from "@/lib/stores/issue-modal.store";
-import { sortBy } from "lodash";
-import { computed, ref } from "vue";
-import IssueType from "./IssueType.vue";
+import Checkbox from '@/lib/components/form/Checkbox.vue';
+import IconMore from '@/lib/components/icons/IconMore.vue';
+import type { Issue, SubTask } from '@/lib/models/issue.model';
+import { createIssuesRepository } from '@/lib/service/issues.service';
+import { useIssueModalStore } from '@/lib/stores/issue-modal.store';
+import { sortBy } from 'lodash';
+import { computed, ref } from 'vue';
+import IssueType from './IssueType.vue';
 
 let props = defineProps<{
   issue: Issue;
 }>();
 
-const sortedSubtasks = computed(() => sortBy(props.issue.subtasks, s => s.id));
+const sortedSubtasks = computed(() => sortBy(props.issue.subtasks, (s) => s.id));
 
 const seeCompletedSubtasks = ref(false);
 
@@ -24,19 +24,25 @@ function toggleSubtaskCompletion(subtask: SubTask) {
 
 const issueModalStore = useIssueModalStore();
 
-const issueColor = computed(() => ({
-  story: 'green',
-  task: 'blue',
-  bug: 'red',
-  quickfix: 'orange',
-  component: 'purple',
-  refactor: 'green',
-  refinement: 'blue',
-})[props.issue.type]);
+const issueColor = computed(
+  () =>
+    ({
+      story: 'green',
+      task: 'blue',
+      bug: 'red',
+      quickfix: 'orange',
+      component: 'purple',
+      refactor: 'green',
+      refinement: 'blue',
+    })[props.issue.type]
+);
 </script>
 
 <template>
-  <div class="issue-card draggable-handle" :style="{ 'border-color': `var(--light-${issueColor}-bg)` }">
+  <div
+    class="issue-card draggable-handle"
+    :style="{ 'border-color': `var(--light-${issueColor}-bg)` }"
+  >
     <div class="top-section">
       <div class="issue-title" @click="issueModalStore.open(issue)">{{ issue.title }}</div>
 
@@ -47,14 +53,24 @@ const issueColor = computed(() => ({
 
     <div class="middle-section">
       <div class="flex-vert gap-sm">
-        <div v-for="subtask in sortedSubtasks" :key="subtask.id" class="subtask flex-horz gap-sm"
-          :class="{ completed: subtask.completed, seeCompletedSubtasks }">
-          <Checkbox v-model="subtask.completed" @update:modelValue="toggleSubtaskCompletion(subtask)" />
+        <div
+          v-for="subtask in sortedSubtasks"
+          :key="subtask.id"
+          class="subtask flex-horz gap-sm"
+          :class="{ completed: subtask.completed, seeCompletedSubtasks }"
+        >
+          <Checkbox
+            v-model="subtask.completed"
+            @update:modelValue="toggleSubtaskCompletion(subtask)"
+          />
           {{ subtask.title }}
         </div>
-        <small v-if="issue.subtasks.length > 0" class="toggle-completed-subtasks"
-          @click="seeCompletedSubtasks = !seeCompletedSubtasks">
-          {{ seeCompletedSubtasks ? "Hide" : "See" }} done subtasks
+        <small
+          v-if="issue.subtasks.length > 0"
+          class="toggle-completed-subtasks"
+          @click="seeCompletedSubtasks = !seeCompletedSubtasks"
+        >
+          {{ seeCompletedSubtasks ? 'Hide' : 'See' }} done subtasks
         </small>
       </div>
     </div>
@@ -62,8 +78,12 @@ const issueColor = computed(() => ({
     <div class="bottom-section">
       <IssueType :type="issue.type" />
       <span v-if="issue.assignees.length > 0" class="assigned-to">
-        <img v-for="assignee of issue.assignees" :key="assignee.id" class="assignee-photo"
-          :src="`http://localhost:3000/users/${assignee.id}/photo`" />
+        <img
+          v-for="assignee of issue.assignees"
+          :key="assignee.id"
+          class="assignee-photo"
+          :src="`http://localhost:3000/users/${assignee.id}/photo`"
+        />
       </span>
       <span class="story-points">2 pts</span>
     </div>
@@ -138,13 +158,12 @@ const issueColor = computed(() => ({
 }
 </style>
 
-
 <style lang="scss" scoped>
 .assigned-to {
   display: flex;
   align-items: center;
   white-space: nowrap;
-  font-size: .8rem;
+  font-size: 0.8rem;
 }
 
 .assignee-photo {

@@ -1,10 +1,10 @@
-import { beforeEnter } from "@/lib/router/before-enter";
+import { beforeEnter } from '@/lib/router/before-enter';
 
 const collaboratorsRoutes = [
   {
-    path: "/products/:id/collaborators",
-    name: "collaborators",
-    component: () => import("./CollaboratorsView.vue"),
+    path: '/products/:id/collaborators',
+    name: 'collaborators',
+    component: () => import('./CollaboratorsView.vue'),
     beforeEnter,
   },
 ];

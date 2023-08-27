@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import { DiscussionService } from "@/modules/timeline/discussion.service";
-import { onMounted, ref } from "vue";
-import { useRoute } from "vue-router";
-import CreateDiscussion from "./CreateDiscussion.vue";
-import Discussion from "./Discussion.vue";
+import { DiscussionService } from '@/modules/timeline/discussion.service';
+import { onMounted, ref } from 'vue';
+import { useRoute } from 'vue-router';
+import CreateDiscussion from './CreateDiscussion.vue';
+import Discussion from './Discussion.vue';
 
 const route = useRoute();
 

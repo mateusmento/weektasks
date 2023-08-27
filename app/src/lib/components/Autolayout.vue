@@ -2,8 +2,8 @@
 import { computed } from 'vue';
 
 const props = defineProps<{
-  direction: string,
-  gap: string,
+  direction: string;
+  gap: string;
 }>();
 
 const classes = computed(() => ({

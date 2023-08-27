@@ -1,21 +1,21 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
-import type { Sprint } from "@/lib/models/sprint.model";
-import IssueItem from "../components/BacklogItem.vue";
-import draggable from "vuedraggable";
-import { createSprintsRepository } from "@/lib/service/sprints.service";
-import { AxiosError } from "axios";
-import AddBacklogItem from "../components/AddBacklogItem.vue";
+import { ref, computed } from 'vue';
+import type { Sprint } from '@/lib/models/sprint.model';
+import IssueItem from '../components/BacklogItem.vue';
+import draggable from 'vuedraggable';
+import { createSprintsRepository } from '@/lib/service/sprints.service';
+import { AxiosError } from 'axios';
+import AddBacklogItem from '../components/AddBacklogItem.vue';
 
 let props = defineProps<{
   sprint: Sprint;
 }>();
 
-let emit = defineEmits(["update:sprint"]);
+let emit = defineEmits(['update:sprint']);
 
 let sprintIssues = computed({
   get: () => props.sprint.issues,
-  set: (issues) => emit("update:sprint", { ...props.sprint, issues }),
+  set: (issues) => emit('update:sprint', { ...props.sprint, issues }),
 });
 
 let sprintHasNoIssues = computed(() => props.sprint.issues.length === 0);
@@ -29,8 +29,7 @@ async function createIssue(createIssueData: any) {
     let issue = await sprintsRepo.createIssue(props.sprint.id, createIssueData);
     sprintIssues.value = [...props.sprint.issues, issue];
   } catch (ex) {
-    if (ex instanceof AxiosError)
-      alert(ex.response?.data.message);
+    if (ex instanceof AxiosError) alert(ex.response?.data.message);
   }
 }
 
@@ -71,10 +70,7 @@ async function moveIssue({ moved, added, removed }: any) {
     >
       <template #item="{ element: issue, index: i }">
         <li>
-          <IssueItem
-            v-model:issue="sprintIssues[i]"
-            @remove="removeIssue(issue.id)"
-          />
+          <IssueItem v-model:issue="sprintIssues[i]" @remove="removeIssue(issue.id)" />
         </li>
       </template>
       <template #footer>
@@ -86,14 +82,14 @@ async function moveIssue({ moved, added, removed }: any) {
       </template>
     </draggable>
 
-    <AddBacklogItem @created="createIssue"/>
+    <AddBacklogItem @created="createIssue" />
   </div>
 </template>
 
 <style scoped lang="scss">
 .sprint-issues {
   margin-top: 5px;
-  background: #F6FAFF;
+  background: #f6faff;
   border-radius: 8px;
   padding: 5px;
 }

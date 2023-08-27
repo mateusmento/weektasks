@@ -6,8 +6,8 @@ import type { Issue } from '@/lib/models/issue.model';
 import type { Sprint } from '@/lib/models/sprint.model';
 import draggable from 'vuedraggable';
 import { AxiosError } from 'axios';
-import { createSprintsRepository } from "@/lib/service/sprints.service";
-import { createIssuesRepository } from "@/lib/service/issues.service";
+import { createSprintsRepository } from '@/lib/service/sprints.service';
+import { createIssuesRepository } from '@/lib/service/issues.service';
 import IssueCard from './IssueCard.vue';
 import CardList from './CardList.vue';
 
@@ -32,8 +32,7 @@ onMounted(async () => {
   try {
     board.value = await fetchBoard(+route.params.id);
   } catch (ex) {
-    if (ex instanceof AxiosError)
-      alert(ex.response?.data.message);
+    if (ex instanceof AxiosError) alert(ex.response?.data.message);
   }
 });
 
@@ -47,41 +46,35 @@ async function endSprint() {
     await sprintsRepo.endSprint(board.value.sprint.id);
     router.push({ name: 'backlog' });
   } catch (ex) {
-    if (ex instanceof AxiosError)
-      alert(ex.response?.data.message);
-    else
-      throw ex;
+    if (ex instanceof AxiosError) alert(ex.response?.data.message);
+    else throw ex;
   }
 }
 
 async function moveTodoItems({ added }: any) {
   if (added) {
-    const data = await issuesRepo.patchIssue(added.element.id, { status: "todo" });
-    if (board.value)
-      board.value.issues.todo[added.newIndex] = { ...added.element, ...data };
+    const data = await issuesRepo.patchIssue(added.element.id, { status: 'todo' });
+    if (board.value) board.value.issues.todo[added.newIndex] = { ...added.element, ...data };
   }
 }
 
 async function moveDoingItems({ added }: any) {
   if (added) {
-    const data = await issuesRepo.patchIssue(added.element.id, { status: "doing" });
-    if (board.value)
-      board.value.issues.doing[added.newIndex] = { ...added.element, ...data };
+    const data = await issuesRepo.patchIssue(added.element.id, { status: 'doing' });
+    if (board.value) board.value.issues.doing[added.newIndex] = { ...added.element, ...data };
   }
 }
 
 async function moveDoneItems({ added }: any) {
   if (added) {
-    const data = await issuesRepo.patchIssue(added.element.id, { status: "done" });
-    if (board.value)
-      board.value.issues.done[added.newIndex] = { ...added.element, ...data };
+    const data = await issuesRepo.patchIssue(added.element.id, { status: 'done' });
+    if (board.value) board.value.issues.done[added.newIndex] = { ...added.element, ...data };
   }
 }
 </script>
 
 <template>
   <main v-if="board" class="board-view">
-
     <section class="top-section">
       <div>
         <h2>Sprint Board</h2>
@@ -91,11 +84,16 @@ async function moveDoneItems({ added }: any) {
     </section>
 
     <section class="content-section">
-
       <CardList :issues="board.issues.todo" title="Backlog">
-        <draggable v-model="board.issues.todo" item-key="id" handle=".draggable-handle" group="issues" @change="moveTodoItems">
-          <template #item="{element: item, index: i}">
-            <IssueCard v-model:issue="board.issues.todo[i]"/>
+        <draggable
+          v-model="board.issues.todo"
+          item-key="id"
+          handle=".draggable-handle"
+          group="issues"
+          @change="moveTodoItems"
+        >
+          <template #item="{ element: item, index: i }">
+            <IssueCard v-model:issue="board.issues.todo[i]" />
           </template>
           <template #footer v-if="board.issues.todo.length === 0">
             <small class="issue-placeholder">
@@ -106,9 +104,15 @@ async function moveDoneItems({ added }: any) {
       </CardList>
 
       <CardList :issues="board.issues.doing" title="In Progress">
-        <draggable v-model="board.issues.doing" item-key="id" handle=".draggable-handle" group="issues" @change="moveDoingItems">
-          <template #item="{element: item, index: i}">
-            <IssueCard v-model:issue="board.issues.doing[i]"/>
+        <draggable
+          v-model="board.issues.doing"
+          item-key="id"
+          handle=".draggable-handle"
+          group="issues"
+          @change="moveDoingItems"
+        >
+          <template #item="{ element: item, index: i }">
+            <IssueCard v-model:issue="board.issues.doing[i]" />
           </template>
           <template #footer v-if="board.issues.doing.length === 0">
             <small class="issue-placeholder">
@@ -119,9 +123,15 @@ async function moveDoneItems({ added }: any) {
       </CardList>
 
       <CardList :issues="board.issues.done" title="Done">
-        <draggable v-model="board.issues.done" item-key="id" handle=".draggable-handle" group="issues" @change="moveDoneItems">
-          <template #item="{element: item, index: i}">
-            <IssueCard v-model:issue="board.issues.done[i]"/>
+        <draggable
+          v-model="board.issues.done"
+          item-key="id"
+          handle=".draggable-handle"
+          group="issues"
+          @change="moveDoneItems"
+        >
+          <template #item="{ element: item, index: i }">
+            <IssueCard v-model:issue="board.issues.done[i]" />
           </template>
           <template #footer v-if="board.issues.done.length === 0">
             <small class="issue-placeholder">
@@ -131,7 +141,6 @@ async function moveDoneItems({ added }: any) {
         </draggable>
       </CardList>
     </section>
-
   </main>
 </template>
 
@@ -150,12 +159,11 @@ async function moveDoneItems({ added }: any) {
   margin-left: auto;
   padding: 10px 20px;
   border-radius: 10px;
-  background-color: #773BC3;
+  background-color: #773bc3;
   color: #fff;
   font-weight: 600;
   font-size: 16px;
 }
-
 
 .content-section {
   display: flex;

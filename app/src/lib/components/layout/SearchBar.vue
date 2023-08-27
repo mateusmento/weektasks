@@ -4,8 +4,12 @@
       <input v-model="searchQuery" placeholder="Search something..." />
       <ul class="dropdown-menu list menu">
         <li v-for="issue of results" :key="issue.id" class="menu-item">
-          <router-link class="hide-text-overflow" :to="{ name: 'issue', params: { issueId: issue.id } }"
-            @click="closeResults">{{ issue.title }}</router-link>
+          <router-link
+            class="hide-text-overflow"
+            :to="{ name: 'issue', params: { issueId: issue.id } }"
+            @click="closeResults"
+            >{{ issue.title }}</router-link
+          >
         </li>
       </ul>
     </div>
@@ -16,24 +20,23 @@
 </template>
 
 <script lang="ts" setup>
-import type { Issue } from "@/lib/models/issue.model";
-import { createIssuesRepository } from "@/lib/service/issues.service";
-import { ref, watch } from "vue";
-import IconSearch from "../icons/IconSearch.vue";
+import type { Issue } from '@/lib/models/issue.model';
+import { createIssuesRepository } from '@/lib/service/issues.service';
+import { ref, watch } from 'vue';
+import IconSearch from '../icons/IconSearch.vue';
 
 const props = defineProps<{
-  productId: number,
+  productId: number;
 }>();
 
-const searchQuery = ref("");
+const searchQuery = ref('');
 const results = ref<Issue[]>([]);
 const issuesRepo = createIssuesRepository();
 
 watch(searchQuery, async () => {
   if (searchQuery.value.trim())
     results.value = await issuesRepo.findIssues(props.productId, searchQuery.value);
-  else
-    results.value = [];
+  else results.value = [];
 });
 
 function closeResults() {

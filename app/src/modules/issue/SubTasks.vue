@@ -1,12 +1,12 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import type { Issue } from '@/lib/models/issue.model';
-import { createIssuesRepository } from "@/lib/service/issues.service";
+import { createIssuesRepository } from '@/lib/service/issues.service';
 import IconPlus from '@/lib/components/icons/IconPlus.vue';
 import SubTask from './SubTask.vue';
 
 const props = defineProps<{
-  issue: Issue,
+  issue: Issue;
 }>();
 
 const emit = defineEmits(['update:issue']);
@@ -19,27 +19,32 @@ async function createSubTask() {
   const data = { title: subtaskTitle.value };
   const subtask = await issueRepo.createSubTask(props.issue.id, data);
   const subtasks = [...props.issue.subtasks, subtask];
-  emit("update:issue", { ...props.issue, subtasks });
+  emit('update:issue', { ...props.issue, subtasks });
   subtaskTitle.value = '';
 }
 
 async function removeSubtask(subtask: any) {
   await issueRepo.removeSubtask(subtask.id);
-  const subtasks = props.issue.subtasks.filter(s => s.id !== subtask.id);
-  emit("update:issue", { ...props.issue, subtasks });
+  const subtasks = props.issue.subtasks.filter((s) => s.id !== subtask.id);
+  emit('update:issue', { ...props.issue, subtasks });
 }
 </script>
 
 <template>
   <div class="flex-vert-md">
     <ul class="flex-vert-md">
-      <SubTask v-for="subtask of issue.subtasks" :key="subtask.id" :subtask="subtask" @remove="removeSubtask"/>
+      <SubTask
+        v-for="subtask of issue.subtasks"
+        :key="subtask.id"
+        :subtask="subtask"
+        @remove="removeSubtask"
+      />
     </ul>
     <form class="create-subtask" @submit.prevent="createSubTask">
       <button pill>
-        <IconPlus/>
+        <IconPlus />
       </button>
-      <input v-model="subtaskTitle" placeholder="Add a new subtask..."/>
+      <input v-model="subtaskTitle" placeholder="Add a new subtask..." />
     </form>
   </div>
 </template>
@@ -52,7 +57,7 @@ async function removeSubtask(subtask: any) {
   border-radius: 10px;
 
   button {
-    background: #773BC3;
+    background: #773bc3;
     padding: 5px;
   }
 
@@ -63,8 +68,8 @@ async function removeSubtask(subtask: any) {
     outline: none;
     border: 2px solid transparent;
     transition: border-color 100ms;
-    background-color: #E7E8FF;
-    color: #8459FF;
+    background-color: #e7e8ff;
+    color: #8459ff;
   }
 
   input::placeholder {
@@ -72,7 +77,7 @@ async function removeSubtask(subtask: any) {
   }
 
   input:focus {
-    border-color: #8459FF;
+    border-color: #8459ff;
   }
 }
 </style>

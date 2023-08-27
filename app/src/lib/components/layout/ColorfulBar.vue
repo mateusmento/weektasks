@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 defineProps<{
-  thick?: boolean,
+  thick?: boolean;
 }>();
 </script>
 
 <template>
-  <div class="colorful-bar" :class="{thick}">
+  <div class="colorful-bar" :class="{ thick }">
     <div class="purple"></div>
     <div class="yellow"></div>
     <div class="green"></div>
@@ -25,23 +25,23 @@ defineProps<{
   height: 10px;
 }
 .purple {
-  background-color: #8459FF;
+  background-color: #8459ff;
   flex: 3;
 }
 .yellow {
-  background-color: #FFEE59;
+  background-color: #ffee59;
   flex: 1;
 }
 .green {
-  background-color: #A2FF59;
+  background-color: #a2ff59;
   flex: 2;
 }
 .orange {
-  background-color: #FFD159;
+  background-color: #ffd159;
   flex: 1.5;
 }
 .cyan {
-  background-color: #59FFC3;
+  background-color: #59ffc3;
   flex: 2.5;
 }
 </style>

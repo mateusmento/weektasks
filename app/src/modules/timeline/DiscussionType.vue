@@ -2,16 +2,19 @@
 import { computed } from 'vue';
 
 const props = defineProps<{
-  type: string
+  type: string;
 }>();
 
-const color = computed(() => ({
-  progress: 'light-green',
-  feedback: 'light-blue',
-  dicussion: 'light-blue',
-  decision: 'light-purple',
-  blocker: 'strong-red',
-})[props.type]);
+const color = computed(
+  () =>
+    ({
+      progress: 'light-green',
+      feedback: 'light-blue',
+      dicussion: 'light-blue',
+      decision: 'light-purple',
+      blocker: 'strong-red',
+    })[props.type]
+);
 </script>
 
 <template>

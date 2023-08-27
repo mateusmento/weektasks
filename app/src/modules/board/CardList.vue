@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 defineProps<{
-  title: string,
-  issues: any[],
+  title: string;
+  issues: any[];
 }>();
 </script>
 
@@ -12,7 +12,7 @@ defineProps<{
       <div class="issues-count">{{ issues.length }} issues</div>
     </div>
     <div class="content">
-      <slot/>
+      <slot />
     </div>
   </div>
 </template>
@@ -41,7 +41,7 @@ defineProps<{
 
 .content {
   border-radius: 10px;
-  background: #F4F9FF;
+  background: #f4f9ff;
   padding: 10px;
 }
 </style>

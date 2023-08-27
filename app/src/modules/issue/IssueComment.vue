@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import { vOnClickOutside } from '@vueuse/components';
 
 const props = defineProps<{
-  comment: any
+  comment: any;
 }>();
 
 const emit = defineEmits(['remove', 'edit', 'update:comment']);
@@ -25,8 +25,8 @@ function startEditing() {
 
 function sendEditing() {
   isEditting.value = false;
-  emit('update:comment', {...props.comment, text: commentText.value});
-  emit("edit", props.comment.id, commentText.value);
+  emit('update:comment', { ...props.comment, text: commentText.value });
+  emit('edit', props.comment.id, commentText.value);
   commentText.value = '';
 }
 </script>
@@ -34,10 +34,14 @@ function sendEditing() {
 <template>
   <div class="comment card">
     <div class="top-section">
-      <b class="comment-author">{{comment.author.name}}</b>
-      <div class="dropdown" :class="{active: showOptions}" v-on-click-outside="() => showOptions = false">
+      <b class="comment-author">{{ comment.author.name }}</b>
+      <div
+        class="dropdown"
+        :class="{ active: showOptions }"
+        v-on-click-outside="() => (showOptions = false)"
+      >
         <div class="dropdown-toggle" @click="showOptions = !showOptions">
-          <el-icon><MoreFilled/></el-icon>
+          <el-icon><MoreFilled /></el-icon>
         </div>
         <ul class="dropdown-menu menu list">
           <li class="menu-item" @click="startEditing">Edit</li>

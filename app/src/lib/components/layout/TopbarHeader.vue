@@ -11,7 +11,7 @@ const router = useRouter();
 const route = useRoute();
 
 const id = computed(() => route.params.id);
-const productId = computed(() => route.path.startsWith("/products") ? +route.params.id : null);
+const productId = computed(() => (route.path.startsWith('/products') ? +route.params.id : null));
 
 const authUserStore = useAuthUserStore();
 
@@ -30,7 +30,7 @@ const authService = createAuthService();
 async function signout() {
   await authService.signout();
   authUserStore.user = null;
-  router.push("/auth/signin");
+  router.push('/auth/signin');
 }
 </script>
 
@@ -54,12 +54,17 @@ async function signout() {
         </router-link>
         <div class="dropdown" :class="{ active: showDropdown }" v-on-click-outside="hideDropdown">
           <div class="dropdown-toggle" @click="toggleDropdown">
-            <img class="user-photo" :src="`http://localhost:3000/users/${authUserStore.user?.id}/photo`" />
+            <img
+              class="user-photo"
+              :src="`http://localhost:3000/users/${authUserStore.user?.id}/photo`"
+            />
           </div>
           <ul class="dropdown-menu menu list">
             <li>Welcome, {{ authUserStore.user?.name }}</li>
             <li class="menu-item">
-              <RouterLink to="" @click="toggleDropdown" @click.prevent="signout">Sign Out</RouterLink>
+              <RouterLink to="" @click="toggleDropdown" @click.prevent="signout"
+                >Sign Out</RouterLink
+              >
             </li>
           </ul>
         </div>

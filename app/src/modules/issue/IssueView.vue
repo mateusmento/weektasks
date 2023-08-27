@@ -1,15 +1,15 @@
 <script lang="ts" setup>
 import ColorfulBar from '@/lib/components/layout/ColorfulBar.vue';
 import type { Issue } from '@/lib/models/issue.model';
-import { createIssuesRepository } from "@/lib/service/issues.service";
+import { createIssuesRepository } from '@/lib/service/issues.service';
 import { vOnClickOutside } from '@vueuse/components';
 import { computed, onMounted, reactive, ref } from 'vue';
 import IssueComments from './IssueComments.vue';
 import SubTasks from './SubTasks.vue';
 
 const props = defineProps<{
-  issueId: number,
-  issue: Issue,
+  issueId: number;
+  issue: Issue;
 }>();
 
 const emit = defineEmits(['update:issue']);
@@ -19,7 +19,7 @@ const state = reactive({ issue: null as Issue | null });
 const issue = computed({
   get: () => props.issue ?? state.issue,
   set: (value) => {
-    if (props.issue) emit("update:issue", value);
+    if (props.issue) emit('update:issue', value);
     else state.issue = value;
   },
 });
@@ -29,8 +29,7 @@ const showStatusOptions = ref(false);
 const issueRepo = createIssuesRepository();
 
 onMounted(async () => {
-  if (props.issueId)
-    issue.value = await issueRepo.fetchIssue(props.issueId);
+  if (props.issueId) issue.value = await issueRepo.fetchIssue(props.issueId);
 });
 
 function updateIssueDescription() {
@@ -47,9 +46,16 @@ function updateIssueDescription() {
         <div class="issue-title">{{ issue.title }}</div>
         <div class="row">
           <div v-if="issue.assignedTo" class="issue-assigned-to">{{ issue.assignedTo.name }}</div>
-          <div class="dropdown issue-status-dropdown" :class="{ active: showStatusOptions }"
-            v-on-click-outside="() => showStatusOptions = false">
-            <div class="issue-status" :class="issue.status" @click="showStatusOptions = !showStatusOptions">
+          <div
+            class="dropdown issue-status-dropdown"
+            :class="{ active: showStatusOptions }"
+            v-on-click-outside="() => (showStatusOptions = false)"
+          >
+            <div
+              class="issue-status"
+              :class="issue.status"
+              @click="showStatusOptions = !showStatusOptions"
+            >
               {{ issue.status }}
             </div>
             <ul class="dropdown-menu menu list">
@@ -72,8 +78,7 @@ function updateIssueDescription() {
           <div class="title">Description</div>
         </div>
         <div class="card issue-description">
-          <textarea v-model="issue.description" placeholder="Give a description...">
-          </textarea>
+          <textarea v-model="issue.description" placeholder="Give a description..."> </textarea>
           <div class="save">
             <button @click="updateIssueDescription">Save</button>
           </div>
@@ -99,7 +104,7 @@ function updateIssueDescription() {
 .issue-view {
   width: 720px;
   margin: auto;
-  background-color: #F6FAFF;
+  background-color: #f6faff;
 }
 
 .content {
@@ -191,7 +196,7 @@ function updateIssueDescription() {
   }
 
   &:focus-within {
-    box-shadow: 0 0 0 2px #8459FF;
+    box-shadow: 0 0 0 2px #8459ff;
   }
 
   &:focus-within .save {

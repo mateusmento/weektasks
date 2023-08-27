@@ -1,24 +1,26 @@
-import { axios } from "@/lib/axios";
+import { axios } from '@/lib/axios';
 
 export class DiscussionService {
   findDiscussions(productId: number, page: number, pageSize: number) {
-    return axios.get(`/products/${productId}/discussions`, { params: { page, pageSize } }).then(res => res.data);
+    return axios
+      .get(`/products/${productId}/discussions`, { params: { page, pageSize } })
+      .then((res) => res.data);
   }
 
   findDiscussion(discussionId: number) {
-    return axios.get(`/discussions/${discussionId}`).then(res => res.data);
+    return axios.get(`/discussions/${discussionId}`).then((res) => res.data);
   }
 
   createDiscussion(productId: number, discussion: any) {
-    return axios.post(`/products/${productId}/discussions`, discussion).then(res => res.data);
+    return axios.post(`/products/${productId}/discussions`, discussion).then((res) => res.data);
   }
 
   likeDiscussion(id: number) {
-    return axios.put(`/discussions/${id}/like`).then(res => res.data);
+    return axios.put(`/discussions/${id}/like`).then((res) => res.data);
   }
 
   findReplies(discussionId: number) {
-    return axios.get(`/discussions/${discussionId}/replies`).then(res => res.data);
+    return axios.get(`/discussions/${discussionId}/replies`).then((res) => res.data);
   }
 
   createReply(discussionId: number, reply: any) {
@@ -26,6 +28,6 @@ export class DiscussionService {
   }
 
   likeReply(id: number) {
-    return axios.put(`/replies/${id}/like`).then(res => res.data);
+    return axios.put(`/replies/${id}/like`).then((res) => res.data);
   }
 }

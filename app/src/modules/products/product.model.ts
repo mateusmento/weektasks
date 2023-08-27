@@ -1,4 +1,4 @@
-import type { User } from "@/lib/models/user.model";
+import type { User } from '@/lib/models/user.model';
 
 export interface Collaborator {
   id: number;

@@ -1,19 +1,17 @@
-import { axios } from "@/lib/axios";
-import type { Issue } from "@/lib/models/issue.model";
+import { axios } from '@/lib/axios';
+import type { Issue } from '@/lib/models/issue.model';
 
 export const createIssuesRepository = () => ({
   fetchIssue(id: number) {
-    return axios.get("/issues/" + id).then((res) => res.data);
+    return axios.get('/issues/' + id).then((res) => res.data);
   },
 
   findIssues(productId: number, search: string) {
-    return axios
-      .get<Issue[]>("/issues", { params: { productId, search } })
-      .then((res) => res.data);
+    return axios.get<Issue[]>('/issues', { params: { productId, search } }).then((res) => res.data);
   },
 
   patchIssue(id: number, partial: Partial<Issue>) {
-    return axios.patch("/issues/" + id, partial).then((res) => res.data);
+    return axios.patch('/issues/' + id, partial).then((res) => res.data);
   },
 
   assignUser(id: number, assigneeId: number) {
@@ -31,9 +29,7 @@ export const createIssuesRepository = () => ({
   },
 
   addComment(id: number, text: string) {
-    return axios
-      .post(`/issues/${id}/comments`, { text })
-      .then((res) => res.data);
+    return axios.post(`/issues/${id}/comments`, { text }).then((res) => res.data);
   },
 
   removeComment(id: number) {
@@ -45,11 +41,11 @@ export const createIssuesRepository = () => ({
   },
 
   createSubTask(id: number, subtask: any) {
-    return axios.post(`/issues/${id}/subtasks`, subtask).then(res => res.data);
+    return axios.post(`/issues/${id}/subtasks`, subtask).then((res) => res.data);
   },
 
   patchSubTask(subtaskId: number, subtask: any) {
-    return axios.patch(`/subtasks/${subtaskId}`, subtask).then(res => res.data);
+    return axios.patch(`/subtasks/${subtaskId}`, subtask).then((res) => res.data);
   },
 
   removeSubtask(id: number) {
@@ -58,5 +54,5 @@ export const createIssuesRepository = () => ({
 
   toggleSubtaskCompletion(id: number) {
     return axios.put(`/subtasks/${id}/completion`);
-  }
+  },
 });

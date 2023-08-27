@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-import { computed, ref, onMounted } from "vue";
-import draggable from "vuedraggable";
-import { useRoute } from "vue-router";
-import BacklogItem from "../components/BacklogItem.vue";
-import AddBacklogItem from "../components/AddBacklogItem.vue";
-import { AxiosError } from "axios";
-import { createBacklogRepository } from "@/lib/service/backlog.service";
+import { computed, ref, onMounted } from 'vue';
+import draggable from 'vuedraggable';
+import { useRoute } from 'vue-router';
+import BacklogItem from '../components/BacklogItem.vue';
+import AddBacklogItem from '../components/AddBacklogItem.vue';
+import { AxiosError } from 'axios';
+import { createBacklogRepository } from '@/lib/service/backlog.service';
 
 const route = useRoute();
 const productId = computed(() => route.params.id);
@@ -23,8 +23,7 @@ async function createBacklogItem(createItemData: any) {
     let item = await backlogRepo.value.createIssue(createItemData);
     backlogItems.value.push(item);
   } catch (ex) {
-    if (ex instanceof AxiosError)
-      alert(ex.response?.data.message);
+    if (ex instanceof AxiosError) alert(ex.response?.data.message);
   }
 }
 
@@ -34,12 +33,12 @@ async function removeIssue(id: number) {
 }
 
 function canMoveBacklogItemToSprint({ relatedContext }: any) {
-  let dropzone = relatedContext.component.$attrs["data-dropzone"];
+  let dropzone = relatedContext.component.$attrs['data-dropzone'];
   // dropzone === undefined seems to happen when moving an item inside a dropzone
-  return dropzone === undefined || dropzone === "sprint";
+  return dropzone === undefined || dropzone === 'sprint';
 }
 
-function moveBacklogItem({moved, added, removed}: any) {
+function moveBacklogItem({ moved, added, removed }: any) {
   if (added) {
     const { id } = added.element;
     const item = { issueId: id, order: added.newIndex };
@@ -70,15 +69,12 @@ function moveBacklogItem({moved, added, removed}: any) {
     >
       <template #item="{ element: backlogItem, index: i }">
         <li>
-          <BacklogItem
-            v-model:issue="backlogItems[i]"
-            @remove="removeIssue"
-          />
+          <BacklogItem v-model:issue="backlogItems[i]" @remove="removeIssue" />
         </li>
       </template>
     </draggable>
 
-    <AddBacklogItem @created="createBacklogItem"/>
+    <AddBacklogItem @created="createBacklogItem" />
   </div>
 </template>
 

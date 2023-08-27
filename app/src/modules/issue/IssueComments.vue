@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { User } from '@/lib/models/user.model';
-import { createIssuesRepository } from "@/lib/service/issues.service";
+import { createIssuesRepository } from '@/lib/service/issues.service';
 import { onMounted, ref } from 'vue';
 import CreateDiscussion from '../timeline/CreateDiscussion.vue';
 
@@ -25,13 +25,13 @@ onMounted(async () => {
 
 async function addComment() {
   const comment = await issueRepo.addComment(props.issueId, newCommentText.value);
-  comments.value.unshift(comment)
+  comments.value.unshift(comment);
   newCommentText.value = '';
 }
 
 async function removeComment(id: number) {
   issueRepo.removeComment(id);
-  comments.value = comments.value.filter(c => c.id !== id);
+  comments.value = comments.value.filter((c) => c.id !== id);
 }
 
 async function editComment(id: number, text: string) {
@@ -43,8 +43,13 @@ async function editComment(id: number, text: string) {
   <div class="issue-comments flex-vert-lg">
     <div class="section-title"><b>Comments</b></div>
     <CreateDiscussion @created="addComment" />
-    <IssueComment v-for="(comment, i) of comments" :key="comment.id" v-model:comment="comments[i]" @remove="removeComment"
-      @edit="editComment" />
+    <IssueComment
+      v-for="(comment, i) of comments"
+      :key="comment.id"
+      v-model:comment="comments[i]"
+      @remove="removeComment"
+      @edit="editComment"
+    />
   </div>
 </template>
 

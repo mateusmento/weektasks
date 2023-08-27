@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import { ref, onMounted } from "vue";
-import { createProductsRepository } from "@/lib/service/products.service";
-import type { Product } from "./product.model";
+import { ref, onMounted } from 'vue';
+import { createProductsRepository } from '@/lib/service/products.service';
+import type { Product } from './product.model';
 
 const products = ref<Product[]>([]);
-const productName = ref("");
+const productName = ref('');
 
 const productsRepo = createProductsRepository();
 
@@ -25,11 +25,11 @@ async function createProduct() {
       </div>
       <ul class="product-list list menu">
         <li class="menu-item" v-for="product in products" :key="product.id">
-          <router-link :to="`/products/${product.id}/backlog`">{{product.name}}</router-link>
+          <router-link :to="`/products/${product.id}/backlog`">{{ product.name }}</router-link>
         </li>
       </ul>
       <form class="form-group" @submit.prevent="createProduct">
-        <input class="small" v-model="productName" placeholder="Product's name..."/>
+        <input class="small" v-model="productName" placeholder="Product's name..." />
         <button type="submit">Create</button>
       </form>
     </div>

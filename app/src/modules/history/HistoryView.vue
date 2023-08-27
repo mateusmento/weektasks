@@ -2,7 +2,7 @@
   <div class="history-view">
     <ul>
       <li class="past-sprint" v-for="(sprint, i) of pastSprints" :key="sprint.id">
-        <Sprint v-model:sprint="pastSprints[i]" @remove="removeSprint"/>
+        <Sprint v-model:sprint="pastSprints[i]" @remove="removeSprint" />
       </li>
     </ul>
   </div>
@@ -15,7 +15,7 @@ import type { Sprint as ISprint } from '@/lib/models/sprint.model';
 import Sprint from '../backlog/sprint/Sprint.vue';
 
 const props = defineProps<{
-  id: string
+  id: string;
 }>();
 
 const sprintsRepo = createSprintsRepository();
