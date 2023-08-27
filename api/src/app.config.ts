@@ -12,6 +12,9 @@ export class AppConfig {
   POSTGRES_USER: string = '';
   POSTGRES_PASSWORD: string = '';
   REDIS_URL: string = '';
+  JWT_SECRET: string = '';
+  JWT_EXPIRES_IN: string = '';
+  PASSWORD_ROUNDS: string = '';
 
   constructor(private config: ConfigService) {
     const keys = Object.getOwnPropertyNames(this).filter(

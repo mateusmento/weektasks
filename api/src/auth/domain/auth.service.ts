@@ -8,10 +8,10 @@ import { CredentialEntity } from './credential.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
-import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { UserEntity } from './user.entity';
 import { CreateCredentialDto } from '../application/dtos/create-credential.dto';
+import { AppConfig } from 'src/app.config';
 
 @Injectable()
 export class AuthService {
@@ -20,12 +20,12 @@ export class AuthService {
     private credentialRepo: Repository<CredentialEntity>,
     @InjectRepository(UserEntity)
     private userRepo: Repository<UserEntity>,
-    private config: ConfigService,
+    private config: AppConfig,
     private jwtService: JwtService
   ) {}
 
   async createCredential(data: CreateCredentialDto) {
-    const salt = await bcrypt.genSalt(+this.config.get('PASSWORD_ROUNDS'));
+    const salt = await bcrypt.genSalt(+this.config.PASSWORD_ROUNDS);
     data.password = await bcrypt.hash(data.password, salt);
     try {
       return await this.userRepo.save({
