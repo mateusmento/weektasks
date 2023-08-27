@@ -25,8 +25,6 @@ import { ProfileModule } from './profile/profile.module';
     TypeOrmModule.forRootAsync({
       useFactory: () => ({
         ...typeormConfig,
-        synchronize: true,
-        autoLoadEntities: true,
       }),
       dataSourceFactory: async (config) =>
         addTransactionalDataSource(new DataSource(config)),
