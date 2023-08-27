@@ -209,8 +209,8 @@ export class MigrationInitialEntities1693152032263
             CREATE INDEX "IDX_02845dd9703dc4d00a8a8834fd" ON "contact_peers" ("users_id")
         `);
     await queryRunner.query(`
-            ALTER TABLE "auth"."users"
-            ADD CONSTRAINT "FK_23b9db2106e4f409452018f7a76" FOREIGN KEY ("credential_id") REFERENCES "auth"."credentials"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+            ALTER TABLE "users"
+            ADD CONSTRAINT "FK_23b9db2106e4f409452018f7a76" FOREIGN KEY ("credential_id") REFERENCES "credentials"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
         `);
     await queryRunner.query(`
             ALTER TABLE "sub_task"
@@ -218,7 +218,7 @@ export class MigrationInitialEntities1693152032263
         `);
     await queryRunner.query(`
             ALTER TABLE "issue"
-            ADD CONSTRAINT "FK_f85c57d1ef3145a5571679ced5c" FOREIGN KEY ("assigned_to_id") REFERENCES "auth"."users"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+            ADD CONSTRAINT "FK_f85c57d1ef3145a5571679ced5c" FOREIGN KEY ("assigned_to_id") REFERENCES "users"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
         `);
     await queryRunner.query(`
             ALTER TABLE "meetings"
@@ -226,7 +226,7 @@ export class MigrationInitialEntities1693152032263
         `);
     await queryRunner.query(`
             ALTER TABLE "meeting_attendees"
-            ADD CONSTRAINT "FK_edda203440a111ad016876f8737" FOREIGN KEY ("user_id") REFERENCES "auth"."users"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+            ADD CONSTRAINT "FK_edda203440a111ad016876f8737" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
         `);
     await queryRunner.query(`
             ALTER TABLE "meeting_attendees"
@@ -234,7 +234,7 @@ export class MigrationInitialEntities1693152032263
         `);
     await queryRunner.query(`
             ALTER TABLE "messages"
-            ADD CONSTRAINT "FK_c9825229e2715f413a5b9b78d29" FOREIGN KEY ("speaker_id") REFERENCES "auth"."users"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+            ADD CONSTRAINT "FK_c9825229e2715f413a5b9b78d29" FOREIGN KEY ("speaker_id") REFERENCES "users"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
         `);
     await queryRunner.query(`
             ALTER TABLE "messages"
@@ -246,15 +246,15 @@ export class MigrationInitialEntities1693152032263
         `);
     await queryRunner.query(`
             ALTER TABLE "issue_comment"
-            ADD CONSTRAINT "FK_029ff3bffa6d5a09b0a37b9a072" FOREIGN KEY ("author_id") REFERENCES "auth"."users"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+            ADD CONSTRAINT "FK_029ff3bffa6d5a09b0a37b9a072" FOREIGN KEY ("author_id") REFERENCES "users"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
         `);
     await queryRunner.query(`
             ALTER TABLE "product"
-            ADD CONSTRAINT "FK_c2eedda8bf0194e1fb299ee7424" FOREIGN KEY ("owner_id") REFERENCES "auth"."users"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+            ADD CONSTRAINT "FK_c2eedda8bf0194e1fb299ee7424" FOREIGN KEY ("owner_id") REFERENCES "users"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
         `);
     await queryRunner.query(`
             ALTER TABLE "collaborator"
-            ADD CONSTRAINT "FK_2b516ff163b9e85cb9adecc76c8" FOREIGN KEY ("user_id") REFERENCES "auth"."users"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+            ADD CONSTRAINT "FK_2b516ff163b9e85cb9adecc76c8" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
         `);
     await queryRunner.query(`
             ALTER TABLE "collaborator"
@@ -262,11 +262,11 @@ export class MigrationInitialEntities1693152032263
         `);
     await queryRunner.query(`
             ALTER TABLE "discussion"
-            ADD CONSTRAINT "FK_ece98699d7f7ab191a54202b6cb" FOREIGN KEY ("author_id") REFERENCES "auth"."users"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+            ADD CONSTRAINT "FK_ece98699d7f7ab191a54202b6cb" FOREIGN KEY ("author_id") REFERENCES "users"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
         `);
     await queryRunner.query(`
             ALTER TABLE "reply"
-            ADD CONSTRAINT "FK_0d98e8ade07b472e8af8b856e1b" FOREIGN KEY ("author_id") REFERENCES "auth"."users"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+            ADD CONSTRAINT "FK_0d98e8ade07b472e8af8b856e1b" FOREIGN KEY ("author_id") REFERENCES "users"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
         `);
     await queryRunner.query(`
             ALTER TABLE "assignee"
@@ -274,7 +274,7 @@ export class MigrationInitialEntities1693152032263
         `);
     await queryRunner.query(`
             ALTER TABLE "assignee"
-            ADD CONSTRAINT "FK_756526b664de47144ce637e63fc" FOREIGN KEY ("user_id") REFERENCES "auth"."users"("id") ON DELETE CASCADE ON UPDATE CASCADE
+            ADD CONSTRAINT "FK_756526b664de47144ce637e63fc" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE
         `);
     await queryRunner.query(`
             ALTER TABLE "contact_peers"
@@ -282,7 +282,7 @@ export class MigrationInitialEntities1693152032263
         `);
     await queryRunner.query(`
             ALTER TABLE "contact_peers"
-            ADD CONSTRAINT "FK_02845dd9703dc4d00a8a8834fd8" FOREIGN KEY ("users_id") REFERENCES "auth"."users"("id") ON DELETE CASCADE ON UPDATE CASCADE
+            ADD CONSTRAINT "FK_02845dd9703dc4d00a8a8834fd8" FOREIGN KEY ("users_id") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE
         `);
   }
 
@@ -342,7 +342,7 @@ export class MigrationInitialEntities1693152032263
             ALTER TABLE "sub_task" DROP CONSTRAINT "FK_7240395fed5f911fefd409d1220"
         `);
     await queryRunner.query(`
-            ALTER TABLE "auth"."users" DROP CONSTRAINT "FK_23b9db2106e4f409452018f7a76"
+            ALTER TABLE "users" DROP CONSTRAINT "FK_23b9db2106e4f409452018f7a76"
         `);
     await queryRunner.query(`
             DROP INDEX "public"."IDX_02845dd9703dc4d00a8a8834fd"
@@ -414,10 +414,10 @@ export class MigrationInitialEntities1693152032263
             DROP TABLE "sub_task"
         `);
     await queryRunner.query(`
-            DROP TABLE "auth"."credentials"
+            DROP TABLE "credentials"
         `);
     await queryRunner.query(`
-            DROP TABLE "auth"."users"
+            DROP TABLE "users"
         `);
   }
 }
