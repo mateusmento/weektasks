@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { AppConfig } from './app.config';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -17,6 +17,7 @@ import { SprintsModule } from './sprints/sprints.module';
 import { TimelineModule } from './timeline/timeline.module';
 import { ProfileModule } from './profile/profile.module';
 
+@Global()
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -42,5 +43,6 @@ import { ProfileModule } from './profile/profile.module';
     TimelineModule,
   ],
   providers: [AppConfig],
+  exports: [AppConfig],
 })
 export class AppModule {}
