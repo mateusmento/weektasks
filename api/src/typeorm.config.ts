@@ -4,6 +4,7 @@ import { AppConfig } from './app.config';
 import { ConfigService } from '@nestjs/config';
 import { existsSync, mkdirSync, readdirSync } from 'fs';
 import * as path from 'path';
+import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
 dotenv();
 
@@ -18,7 +19,7 @@ export const typeormConfig: DataSourceOptions = {
   password: config.POSTGRES_PASSWORD,
   logging: 'all',
   logger: 'advanced-console',
-  entities: [],
+  namingStrategy: new SnakeNamingStrategy(),
   migrations: migrations(),
 };
 

@@ -18,7 +18,7 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "typeorm": "typeorm-ts-node-commonjs",
+    "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "migration:generate": "npm run typeorm migration:generate -- -p -d ./src/typeorm.config.ts ./migrations/Migration$npm_config_name",
     "migration:run": "npm run typeorm migration:run -- -d ./src/typeorm.config.ts",
     "migration:revert": "npm run typeorm migration:revert -- -d ./src/typeorm.config.ts"
@@ -56,6 +56,7 @@
     "rxjs": "^7.8.1",
     "socket.io": "^4.7.2",
     "typeorm": "^0.3.17",
+    "typeorm-naming-strategies": "^4.1.0",
     "typeorm-transactional": "^0.4.1"
   },
   "devDependencies": {
