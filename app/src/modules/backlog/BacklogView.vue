@@ -28,6 +28,7 @@ import BacklogSection from './backlog/BacklogSection.vue';
   flex-direction: column;
   gap: 20px;
   padding-top: 60px;
+  min-width: 650px;
 }
 
 .product-backlog-section {
