@@ -1,29 +1,29 @@
 <script lang="ts" setup>
-import { ref, computed } from "vue";
-import type { Sprint } from "@/lib/models/sprint.model";
-import WkEditable from "@/lib/components/form/WkEditable.vue";
+import { ref, computed } from 'vue';
+import type { Sprint } from '@/lib/models/sprint.model';
+import WkEditable from '@/lib/components/form/WkEditable.vue';
 import SprintIssues from './SprintIssues.vue';
-import { createSprintsRepository } from "@/lib/service/sprints.service";
-import { AxiosError } from "axios";
-import IconArrowDown from "@/lib/components/icons/IconArrowDown.vue";
-import IconArrowUp from "@/lib/components/icons/IconArrowDown.vue";
-import IconTrash from "@/lib/components/icons/IconTrash.vue";
-import IconEdit from "@/lib/components/icons/IconEdit.vue";
-import moment from "moment";
+import { createSprintsRepository } from '@/lib/service/sprints.service';
+import { AxiosError } from 'axios';
+import IconArrowDown from '@/lib/components/icons/IconArrowDown.vue';
+import IconArrowUp from '@/lib/components/icons/IconArrowDown.vue';
+import IconTrash from '@/lib/components/icons/IconTrash.vue';
+import IconEdit from '@/lib/components/icons/IconEdit.vue';
+import moment from 'moment';
 
 let props = defineProps<{
   sprint: Sprint;
 }>();
 
-let emit = defineEmits(["remove", "update:sprint"]);
+let emit = defineEmits(['remove', 'update:sprint']);
 
 let sprintTitle = computed({
   get: () => props.sprint.title,
-  set: (title) => emit("update:sprint", { ...props.sprint, title }),
+  set: (title) => emit('update:sprint', { ...props.sprint, title }),
 });
 
 function updateSprint(patch: Partial<Sprint>) {
-  emit("update:sprint", { ...props.sprint, ...patch });
+  emit('update:sprint', { ...props.sprint, ...patch });
 }
 
 let hideIssues = ref(false);
@@ -40,7 +40,7 @@ async function updateSprintTitle() {
 
 async function removeSprint(id: number) {
   await sprintsRepo.removeSprint(id);
-  emit("remove", id);
+  emit('remove', id);
 }
 
 async function startSprint(sprintId: number) {
@@ -48,10 +48,8 @@ async function startSprint(sprintId: number) {
     const sprint = await sprintsRepo.startSprint(sprintId);
     updateSprint({ hasntStarted: sprint.hasntStarted, isOnGoing: sprint.isOnGoing });
   } catch (ex) {
-    if (ex instanceof AxiosError)
-      alert(ex.response?.data.message);
-    else
-      throw ex;
+    if (ex instanceof AxiosError) alert(ex.response?.data.message);
+    else throw ex;
   }
 }
 
@@ -60,10 +58,8 @@ async function endSprint(sprintId: number) {
     const sprint = await sprintsRepo.endSprint(sprintId);
     updateSprint({ isOnGoing: sprint.isOnGoing, hasEnded: sprint.hasEnded });
   } catch (ex) {
-    if (ex instanceof AxiosError)
-      alert(ex.response?.data.message);
-    else
-      throw ex;
+    if (ex instanceof AxiosError) alert(ex.response?.data.message);
+    else throw ex;
   }
 }
 </script>
@@ -90,24 +86,31 @@ async function endSprint(sprintId: number) {
       <IconTrash @click="removeSprint(sprint.id)" title="Delete sprint" />
 
       <span class="period ml-2">
-        {{ moment.utc(sprint.startedAt).format("MMM DD") }}
+        {{ moment.utc(sprint.startedAt).format('MMM DD') }}
         to
-        {{ moment.utc(sprint.endedAt).format("MMM DD") }}
+        {{ moment.utc(sprint.endedAt).format('MMM DD') }}
       </span>
 
       <div class="spacer"></div>
 
-      <button v-if="sprint.hasntStarted" class="start-sprint" pill @click="startSprint(sprint.id)">Start Sprint</button>
-      <button v-if="sprint.isOnGoing" class="start-sprint" pill @click="endSprint(sprint.id)">End Sprint</button>
+      <button v-if="sprint.hasntStarted" class="start-sprint" pill @click="startSprint(sprint.id)">
+        Start Sprint
+      </button>
+      <button v-if="sprint.isOnGoing" class="start-sprint" pill @click="endSprint(sprint.id)">
+        End Sprint
+      </button>
 
       <div class="ml-4" @click="hideIssues = !hideIssues">
         <IconArrowDown v-if="hideIssues" />
         <IconArrowUp v-else />
       </div>
-
     </div>
 
-    <SprintIssues v-if="!hideIssues" :sprint="sprint" @update:sprint="emit('update:sprint', $event)" />
+    <SprintIssues
+      v-if="!hideIssues"
+      :sprint="sprint"
+      @update:sprint="emit('update:sprint', $event)"
+    />
   </div>
 </template>
 
@@ -134,7 +137,7 @@ async function endSprint(sprintId: number) {
 .start-sprint {
   display: block;
   margin-left: auto;
-  background: #773BC3;
+  background: #773bc3;
   border-radius: 5px;
   padding: 5px;
   color: white;
@@ -153,7 +156,7 @@ async function endSprint(sprintId: number) {
   padding: 5px;
   gap: 2px;
 
-  background: #F6FAFF;
+  background: #f6faff;
   border-radius: 8px;
 }
 </style>
