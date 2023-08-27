@@ -1,0 +1,202 @@
+.icon
+  display: flex
+  justify-content: center
+  align-items: center
+  width: fit-content
+
+.dropdown
+  position: relative
+  .dropdown-menu
+    display: block
+    position: absolute
+    z-index: 1
+    box-shadow: 0 0px 4px #ccc
+  &:not(.active) .dropdown-menu
+    display: none
+
+ul.list
+  display: block
+  background: white
+  border: 1px solid #ccc
+  border-radius: 5px
+  // overflow: auto
+  & > li
+    padding: 10px 15px
+  & > li:not(:last-of-type)
+    border-bottom: 1px solid #ccc
+
+.menu
+  white-space: nowrap
+
+  & > .menu-item
+    padding: 10px 15px
+    cursor: pointer
+    & > a
+      display: block
+      width: 100%
+    &:hover
+      background: #eee
+
+.combo-box
+  input
+    z-index: 2
+  .menu
+    width: 100%
+    border-top: none
+
+.form-group
+  display: flex
+
+  input
+    border-top-right-radius: 0
+    border-bottom-right-radius: 0
+
+  button
+    border-left: none
+    border-top-left-radius: 0
+    border-bottom-left-radius: 0
+
+  .menu
+    border-top: none
+    border-top-left-radius: 0
+    border-top-right-radius: 0
+
+  .combo-box.active input
+    border-bottom-left-radius: 0
+
+.hide-text-overflow
+  overflow: hidden
+  text-overflow: ellipsis
+
+label
+  display: block
+  margin-left: 15px
+  margin-bottom: 5px
+
+input, select, textarea
+  display: inline-block
+  width: 100%
+  color: #777
+
+input, select, textarea, button
+  padding: 10px 15px
+  border: 1px solid #ccc
+  border-radius: 5px
+  font-size: .9rem
+
+:is(input, select, textarea, button, .list > li).small
+  padding: 5px 10px
+
+.card
+  padding: 10px
+  border-radius: 10px
+  background: #fff
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.25)
+
+.card-lg
+  border-radius: 20px
+  padding: 20px
+
+.p-sm
+  padding: 5px
+.p-md
+  padding: 10px
+.p-lg
+  padding: 20px
+
+.m-auto
+  margin: auto
+
+.container
+  margin-left: auto
+  margin-right: auto
+  width: 1000px
+.content
+  display: flex
+  gap: 10px
+  margin-top: 100px
+  margin-bottom: 20px
+.content.vertical
+  flex-direction: column
+.content.gap-lg
+  gap: 20px
+
+button
+  display: inline-block
+  border: none
+  cursor: pointer
+
+button[pill]
+  border-radius: 30px
+  padding: 10px 15px
+
+button.purple
+  background-color: #D4AAFF
+  color: #561497
+
+button[hover]
+  transition: background-color 100ms
+
+button[hover]:not(:hover)
+  background-color: transparent
+
+:root
+  --light-purple-bg: #E5CCFF
+  --light-purple-font: #AE5DFF
+  --light-green-bg: #C3FFAE
+  --light-green-font: #2EB500
+  --light-blue-bg: #CEE2FF
+  --light-blue-font: #6070FF
+  --light-red-bg: #FFAEAE
+  --light-red-font: #CB1414
+  --light-orange-bg: #FFD7A8
+  --light-orange-font: #9A5D16
+  --strong-purple-bg: #AE5DFF
+  --strong-green-bg: #85FF5A
+  --strong-blue-bg: #5D9EFF
+  --strong-red-bg: #FF5B5B
+  --strong-orange-bg: #FFB966
+
+.badge
+  display: block
+  width: fit-content
+  padding: 2px 7px
+  background: #ccc
+  color: #777
+  border-radius: 20px
+  font-size: 12px
+
+.pill
+  border-radius: 100px
+
+.light-purple
+  background-color: var(--light-purple-bg)
+  color: var(--light-purple-font)
+.light-green
+  background-color: var(--light-green-bg)
+  color: var(--light-green-font)
+.light-blue
+  background-color: var(--light-blue-bg)
+  color: var(--light-blue-font)
+.light-red
+  background-color: var(--light-red-bg)
+  color: var(--light-red-font)
+.light-orange
+  background-color: var(--light-orange-bg)
+  color: var(--light-orange-font)
+
+.strong-purple
+  background-color: var(--strong-purple-bg)
+  color: #fff
+.strong-green
+  background-color: var(--strong-green-bg)
+  color: #fff
+.strong-blue
+  background-color: var(--strong-blue-bg)
+  color: #fff
+.strong-red
+  background-color: var(--strong-red-bg)
+  color: #fff
+.strong-orange
+  background-color: var(--strong-orange-bg)
+  color: #fff

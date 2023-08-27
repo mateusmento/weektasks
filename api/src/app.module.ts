@@ -23,7 +23,11 @@ import { ProfileModule } from './profile/profile.module';
       isGlobal: true,
     }),
     TypeOrmModule.forRootAsync({
-      useFactory: () => typeormConfig,
+      useFactory: () => ({
+        ...typeormConfig,
+        synchronize: true,
+        autoLoadEntities: true,
+      }),
       dataSourceFactory: async (config) =>
         addTransactionalDataSource(new DataSource(config)),
     }),

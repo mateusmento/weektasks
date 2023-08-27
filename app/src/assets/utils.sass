@@ -1,0 +1,42 @@
+.flex-horz
+  display: flex
+  flex-direction: row
+
+.flex-vert
+  display: flex
+  flex-direction: column
+
+.gap-sm
+  gap: 5px
+.gap-md
+  gap: 10px
+.gap-lg
+  gap: 20px
+
+.spacer
+  flex: 1
+
+.ml-1
+  margin-left: 5px
+
+.ml-2
+  margin-left: 10px
+
+.ml-4
+  margin-left: 20px
+
+.flex-vert-md
+  @extend .flex-vert
+  @extend .gap-md
+
+.flex-horz-md
+  @extend .flex-horz
+  @extend .gap-md
+
+.flex-vert-lg
+  @extend .flex-vert
+  @extend .gap-lg
+
+.flex-horz-lg
+  @extend .flex-horz
+  @extend .gap-lg

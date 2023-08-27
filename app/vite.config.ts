@@ -8,7 +8,7 @@ import vueJsx from '@vitejs/plugin-vue-jsx';
 export default defineConfig({
   plugins: [
     VueRouter({
-      dts: './definitions/typed-router.d.ts',
+      dts: './declarations/typed-router.d.ts',
     }),
     vue(),
     vueJsx(),

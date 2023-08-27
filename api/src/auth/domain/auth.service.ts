@@ -33,6 +33,7 @@ export class AuthService {
         credential: data,
       });
     } catch (ex) {
+      console.error(ex);
       throw new ConflictException('Username is being used by another user');
     }
   }
