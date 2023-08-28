@@ -90,7 +90,6 @@ function moveBacklogItem({ moved, added, removed }: any) {
   display: flex;
   flex-direction: column;
   gap: 2px;
-  margin-bottom: 5px;
 }
 
 .backlog-title {
