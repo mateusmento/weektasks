@@ -7,7 +7,6 @@ import { FindProductQuery } from 'src/products/features/find-product.query';
 import { Repository } from 'typeorm';
 import { Transactional } from 'typeorm-transactional';
 import { Issue } from '../../entities/issue.entity';
-import { EventEmitter2 } from '@nestjs/event-emitter';
 
 export class CreateIssueCommand {
   @IsNotEmpty()
@@ -25,21 +24,12 @@ export class CreateIssueCommand {
   }
 }
 
-export class IssueCreated {
-  issue: Issue;
-
-  constructor(partial: Partial<IssueCreated> = {}) {
-    patchObject(this, partial);
-  }
-}
-
 @CommandHandler(CreateIssueCommand)
 export class CreateIssueHandler implements ICommandHandler<CreateIssueCommand> {
   constructor(
     @InjectRepository(Issue)
     private issueRepo: Repository<Issue>,
-    private queryBus: QueryBus,
-    private emitter: EventEmitter2
+    private queryBus: QueryBus
   ) {}
 
   @Transactional()
@@ -54,8 +44,6 @@ export class CreateIssueHandler implements ICommandHandler<CreateIssueCommand> {
       where: { id: issue.id },
       relations: { assignees: true, subtasks: true },
     });
-    const event = new IssueCreated({ issue });
-    await this.emitter.emitAsync(IssueCreated.name, event);
     return issue;
   }
 }
