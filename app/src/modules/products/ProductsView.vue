@@ -1,38 +1,58 @@
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, reactive } from 'vue';
 import { createProductsRepository } from '@/lib/service/products.service';
 import type { Product } from './product.model';
 
-const products = ref<Product[]>([]);
+const products = reactive({
+  own: [] as Product[],
+  collaborating: [] as Product[],
+});
+
 const productName = ref('');
 
 const productsRepo = createProductsRepository();
 
 onMounted(async () => {
-  products.value = await productsRepo.fetchProducts();
+  const { own, collaborating } = await productsRepo.fetchProducts();
+  products.own = own;
+  products.collaborating = collaborating;
 });
 
 async function createProduct() {
   const product = await productsRepo.createProduct({ name: productName.value });
-  products.value.push(product);
+  products.own.push(product);
 }
 </script>
 
 <template>
   <main class="products-view">
-    <div>
-      <div class="page-title">
-        <b>Your Products</b>
+    <div class="products">
+      <div>
+        <div class="page-title">
+          <b>Your Products</b>
+        </div>
+        <ul v-if="products.own.length > 0" class="product-list list menu">
+          <li class="menu-item" v-for="product in products.own" :key="product.id">
+            <router-link :to="`/products/${product.id}/backlog`">{{ product.name }}</router-link>
+          </li>
+        </ul>
+
+        <form class="form-group" @submit.prevent="createProduct">
+          <input class="small" v-model="productName" placeholder="Product's name..." />
+          <button type="submit">Create</button>
+        </form>
       </div>
-      <ul class="product-list list menu">
-        <li class="menu-item" v-for="product in products" :key="product.id">
-          <router-link :to="`/products/${product.id}/backlog`">{{ product.name }}</router-link>
-        </li>
-      </ul>
-      <form class="form-group" @submit.prevent="createProduct">
-        <input class="small" v-model="productName" placeholder="Product's name..." />
-        <button type="submit">Create</button>
-      </form>
+
+      <div>
+        <div class="page-title">
+          <b>Collaborated Products</b>
+        </div>
+        <ul v-if="products.collaborating.length > 0" class="product-list list menu">
+          <li class="menu-item" v-for="product in products.collaborating" :key="product.id">
+            <router-link :to="`/products/${product.id}/backlog`">{{ product.name }}</router-link>
+          </li>
+        </ul>
+      </div>
     </div>
   </main>
 </template>
@@ -43,6 +63,12 @@ async function createProduct() {
   justify-content: center;
   align-items: center;
   min-height: calc(100vh - 60px);
+}
+
+.products {
+  display: flex;
+  // flex-direction: column;
+  gap: 40px;
 }
 
 .page-title {

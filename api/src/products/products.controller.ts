@@ -29,7 +29,7 @@ export class ProductsController {
   @Get()
   findProducts(@AuthUser() user: any) {
     const query = patchObject(new FindProductsQuery(), {
-      owner: user,
+      userId: user.id,
     });
     return this.queryBus.execute(query);
   }

@@ -1,11 +1,10 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserEntity } from 'src/auth/domain/user.entity';
 import { Repository } from 'typeorm';
 import { Product } from '../entities/product.entity';
 
 export class FindProductsQuery {
-  owner: UserEntity;
+  userId: number;
 }
 
 @QueryHandler(FindProductsQuery)
@@ -15,9 +14,16 @@ export class FindProductsHandler implements IQueryHandler<FindProductsQuery> {
     private productRepo: Repository<Product>
   ) {}
 
-  async execute({ owner }: FindProductsQuery): Promise<Product[]> {
-    return this.productRepo.find({
-      where: { ownerId: owner.id },
-    });
+  async execute({ userId }: FindProductsQuery) {
+    const products = await this.productRepo
+      .createQueryBuilder('p')
+      .innerJoin('p.collaborators', 'c')
+      .where('c.userId = :userId or p.ownerId = :userId', { userId })
+      .getMany();
+
+    return {
+      own: products.filter((p) => p.ownerId === userId),
+      collaborating: products.filter((p) => p.ownerId !== userId),
+    };
   }
 }

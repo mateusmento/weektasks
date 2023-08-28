@@ -1,9 +1,14 @@
 import { axios } from '@/lib/axios';
 import type { Collaborator, Product } from '@/modules/products/product.model';
 
+type FindProductsResult = {
+  own: Product[];
+  collaborating: Product[];
+};
+
 export const createProductsRepository = () => ({
   fetchProducts() {
-    return axios.get<Product[]>('/products').then((res) => res.data);
+    return axios.get<FindProductsResult>('/products').then((res) => res.data);
   },
 
   createProduct(product: Partial<Product>) {
