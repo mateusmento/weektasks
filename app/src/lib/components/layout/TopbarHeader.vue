@@ -6,14 +6,16 @@ import { computed, ref } from 'vue';
 import { RouterLink, useRoute, useRouter } from 'vue-router';
 import ColorfulBar from './ColorfulBar.vue';
 import SearchBar from './SearchBar.vue';
+import { useActiveProductStore } from '@/lib/stores/product.store';
 
 const router = useRouter();
 const route = useRoute();
 
+const authUserStore = useAuthUserStore();
+const activeProductStore = useActiveProductStore();
+
 const id = computed(() => route.params.id);
 const productId = computed(() => (route.path.startsWith('/products') ? +route.params.id : null));
-
-const authUserStore = useAuthUserStore();
 
 const showDropdown = ref(false);
 
@@ -50,7 +52,7 @@ async function signout() {
 
       <div class="right-side">
         <router-link to="/products">
-          <button class="purple" pill>Weektasks</button>
+          <button class="purple" pill>{{ activeProductStore.product?.name }}</button>
         </router-link>
         <div class="dropdown" :class="{ active: showDropdown }" v-on-click-outside="hideDropdown">
           <div class="dropdown-toggle" @click="toggleDropdown">
@@ -111,3 +113,4 @@ nav {
   right: 0
   margin-top: 10px
 </style>
+@/lib/stores/active0product.store
