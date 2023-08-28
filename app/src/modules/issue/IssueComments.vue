@@ -3,6 +3,7 @@ import type { User } from '@/lib/models/user.model';
 import { createIssuesRepository } from '@/lib/service/issues.service';
 import { onMounted, ref } from 'vue';
 import CreateDiscussion from '../timeline/CreateDiscussion.vue';
+import IssueComment from './IssueComment.vue';
 
 const props = defineProps<{
   issueId: number;
