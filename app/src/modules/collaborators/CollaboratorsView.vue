@@ -6,6 +6,7 @@ import { createUsersRepository } from '@/lib/service/users.service';
 import { createProductsRepository } from '@/lib/service/products.service';
 import type { Collaborator } from '../products/product.model';
 import type { User } from '@/lib/models/user.model';
+import { envs } from '@/lib/utils/envs';
 
 const route = useRoute();
 
@@ -50,7 +51,7 @@ async function removeCollaborator(collabId: number) {
       <b class="page-title">Collaborators</b>
       <ul class="collaborators-list list">
         <li v-for="collab in collaborators" :key="collab.id">
-          <img class="user-photo" :src="`http://localhost:3000/users/${collab.user.id}/photo`" />
+          <img class="user-photo" :src="`${envs.API_BASE_URL}/users/${collab.user.id}/photo`" />
 
           <div class="collaborator-name">{{ collab.user.name }}</div>
           <div>

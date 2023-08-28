@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { vOnClickOutside } from '@vueuse/components';
+import { envs } from '@/lib/utils/envs';
 
 const props = defineProps<{
   comment: any;
@@ -34,7 +35,7 @@ function sendEditing() {
 <template>
   <div class="comment card">
     <div class="top-section">
-      <img class="user-photo" :src="`http://localhost:3000/users/${comment.author.id}/photo`" />
+      <img class="user-photo" :src="`${envs.API_BASE_URL}/users/${comment.author.id}/photo`" />
       <div class="comment-author">{{ comment.author.name }}</div>
       <div
         class="dropdown"

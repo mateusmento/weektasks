@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { envs } from '@/lib/utils/envs';
 import BacklogItems from './BacklogItems.vue';
 import { useActiveProductStore } from '@/lib/stores/active-product.store';
 
@@ -20,7 +21,7 @@ const activeProductStore = useActiveProductStore();
             v-for="collaborator of activeProductStore.product?.collaborators"
             :key="collaborator.id"
             class="user-photo"
-            :src="`http://localhost:3000/users/${collaborator.user.id}/photo`"
+            :src="`${envs.API_BASE_URL}/users/${collaborator.user.id}/photo`"
           />
         </div>
       </div>

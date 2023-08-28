@@ -1,6 +1,7 @@
 import Axios from 'axios';
+import { envs } from './utils/envs';
 
 export const axios = Axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL,
+  baseURL: envs.API_BASE_URL,
   withCredentials: true,
 });

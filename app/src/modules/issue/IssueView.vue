@@ -7,6 +7,7 @@ import { computed, onMounted, reactive, ref } from 'vue';
 import IssueComments from './IssueComments.vue';
 import SubTasks from './SubTasks.vue';
 import { vTextareaAutosize } from '@/lib/directives/textarea-autosize.directive';
+import { envs } from '@/lib/utils/envs';
 
 const props = defineProps<{
   issueId?: number;
@@ -51,7 +52,7 @@ function updateIssueDescription() {
               v-for="assignee of issue.assignees"
               :key="assignee.id"
               class="user-photo"
-              :src="`http://localhost:3000/users/${assignee.id}/photo`"
+              :src="`${envs.API_BASE_URL}/users/${assignee.id}/photo`"
             />
           </div>
           <div

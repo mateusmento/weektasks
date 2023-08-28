@@ -7,6 +7,7 @@ import { RouterLink, useRoute, useRouter } from 'vue-router';
 import ColorfulBar from './ColorfulBar.vue';
 import SearchBar from './SearchBar.vue';
 import { useActiveProductStore } from '@/lib/stores/active-product.store';
+import { envs } from '@/lib/utils/envs';
 
 const router = useRouter();
 const route = useRoute();
@@ -58,7 +59,7 @@ async function signout() {
           <div class="dropdown-toggle" @click="toggleDropdown">
             <img
               class="user-photo"
-              :src="`http://localhost:3000/users/${authUserStore.user?.id}/photo`"
+              :src="`${envs.API_BASE_URL}/users/${authUserStore.user?.id}/photo`"
             />
           </div>
           <ul class="dropdown-menu menu list">

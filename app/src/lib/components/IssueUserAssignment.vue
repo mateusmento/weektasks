@@ -8,6 +8,7 @@ import { createIssuesRepository } from '../service/issues.service';
 import type { User } from '../models/user.model';
 import type { Issue } from '../models/issue.model';
 import IconTrash from './icons/IconTrash.vue';
+import { envs } from '../utils/envs';
 
 let props = defineProps<{
   issue: Issue;
@@ -77,7 +78,7 @@ async function removeAssignee(assigneeId: number) {
       </div>
       <div class="flex-vert gap-md">
         <div v-for="assignee of issue.assignees" :key="assignee.id" class="flex-horz gap-md">
-          <img class="assignee-photo" :src="`http://localhost:3000/users/${assignee.id}/photo`" />
+          <img class="assignee-photo" :src="`${envs.API_BASE_URL}/users/${assignee.id}/photo`" />
           {{ assignee.name }}
           <IconTrash @click="removeAssignee(assignee.id)" />
         </div>

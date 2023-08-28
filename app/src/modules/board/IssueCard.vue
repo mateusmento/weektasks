@@ -7,6 +7,7 @@ import { useIssueModalStore } from '@/lib/stores/issue-modal.store';
 import { sortBy } from 'lodash';
 import { computed, ref } from 'vue';
 import IssueType from './IssueType.vue';
+import { envs } from '@/lib/utils/envs';
 
 let props = defineProps<{
   issue: Issue;
@@ -82,7 +83,7 @@ const issueColor = computed(
           v-for="assignee of issue.assignees"
           :key="assignee.id"
           class="assignee-photo"
-          :src="`http://localhost:3000/users/${assignee.id}/photo`"
+          :src="`${envs.API_BASE_URL}/users/${assignee.id}/photo`"
         />
       </span>
       <span class="story-points">2 pts</span>

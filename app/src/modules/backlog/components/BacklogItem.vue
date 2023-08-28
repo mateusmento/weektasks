@@ -11,6 +11,7 @@ import IconTrash from '@/lib/components/icons/IconTrash.vue';
 import Checkbox from '@/lib/components/form/Checkbox.vue';
 import IssueTypeSelect from './IssueTypeSelect.vue';
 import IssueUserAssignment from '@/lib/components/IssueUserAssignment.vue';
+import { envs } from '@/lib/utils/envs';
 
 let props = defineProps<{
   issue: Issue;
@@ -96,7 +97,7 @@ const issueModalStore = useIssueModalStore();
         v-for="assignee of issue.assignees"
         :key="assignee.id"
         class="assignee-photo"
-        :src="`http://localhost:3000/users/${assignee.id}/photo`"
+        :src="`${envs.API_BASE_URL}/users/${assignee.id}/photo`"
       />
     </span>
 
