@@ -146,7 +146,11 @@ async function moveDoneItems({ added }: any) {
 
 <style lang="scss" scoped>
 .board-view {
+  display: flex;
+  flex-direction: column;
   padding: 60px;
+  padding-bottom: 20px;
+  flex: 1;
 }
 
 .top-section {
@@ -166,6 +170,8 @@ async function moveDoneItems({ added }: any) {
 }
 
 .content-section {
+  flex: 1;
+
   display: flex;
   gap: 20px;
   width: 100%;
@@ -179,5 +185,9 @@ async function moveDoneItems({ added }: any) {
 
 .issue-card {
   box-shadow: 0 1px 3px rgba(#000, 0.25);
+}
+
+.card-list {
+  flex: 1;
 }
 </style>

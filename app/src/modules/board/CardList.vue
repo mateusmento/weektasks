@@ -19,13 +19,12 @@ defineProps<{
 
 <style lang="scss" scoped>
 .card-list {
-  height: 100%;
-  flex: 1;
   border: none;
   border-radius: 20px;
   padding: 10px;
   box-shadow: 0 0 3px rgba(#000, 0.25);
   background: #fff;
+  flex: 1;
 }
 
 .card-header {
