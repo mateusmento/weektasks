@@ -13,7 +13,8 @@
 </template>
 
 <style scoped>
-div {
+.icon {
   line-height: 0;
+  padding: 3px 0;
 }
 </style>

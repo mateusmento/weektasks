@@ -41,7 +41,7 @@ async function createBacklogItem() {
   border-radius: 10px;
   padding: 0 10px;
 
-  button {
+  .add-button {
     background: #773bc3;
     padding: 5px;
   }
@@ -54,19 +54,11 @@ async function createBacklogItem() {
     margin: 10px;
     padding: 5px;
     transition: 200ms;
+    border-radius: 0px;
   }
 
   input::placeholder {
     color: #a888ff;
-  }
-
-  transition: border-color 100ms;
-  input {
-    border: 2px solid transparent;
-    border-radius: 0px;
-  }
-  input:focus {
-    border-bottom-color: #d4aaff;
   }
 }
 </style>
