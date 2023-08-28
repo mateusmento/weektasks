@@ -11,6 +11,10 @@ export const createProductsRepository = () => ({
     return axios.get<FindProductsResult>('/products').then((res) => res.data);
   },
 
+  findProduct(id: number) {
+    return axios.get<Product>(`/products/${id}`).then((res) => res.data);
+  },
+
   createProduct(product: Partial<Product>) {
     return axios.post<Product>('/products', product).then((res) => res.data);
   },

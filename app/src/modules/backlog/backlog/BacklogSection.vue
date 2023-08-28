@@ -1,5 +1,17 @@
 <script lang="ts" setup>
+import { useRoute } from 'vue-router';
 import BacklogItems from './BacklogItems.vue';
+import { onMounted, ref } from 'vue';
+import type { Product } from '@/modules/products/product.model';
+import { createProductsRepository } from '@/lib/service/products.service';
+
+const route = useRoute();
+const product = ref<Product>();
+const productService = createProductsRepository();
+
+onMounted(async () => {
+  product.value = await productService.findProduct(route.params.id);
+});
 </script>
 
 <template>
@@ -7,7 +19,7 @@ import BacklogItems from './BacklogItems.vue';
     <div class="topsection">
       <div>
         <div class="subtitle">Product</div>
-        <div class="title">Weektasks</div>
+        <div class="title">{{ product?.name }}</div>
       </div>
 
       <div>
