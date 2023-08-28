@@ -18,7 +18,7 @@ import BacklogSection from './backlog/BacklogSection.vue';
 <style scoped>
 .backlog-view {
   display: flex;
-  justify-content: center;
+  margin: auto;
   gap: 60px;
   flex: 1;
 }
