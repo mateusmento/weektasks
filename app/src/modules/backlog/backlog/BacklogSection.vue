@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import BacklogItems from './BacklogItems.vue';
-import { useActiveProductStore } from '@/lib/stores/product.store';
+import { useActiveProductStore } from '@/lib/stores/active-product.store';
 
 const activeProductStore = useActiveProductStore();
 </script>

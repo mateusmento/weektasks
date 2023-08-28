@@ -6,7 +6,7 @@ import { computed, ref } from 'vue';
 import { RouterLink, useRoute, useRouter } from 'vue-router';
 import ColorfulBar from './ColorfulBar.vue';
 import SearchBar from './SearchBar.vue';
-import { useActiveProductStore } from '@/lib/stores/product.store';
+import { useActiveProductStore } from '@/lib/stores/active-product.store';
 
 const router = useRouter();
 const route = useRoute();
