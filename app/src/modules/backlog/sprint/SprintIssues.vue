@@ -74,13 +74,6 @@ async function moveIssue({ moved, added, removed }: any) {
           <IssueItem v-model:issue="sprintIssues[i]" @remove="removeIssue(issue.id)" />
         </li>
       </template>
-      <template #footer>
-        <li v-if="sprintHasNoIssues" class="issue-placeholder">
-          <small>
-            <i>Move an issue here</i>
-          </small>
-        </li>
-      </template>
     </draggable>
 
     <AddBacklogItem @created="createIssue" />
@@ -108,6 +101,5 @@ async function moveIssue({ moved, added, removed }: any) {
   display: flex;
   flex-direction: column;
   gap: 2px;
-  margin-bottom: 5px;
 }
 </style>
