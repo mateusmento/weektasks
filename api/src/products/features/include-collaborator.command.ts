@@ -7,6 +7,7 @@ import { Repository } from 'typeorm';
 import { Product } from '../entities/product.entity';
 import { HttpException, HttpStatus } from '@nestjs/common';
 import { Transactional } from 'typeorm-transactional';
+import { UserEntity } from 'src/auth/domain/user.entity';
 
 export class IncludeCollaboratorCommand {
   productId: number;
@@ -27,7 +28,9 @@ export class IncludeCollaboratorHandler
     @InjectRepository(Product)
     private productRepo: Repository<Product>,
     @InjectRepository(Collaborator)
-    private collaboratorRepo: Repository<Collaborator>
+    private collaboratorRepo: Repository<Collaborator>,
+    @InjectRepository(UserEntity)
+    private userRepo: Repository<UserEntity>
   ) {}
 
   @Transactional()
@@ -36,9 +39,12 @@ export class IncludeCollaboratorHandler
     const product = await this.productRepo.findOneBy({ id: productId });
     if (product.ownerId !== actorId)
       throw new HttpException(
-        'User is not permitted to remove collaborator',
+        'User is not allowed to include collaborator',
         HttpStatus.FORBIDDEN
       );
-    return this.collaboratorRepo.save({ productId, userId });
+    const user = await this.userRepo.findOneBy({ id: userId });
+    if (!user)
+      throw new HttpException('User was not found', HttpStatus.NOT_FOUND);
+    return this.collaboratorRepo.save({ productId, user });
   }
 }

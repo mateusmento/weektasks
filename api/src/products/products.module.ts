@@ -10,9 +10,14 @@ import { Collaborator } from './entities/collaborator.entity';
 import { FindCollaboratorsHandler } from './features/find-collaborators.query';
 import { IncludeCollaboratorHandler } from './features/include-collaborator.command';
 import { RemoveCollaboratorHandler } from './features/remove-collaborator.command';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Product, Collaborator]), CqrsModule],
+  imports: [
+    TypeOrmModule.forFeature([Product, Collaborator]),
+    CqrsModule,
+    AuthModule,
+  ],
   controllers: [ProductsController],
   providers: [
     CreateProductHandler,

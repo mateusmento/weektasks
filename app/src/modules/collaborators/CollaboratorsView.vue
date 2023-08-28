@@ -29,13 +29,18 @@ function searchUsers(name: string) {
   return usersRepo.searchUsers(name);
 }
 
-function includeCollaborator() {
+async function includeCollaborator() {
   if (!selectedUser.value) return;
-  productRepo.includeCollaborator(+route.params.id, selectedUser.value.id);
+  const collaborator = await productRepo.includeCollaborator(
+    +route.params.id,
+    selectedUser.value.id
+  );
+  collaborators.value.push(collaborator);
 }
 
-function removeCollaborator(collabId: number) {
-  productRepo.removeCollaborator(+route.params.id, collabId);
+async function removeCollaborator(collabId: number) {
+  await productRepo.removeCollaborator(+route.params.id, collabId);
+  collaborators.value = collaborators.value.filter((c) => c.id !== collabId);
 }
 </script>
 

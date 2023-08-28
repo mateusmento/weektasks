@@ -29,7 +29,7 @@ export class RemoveCollaboratorHandler
     const product = await this.productRepo.findOneBy({ id: productId });
     if (product.ownerId !== actorId)
       throw new HttpException(
-        'User is not permitted to remove collaborator',
+        'User is not allow to remove collaborator',
         HttpStatus.FORBIDDEN
       );
     await this.collabRepo.delete({ id: collaboratorId, productId });
