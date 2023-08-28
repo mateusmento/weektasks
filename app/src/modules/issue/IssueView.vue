@@ -46,7 +46,12 @@ function updateIssueDescription() {
         <div class="issue-title">{{ issue.title }}</div>
         <div class="row">
           <div class="issue-assigned-to">
-            <div v-for="assignee of issue.assignees" :key="assignee.id">{{ assignee.name }}</div>
+            <img
+              v-for="assignee of issue.assignees"
+              :key="assignee.id"
+              class="user-photo"
+              :src="`http://localhost:3000/users/${assignee.id}/photo`"
+            />
           </div>
           <div
             class="dropdown issue-status-dropdown"
@@ -128,6 +133,11 @@ function updateIssueDescription() {
 
 .issue-assigned-to {
   flex: 1;
+}
+
+.user-photo {
+  width: 50px;
+  margin-right: -15px;
 }
 
 .section {
