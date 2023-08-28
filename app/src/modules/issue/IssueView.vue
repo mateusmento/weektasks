@@ -6,6 +6,7 @@ import { vOnClickOutside } from '@vueuse/components';
 import { computed, onMounted, reactive, ref } from 'vue';
 import IssueComments from './IssueComments.vue';
 import SubTasks from './SubTasks.vue';
+import { vTextareaAutosize } from '@/lib/directives/textarea-autosize.directive';
 
 const props = defineProps<{
   issueId?: number;
@@ -85,7 +86,11 @@ function updateIssueDescription() {
           <div class="title">Description</div>
         </div>
         <div class="card issue-description">
-          <textarea v-model="issue.description" placeholder="Give a description..."> </textarea>
+          <textarea
+            v-model="issue.description"
+            v-textarea-autosize
+            placeholder="Give a description..."
+          />
           <div class="save">
             <button @click="updateIssueDescription">Save</button>
           </div>
@@ -197,8 +202,8 @@ function updateIssueDescription() {
   gap: 10px;
 
   textarea {
+    border: none;
     resize: none;
-    border-color: transparent;
     outline: none;
   }
 
