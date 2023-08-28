@@ -2,10 +2,12 @@
 import { createAuthService } from '@/lib/service/auth.service';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { useAuthStore } from '../auth.store';
 
 const router = useRouter();
+const authStore = useAuthStore();
 
-const email = ref('');
+const email = ref(authStore.createdUser?.credential.username);
 const password = ref('');
 
 const authService = createAuthService();

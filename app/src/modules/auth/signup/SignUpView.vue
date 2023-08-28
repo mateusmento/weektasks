@@ -2,13 +2,17 @@
 import { computed, ref } from 'vue';
 import { AxiosError } from 'axios';
 import { createUsersRepository } from '@/lib/service/users.service';
+import { useAuthStore } from '../auth.store';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+const authStore = useAuthStore();
+const usersRepo = createUsersRepository();
 
 const name = ref('');
 const email = ref('');
 const password = ref('');
 const repassword = ref('');
-
-const usersRepo = createUsersRepository();
 
 const passwordStrengh = computed(() => {
   const hasMinimalLength = password.value.length >= 8;
@@ -43,7 +47,8 @@ async function signup() {
   };
 
   try {
-    await usersRepo.createUser(userData);
+    authStore.createdUser = await usersRepo.createUser(userData);
+    router.push('/auth/signin');
   } catch (ex) {
     if (ex instanceof AxiosError) {
       alert(ex.response?.data.message);
