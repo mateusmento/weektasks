@@ -3,17 +3,17 @@ import { defineStore } from 'pinia';
 
 export const useIssueModalStore = defineStore('issue-modal', {
   state: () => ({
-    issue: null as Issue | number | null,
+    issue: null as Issue | null,
     isOpen: false,
   }),
   actions: {
-    open(issue: Issue | number) {
+    open(issue: Issue) {
       this.isOpen = true;
       this.issue = issue;
     },
     close() {
       this.isOpen = false;
-      this.issue = null;
+      // this.issue = null;
     },
   },
 });

@@ -8,7 +8,7 @@ import IssueComments from './IssueComments.vue';
 import SubTasks from './SubTasks.vue';
 
 const props = defineProps<{
-  issueId: number;
+  issueId?: number;
   issue: Issue;
 }>();
 
@@ -97,7 +97,7 @@ function updateIssueDescription() {
         </div>
       </div>
 
-      <IssueComments :issue-id="issueId" />
+      <IssueComments :issue-id="issue?.id ?? issueId" />
     </div>
   </div>
 </template>
@@ -107,10 +107,12 @@ function updateIssueDescription() {
   width: 720px;
   margin: auto;
   background-color: #f6faff;
+  height: 100%;
 }
 
 .issue-view-content {
   padding: 30px;
+  height: 100%;
 }
 
 .issue-title {

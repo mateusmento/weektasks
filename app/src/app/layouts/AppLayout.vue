@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import TopbarHeader from '@/lib/components/layout/TopbarHeader.vue';
+import type { Issue } from '@/lib/models/issue.model';
 import { useIssueModalStore } from '@/lib/stores/issue-modal.store';
 import IssueView from '@/modules/issue/IssueView.vue';
 import { vOnClickOutside } from '@vueuse/components';
@@ -14,7 +15,7 @@ const issueModalStore = useIssueModalStore();
 
   <aside class="drawer" :class="{ 'drawer--show': issueModalStore.isOpen }">
     <IssueView
-      v-if="issueModalStore.issue"
+      v-if="issueModalStore.issue !== null"
       :issue="issueModalStore.issue"
       v-on-click-outside="() => issueModalStore.close()"
     />
@@ -36,7 +37,7 @@ const issueModalStore = useIssueModalStore();
   inset: 70.4px 0 0 auto
   transform: translateX(100%)
   box-shadow: 0 0 5px rgba(0, 0, 0, .25)
-  // transition: 200ms
+  transition: 200ms
   z-index: 1
 
 .drawer--show
