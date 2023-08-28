@@ -1,17 +1,8 @@
 <script lang="ts" setup>
-import { useRoute } from 'vue-router';
 import BacklogItems from './BacklogItems.vue';
-import { onMounted, ref } from 'vue';
-import type { Product } from '@/modules/products/product.model';
-import { createProductsRepository } from '@/lib/service/products.service';
+import { useActiveProductStore } from '@/lib/stores/product.store';
 
-const route = useRoute();
-const product = ref<Product>();
-const productService = createProductsRepository();
-
-onMounted(async () => {
-  product.value = await productService.findProduct(route.params.id);
-});
+const activeProductStore = useActiveProductStore();
 </script>
 
 <template>
@@ -19,14 +10,14 @@ onMounted(async () => {
     <div class="topsection">
       <div>
         <div class="subtitle">Product</div>
-        <div class="title">{{ product?.name }}</div>
+        <div class="title">{{ activeProductStore.product?.name }}</div>
       </div>
 
       <div class="product-collaborators">
         <div class="subtitle">Collaborators</div>
         <div class="user-photos">
           <img
-            v-for="collaborator of product?.collaborators"
+            v-for="collaborator of activeProductStore.product?.collaborators"
             :key="collaborator.id"
             class="user-photo"
             :src="`http://localhost:3000/users/${collaborator.user.id}/photo`"
@@ -85,3 +76,4 @@ onMounted(async () => {
   margin-right: -15px;
 }
 </style>
+@/lib/stores/active0product.store
