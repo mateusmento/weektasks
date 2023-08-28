@@ -50,6 +50,8 @@ async function removeCollaborator(collabId: number) {
       <b class="page-title">Collaborators</b>
       <ul class="collaborators-list list">
         <li v-for="collab in collaborators" :key="collab.id">
+          <img class="user-photo" :src="`http://localhost:3000/users/${collab.user.id}/photo`" />
+
           <div class="collaborator-name">{{ collab.user.name }}</div>
           <div>
             <el-icon @click="removeCollaborator(collab.id)"><Delete /></el-icon>
@@ -87,8 +89,15 @@ async function removeCollaborator(collabId: number) {
   margin-bottom: 10px
   li
     display: flex
+    align-items: center
     gap: 30px
 
 .collaborator-name
   flex: 1
+</style>
+
+<style scoped>
+.user-photo {
+  width: 30px;
+}
 </style>
