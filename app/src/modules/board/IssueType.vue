@@ -8,7 +8,7 @@ const props = defineProps<{
 const color = computed(
   () =>
     ({
-      story: 'strong-green',
+      story: 'light-green',
       component: 'strong-purple',
       refactor: 'strong-green',
       task: 'strong-blue',

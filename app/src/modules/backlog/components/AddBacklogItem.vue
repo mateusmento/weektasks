@@ -35,14 +35,12 @@ async function createBacklogItem() {
 .add-task {
   display: flex;
   gap: 10px;
-  /* background-color: #f0f7ff; */
-  /* background-color: #E7E8FF; */
   align-items: center;
   border-radius: 10px;
   padding: 0 10px;
 
   .add-button {
-    background: #773bc3;
+    background: #6b4ae1;
     padding: 5px;
   }
 
@@ -58,7 +56,7 @@ async function createBacklogItem() {
   }
 
   input::placeholder {
-    color: #a888ff;
+    color: #653ecf;
   }
 }
 </style>

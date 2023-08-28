@@ -156,7 +156,7 @@ async function moveDoneItems({ added }: any) {
   margin-left: auto;
   padding: 10px 20px;
   border-radius: 10px;
-  background-color: #773bc3;
+  background: #6b4ae1;
   color: #fff;
   font-weight: 600;
   font-size: 16px;

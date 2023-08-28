@@ -53,7 +53,7 @@ async function signout() {
 
       <div class="right-side">
         <router-link to="/products">
-          <button class="purple" pill>{{ activeProductStore.product?.name }}</button>
+          <button class="active-product" pill>{{ activeProductStore.product?.name }}</button>
         </router-link>
         <div class="dropdown" :class="{ active: showDropdown }" v-on-click-outside="hideDropdown">
           <div class="dropdown-toggle" @click="toggleDropdown">
@@ -97,6 +97,14 @@ nav {
   gap: 30px;
 }
 
+.active-product {
+  background: #c5b5fd;
+  color: #7755f3;
+  background: #d2d3ff;
+  color: #8568ec;
+  font-weight: 600;
+}
+
 .right-side {
   display: flex;
   justify-content: space-between;
@@ -114,4 +122,3 @@ nav {
   right: 0
   margin-top: 10px
 </style>
-@/lib/stores/active0product.store

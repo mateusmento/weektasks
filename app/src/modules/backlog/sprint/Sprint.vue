@@ -146,7 +146,7 @@ async function endSprint(sprintId: number) {
 .start-sprint {
   display: block;
   margin-left: auto;
-  background: #773bc3;
+  background: #6b4ae1;
   border-radius: 5px;
   padding: 5px;
   color: white;
