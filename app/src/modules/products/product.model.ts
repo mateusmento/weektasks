@@ -8,4 +8,5 @@ export interface Collaborator {
 export interface Product {
   id: number;
   name: string;
+  collaborators: Collaborator[];
 }

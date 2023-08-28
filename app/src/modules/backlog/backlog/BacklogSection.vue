@@ -22,8 +22,16 @@ onMounted(async () => {
         <div class="title">{{ product?.name }}</div>
       </div>
 
-      <div>
+      <div class="product-collaborators">
         <div class="subtitle">Collaborators</div>
+        <div class="user-photos">
+          <img
+            v-for="collaborator of product?.collaborators"
+            :key="collaborator.id"
+            class="user-photo"
+            :src="`http://localhost:3000/users/${collaborator.user.id}/photo`"
+          />
+        </div>
       </div>
     </div>
 
@@ -64,5 +72,16 @@ onMounted(async () => {
   font-size: 20px;
   font-weight: 600;
   margin-bottom: 20px;
+}
+
+.product-collaborators {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.user-photo {
+  width: 40px;
+  margin-right: -15px;
 }
 </style>
