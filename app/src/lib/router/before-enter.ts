@@ -7,16 +7,18 @@ export async function beforeEnter(to: any) {
   const store = useAuthUserStore();
   const user = await authenticate();
 
-  if (to.params.id) {
-    const productService = createProductsRepository();
-    const activeProductStore = useActiveProductStore();
-    activeProductStore.product = await productService.findProduct(to.params.id);
-  }
-
   if (!user) {
     store.user = null;
     return { name: 'signin' };
   } else {
     store.user = user;
+
+    if (to.params.id) {
+      const productService = createProductsRepository();
+      const activeProductStore = useActiveProductStore();
+      productService
+        .findProduct(to.params.id)
+        .then((product) => (activeProductStore.product = product));
+    }
   }
 }
