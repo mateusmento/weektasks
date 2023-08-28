@@ -9,6 +9,7 @@
       v-bind="$attrs"
       :placeholder="placeholder"
       autocomplete="off"
+      @keyup="onKeyUp"
       @click="showOptions = options.length > 0"
     />
     <ul class="dropdown-menu list menu">
@@ -49,18 +50,16 @@ const textModel = computed({
   set: (v: any) => emit('update:text', v),
 });
 
-watch(
-  () => props.text,
-  async () => {
-    if (props.text.trim() === '') {
-      options.value = [];
-      showOptions.value = false;
-    } else {
-      options.value = await props.search(props.text);
-      showOptions.value = options.value.length > 0;
-    }
+async function onKeyUp() {
+  if (props.text.trim() === '') {
+    options.value = [];
+    showOptions.value = false;
+  } else {
+    options.value = await props.search(props.text);
+    showOptions.value = options.value.length > 0;
+    console.log(props.text);
   }
-);
+}
 
 function selectOption(option: any) {
   updateValue(option);
