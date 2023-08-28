@@ -26,7 +26,7 @@ async function createReply(reply: any) {
 </script>
 
 <template>
-  <div class="discussion-view container content vertical">
+  <div class="discussion-view container vertical">
     <div class="card card-lg p-md">
       <Discussion v-if="discussion" v-model:discussion="discussion" />
       <FormKit type="form" @submit="createReply">

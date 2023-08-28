@@ -41,7 +41,7 @@ function updateIssueDescription() {
   <div class="issue-view" v-if="issue">
     <ColorfulBar thick />
 
-    <div class="content">
+    <div class="issue-view-content">
       <div class="header">
         <div class="issue-title">{{ issue.title }}</div>
         <div class="row">
@@ -109,7 +109,7 @@ function updateIssueDescription() {
   background-color: #f6faff;
 }
 
-.content {
+.issue-view-content {
   padding: 30px;
 }
 

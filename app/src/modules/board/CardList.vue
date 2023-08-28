@@ -7,11 +7,11 @@ defineProps<{
 
 <template>
   <div class="card-list">
-    <div class="header">
+    <div class="card-header">
       <h4>{{ title }}</h4>
       <div class="issues-count">{{ issues.length }} issues</div>
     </div>
-    <div class="content">
+    <div class="card-content">
       <slot />
     </div>
   </div>
@@ -28,7 +28,7 @@ defineProps<{
   background: #fff;
 }
 
-.header {
+.card-header {
   padding: 10px 20px;
   font-size: 18px;
 }
@@ -39,7 +39,7 @@ defineProps<{
   margin-top: 10px;
 }
 
-.content {
+.card-content {
   border-radius: 10px;
   background: #f4f9ff;
   padding: 10px;
