@@ -45,7 +45,9 @@ function updateIssueDescription() {
       <div class="header">
         <div class="issue-title">{{ issue.title }}</div>
         <div class="row">
-          <div v-if="issue.assignedTo" class="issue-assigned-to">{{ issue.assignedTo.name }}</div>
+          <div class="issue-assigned-to">
+            <div v-for="assignee of issue.assignees" :key="assignee.id">{{ assignee.name }}</div>
+          </div>
           <div
             class="dropdown issue-status-dropdown"
             :class="{ active: showStatusOptions }"

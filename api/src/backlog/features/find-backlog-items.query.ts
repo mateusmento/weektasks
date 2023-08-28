@@ -21,7 +21,7 @@ export class FindBacklogItemsHandler
     let items = await this.backlogItemRepo.find({
       where: { productId },
       relations: {
-        issue: { assignedTo: true, assignees: true, subtasks: true },
+        issue: { assignees: true, subtasks: true },
       },
     });
     items = sortBy(items, (i) => i.order);

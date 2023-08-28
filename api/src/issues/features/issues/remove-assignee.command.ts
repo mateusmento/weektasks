@@ -44,8 +44,6 @@ export class RemoveAssigneeCommand implements ICommandHandler<RemoveAssignee> {
         HttpStatus.FORBIDDEN
       );
 
-    issue.assignedToId = null;
-    issue.assignedTo = null;
     issue.assignees = issue.assignees.filter((a) => a.id !== assigneeId);
     return await this.issueRepo.save(issue);
   }

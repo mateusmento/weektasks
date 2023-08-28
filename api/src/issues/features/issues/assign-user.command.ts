@@ -55,8 +55,6 @@ export class AssignUserHandler implements ICommandHandler<AssignUser> {
         HttpStatus.FORBIDDEN
       );
 
-    issue.assignedToId = assigneeId;
-    issue.assignedTo = collab.user;
     issue.assignees.push(collab.user);
     return await this.issueRepo.save(issue);
   }

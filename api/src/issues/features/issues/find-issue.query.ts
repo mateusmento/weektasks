@@ -23,7 +23,7 @@ export class FindIssueHandler implements IQueryHandler<FindIssueQuery> {
   async execute({ issueId }: FindIssueQuery): Promise<any> {
     const issue = await this.issueRepo.findOne({
       where: { id: issueId },
-      relations: { assignedTo: true, subtasks: true },
+      relations: { subtasks: true },
     });
     issue.subtasks = sortBy(issue.subtasks, (s) => s.id);
     return issue;

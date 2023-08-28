@@ -18,7 +18,7 @@ export class FindSprintsHandler implements IQueryHandler<FindSprintsQuery> {
     return this.sprintRepo.find({
       where: { productId, status: Not(SprintStatus.COMPLETED) },
       relations: {
-        items: { issue: { assignedTo: true, assignees: true, subtasks: true } },
+        items: { issue: { assignees: true, subtasks: true } },
       },
       order: { order: 'asc' },
     });

@@ -39,12 +39,6 @@ export class Issue {
   @OneToMany(() => SubTask, (s) => s.issue)
   subtasks: SubTask[];
 
-  @Column({ nullable: true })
-  assignedToId: number;
-
-  @ManyToOne(() => UserEntity)
-  assignedTo: UserEntity;
-
   @ManyToMany(() => UserEntity)
   @JoinTable({
     name: 'assignee',

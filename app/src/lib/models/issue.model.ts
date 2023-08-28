@@ -9,7 +9,6 @@ export interface Issue {
   title: string;
   description: string;
   status: IssueType;
-  assignedTo: User;
   assignees: User[];
   subtasks: SubTask[];
   estimation: number;
