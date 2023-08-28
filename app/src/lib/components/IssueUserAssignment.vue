@@ -55,7 +55,12 @@ async function removeAssignee(assigneeId: number) {
       <IconAssignUser class="hover-hidden" />
     </span>
 
-    <form @submit.prevent="assignUser" class="users" :class="{ active: showUsers }" @click.stop="">
+    <form
+      @submit.prevent="assignUser"
+      class="flex-vert gap-lg users"
+      :class="{ active: showUsers }"
+      @click.stop=""
+    >
       <div class="assign-user-to-title">
         <b>Assign a collaborator</b>
       </div>
@@ -70,7 +75,7 @@ async function removeAssignee(assigneeId: number) {
         />
         <button class="small" type="submit">Assign</button>
       </div>
-      <div>
+      <div class="flex-vert gap-md">
         <div v-for="assignee of issue.assignees" :key="assignee.id" class="flex-horz gap-md">
           <img class="assignee-photo" :src="`http://localhost:3000/users/${assignee.id}/photo`" />
           {{ assignee.name }}
@@ -87,7 +92,7 @@ async function removeAssignee(assigneeId: number) {
 }
 
 .assign-user-to-title {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   margin-left: 5px;
 }
 
@@ -114,7 +119,7 @@ async function removeAssignee(assigneeId: number) {
 }
 
 .assign-user-to .users.active {
-  display: block;
+  display: flex;
 }
 
 .assignee-photo {
