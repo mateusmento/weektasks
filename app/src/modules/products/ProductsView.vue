@@ -67,7 +67,6 @@ async function createProduct() {
 
 .products {
   display: flex;
-  // flex-direction: column;
   gap: 40px;
 }
 
