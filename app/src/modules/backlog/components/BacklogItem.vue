@@ -90,7 +90,7 @@ const issueModalStore = useIssueModalStore();
 
     <div class="spacer"></div>
 
-    <IssueUserAssignment class="hover-hidden" v-model:issue="issue" />
+    <IssueUserAssignment v-model:issue="issue" />
     <span v-if="issue.assignees.length > 0" class="assigned-to">
       <img
         v-for="assignee of issue.assignees"
