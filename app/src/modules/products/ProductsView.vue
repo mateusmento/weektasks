@@ -31,6 +31,7 @@ async function createProduct() {
         <div class="page-title">
           <b>Your Products</b>
         </div>
+
         <ul v-if="products.own.length > 0" class="product-list list menu">
           <li class="menu-item" v-for="product in products.own" :key="product.id">
             <router-link :to="`/products/${product.id}/backlog`">{{ product.name }}</router-link>
@@ -45,8 +46,9 @@ async function createProduct() {
 
       <div>
         <div class="page-title">
-          <b>Collaborated Products</b>
+          <b>Collaborating Products</b>
         </div>
+
         <ul v-if="products.collaborating.length > 0" class="product-list list menu">
           <li class="menu-item" v-for="product in products.collaborating" :key="product.id">
             <router-link :to="`/products/${product.id}/backlog`">{{ product.name }}</router-link>
