@@ -4,6 +4,7 @@ import { AxiosError } from 'axios';
 import { createUsersRepository } from '@/lib/service/users.service';
 import { useAuthStore } from '../auth.store';
 import { useRouter } from 'vue-router';
+import { Alert } from '@/lib/utils/alert';
 
 const router = useRouter();
 const authStore = useAuthStore();
@@ -38,7 +39,7 @@ const passwordStrengh = computed(() => {
 const confirmedPassword = computed(() => password.value === repassword.value);
 
 async function signup() {
-  if (password.value !== repassword.value) return alert("Passwords don't match");
+  if (password.value !== repassword.value) return Alert.error("Passwords don't match");
 
   const userData = {
     name: name.value,
@@ -51,7 +52,7 @@ async function signup() {
     router.push('/auth/signin');
   } catch (ex) {
     if (ex instanceof AxiosError) {
-      alert(ex.response?.data.message);
+      Alert.error(ex.response?.data.message);
     }
   }
 }

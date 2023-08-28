@@ -6,6 +6,7 @@ import BacklogItem from '../components/BacklogItem.vue';
 import AddBacklogItem from '../components/AddBacklogItem.vue';
 import { AxiosError } from 'axios';
 import { createBacklogRepository } from '@/lib/service/backlog.service';
+import { Alert } from '@/lib/utils/alert';
 
 const route = useRoute();
 const productId = computed(() => route.params.id);
@@ -23,7 +24,7 @@ async function createBacklogItem(createItemData: any) {
     let item = await backlogRepo.value.createIssue(createItemData);
     backlogItems.value.push(item);
   } catch (ex) {
-    if (ex instanceof AxiosError) alert(ex.response?.data.message);
+    if (ex instanceof AxiosError) Alert.error(ex.response?.data.message);
   }
 }
 

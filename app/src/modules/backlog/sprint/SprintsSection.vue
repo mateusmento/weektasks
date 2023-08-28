@@ -30,6 +30,7 @@ import { useRoute } from 'vue-router';
 import { AxiosError } from 'axios';
 import IconBigPlus from '@/lib/components/icons/IconBigPlus.vue';
 import { createSprintsRepository } from '@/lib/service/sprints.service';
+import { Alert } from '@/lib/utils/alert';
 
 const route = useRoute();
 const productId = computed(() => route.params.id);
@@ -50,7 +51,7 @@ async function createSprint() {
     sprints.value.push(sprint);
     sprintTitle.value = '';
   } catch (ex) {
-    if (ex instanceof AxiosError) alert(ex.response?.data.message);
+    if (ex instanceof AxiosError) Alert.error(ex.response?.data.message);
   }
 }
 

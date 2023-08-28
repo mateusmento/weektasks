@@ -6,6 +6,7 @@ import draggable from 'vuedraggable';
 import { createSprintsRepository } from '@/lib/service/sprints.service';
 import { AxiosError } from 'axios';
 import AddBacklogItem from '../components/AddBacklogItem.vue';
+import { Alert } from '@/lib/utils/alert';
 
 let props = defineProps<{
   sprint: Sprint;
@@ -29,7 +30,7 @@ async function createIssue(createIssueData: any) {
     let issue = await sprintsRepo.createIssue(props.sprint.id, createIssueData);
     sprintIssues.value = [...props.sprint.issues, issue];
   } catch (ex) {
-    if (ex instanceof AxiosError) alert(ex.response?.data.message);
+    if (ex instanceof AxiosError) Alert.error(ex.response?.data.message);
   }
 }
 

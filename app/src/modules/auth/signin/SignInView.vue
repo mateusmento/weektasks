@@ -3,6 +3,7 @@ import { createAuthService } from '@/lib/service/auth.service';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from '../auth.store';
+import { Alert } from '@/lib/utils/alert';
 
 const router = useRouter();
 const authStore = useAuthStore();
@@ -22,7 +23,7 @@ async function singin() {
     await authService.signin(credentials);
     router.push({ name: 'products' });
   } catch (ex) {
-    alert('Unauthorized');
+    Alert.error('Unauthorized');
   }
 }
 </script>

@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { createAuthService } from '@/lib/service/auth.service';
+import { Alert } from '@/lib/utils/alert';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
@@ -20,7 +21,7 @@ async function singin() {
     await authService.signin(credentials);
     router.push({ name: 'products' });
   } catch (ex) {
-    alert('Unauthorized');
+    Alert.error('Unauthorized');
   }
 }
 </script>

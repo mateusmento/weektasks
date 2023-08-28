@@ -2,6 +2,7 @@
 import { computed, ref } from 'vue';
 import { AxiosError } from 'axios';
 import { createUsersRepository } from '@/lib/service/users.service';
+import { Alert } from '@/lib/utils/alert';
 
 const name = ref('');
 const email = ref('');
@@ -46,7 +47,7 @@ async function signup() {
     await usersRepo.createUser(userData);
   } catch (ex) {
     if (ex instanceof AxiosError) {
-      alert(ex.response?.data.message);
+      Alert.error(ex.response?.data.message);
     }
   }
 }

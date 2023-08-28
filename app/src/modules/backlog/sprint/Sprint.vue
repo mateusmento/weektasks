@@ -10,6 +10,7 @@ import IconArrowUp from '@/lib/components/icons/IconArrowDown.vue';
 import IconTrash from '@/lib/components/icons/IconTrash.vue';
 import IconEdit from '@/lib/components/icons/IconEdit.vue';
 import moment from 'moment';
+import { Alert } from '@/lib/utils/alert';
 
 let props = defineProps<{
   sprint: Sprint;
@@ -48,7 +49,7 @@ async function startSprint(sprintId: number) {
     const sprint = await sprintsRepo.startSprint(sprintId);
     updateSprint({ hasntStarted: sprint.hasntStarted, isOnGoing: sprint.isOnGoing });
   } catch (ex) {
-    if (ex instanceof AxiosError) alert(ex.response?.data.message);
+    if (ex instanceof AxiosError) Alert.error(ex.response?.data.message);
     else throw ex;
   }
 }
@@ -58,7 +59,7 @@ async function endSprint(sprintId: number) {
     const sprint = await sprintsRepo.endSprint(sprintId);
     updateSprint({ isOnGoing: sprint.isOnGoing, hasEnded: sprint.hasEnded });
   } catch (ex) {
-    if (ex instanceof AxiosError) alert(ex.response?.data.message);
+    if (ex instanceof AxiosError) Alert.error(ex.response?.data.message);
     else throw ex;
   }
 }

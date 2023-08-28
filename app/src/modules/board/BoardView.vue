@@ -10,6 +10,7 @@ import { createSprintsRepository } from '@/lib/service/sprints.service';
 import { createIssuesRepository } from '@/lib/service/issues.service';
 import IssueCard from './IssueCard.vue';
 import CardList from './CardList.vue';
+import { Alert } from '@/lib/utils/alert';
 
 const route = useRoute();
 const router = useRouter();
@@ -32,7 +33,7 @@ onMounted(async () => {
   try {
     board.value = await fetchBoard(+route.params.id);
   } catch (ex) {
-    if (ex instanceof AxiosError) alert(ex.response?.data.message);
+    if (ex instanceof AxiosError) Alert.error(ex.response?.data.message);
   }
 });
 
@@ -46,7 +47,7 @@ async function endSprint() {
     await sprintsRepo.endSprint(board.value.sprint.id);
     router.push({ name: 'backlog' });
   } catch (ex) {
-    if (ex instanceof AxiosError) alert(ex.response?.data.message);
+    if (ex instanceof AxiosError) Alert.error(ex.response?.data.message);
     else throw ex;
   }
 }
