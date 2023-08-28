@@ -22,6 +22,8 @@ export class Product {
   @ManyToOne(() => UserEntity)
   owner: UserEntity;
 
-  @OneToMany(() => Collaborator, (c) => c.product)
+  @OneToMany(() => Collaborator, (c) => c.product, {
+    cascade: ['insert', 'remove'],
+  })
   collaborators: Collaborator[];
 }

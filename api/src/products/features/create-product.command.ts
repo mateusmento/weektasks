@@ -22,6 +22,9 @@ export class CreateProductHandler
 
   @Transactional()
   async execute(command: CreateProductCommand): Promise<any> {
-    return await this.productRepo.save(command);
+    return await this.productRepo.save({
+      ...command,
+      collaborators: [{ userId: command.ownerId }],
+    });
   }
 }

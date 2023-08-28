@@ -13,7 +13,8 @@ onMounted(async () => {
 });
 
 async function createProduct() {
-  productsRepo.createProduct({ name: productName.value });
+  const product = await productsRepo.createProduct({ name: productName.value });
+  products.value.push(product);
 }
 </script>
 

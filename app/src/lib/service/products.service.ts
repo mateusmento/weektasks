@@ -7,7 +7,7 @@ export const createProductsRepository = () => ({
   },
 
   createProduct(product: Partial<Product>) {
-    return axios.post('/products', product).then((res) => res.data);
+    return axios.post<Product>('/products', product).then((res) => res.data);
   },
 
   fetchCollaborators(id: number) {
