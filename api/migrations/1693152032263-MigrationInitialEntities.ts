@@ -42,7 +42,6 @@ export class MigrationInitialEntities1693152032263
         "product_id" integer NOT NULL,
         "status" character varying NOT NULL DEFAULT 'todo',
         "estimation" integer,
-        "assigned_to_id" integer,
         "created_at" TIMESTAMP NOT NULL DEFAULT now(),
         CONSTRAINT "PK_f80e086c249b9f3f3ff2fd321b7" PRIMARY KEY ("id")
       )
@@ -215,10 +214,6 @@ export class MigrationInitialEntities1693152032263
     await queryRunner.query(`
             ALTER TABLE "sub_task"
             ADD CONSTRAINT "FK_7240395fed5f911fefd409d1220" FOREIGN KEY ("issue_id") REFERENCES "issue"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
-        `);
-    await queryRunner.query(`
-            ALTER TABLE "issue"
-            ADD CONSTRAINT "FK_f85c57d1ef3145a5571679ced5c" FOREIGN KEY ("assigned_to_id") REFERENCES "users"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
         `);
     await queryRunner.query(`
             ALTER TABLE "meetings"
