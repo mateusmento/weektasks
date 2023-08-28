@@ -51,6 +51,11 @@ async function clearIssueEdit() {
 </template>
 
 <style lang="scss" scoped>
+.subtask {
+  display: flex;
+  align-items: center;
+}
+
 .hover-hidden {
   transition: opacity 100ms;
 }
