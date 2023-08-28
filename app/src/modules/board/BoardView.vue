@@ -91,14 +91,10 @@ async function moveDoneItems({ added }: any) {
           handle=".draggable-handle"
           group="issues"
           @change="moveTodoItems"
+          :component-data="{ class: 'draggable' }"
         >
           <template #item="{ element: item, index: i }">
             <IssueCard v-model:issue="board.issues.todo[i]" />
-          </template>
-          <template #footer v-if="board.issues.todo.length === 0">
-            <small class="issue-placeholder">
-              <i>Move an issue here</i>
-            </small>
           </template>
         </draggable>
       </CardList>
@@ -110,14 +106,10 @@ async function moveDoneItems({ added }: any) {
           handle=".draggable-handle"
           group="issues"
           @change="moveDoingItems"
+          :component-data="{ class: 'draggable' }"
         >
           <template #item="{ element: item, index: i }">
             <IssueCard v-model:issue="board.issues.doing[i]" />
-          </template>
-          <template #footer v-if="board.issues.doing.length === 0">
-            <small class="issue-placeholder">
-              <i>Move an issue here</i>
-            </small>
           </template>
         </draggable>
       </CardList>
@@ -129,14 +121,10 @@ async function moveDoneItems({ added }: any) {
           handle=".draggable-handle"
           group="issues"
           @change="moveDoneItems"
+          :component-data="{ class: 'draggable' }"
         >
           <template #item="{ element: item, index: i }">
             <IssueCard v-model:issue="board.issues.done[i]" />
-          </template>
-          <template #footer v-if="board.issues.done.length === 0">
-            <small class="issue-placeholder">
-              <i>Move an issue here</i>
-            </small>
           </template>
         </draggable>
       </CardList>
@@ -151,6 +139,10 @@ async function moveDoneItems({ added }: any) {
   padding: 60px;
   padding-bottom: 20px;
   flex: 1;
+}
+
+.draggable {
+  height: 100%;
 }
 
 .top-section {

@@ -25,6 +25,8 @@ defineProps<{
   box-shadow: 0 0 3px rgba(#000, 0.25);
   background: #fff;
   flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .card-header {
@@ -42,5 +44,6 @@ defineProps<{
   border-radius: 10px;
   background: #f4f9ff;
   padding: 10px;
+  flex: 1;
 }
 </style>
