@@ -102,8 +102,7 @@ async function endSprint(sprintId: number) {
       </button>
 
       <div class="ml-4" @click="hideIssues = !hideIssues">
-        <IconArrowDown v-if="hideIssues" />
-        <IconArrowUp v-else />
+        <IconArrowDown class="icon-arrow" :class="{ 'arrow-rotated': !hideIssues }" />
       </div>
     </div>
 
@@ -127,6 +126,15 @@ async function endSprint(sprintId: number) {
   align-items: center;
   padding: 0 10px;
   gap: 10px;
+}
+
+.icon-arrow {
+  transition: 300ms;
+  cursor: pointer;
+}
+
+.arrow-rotated {
+  transform: rotate(180deg);
 }
 
 .period {
