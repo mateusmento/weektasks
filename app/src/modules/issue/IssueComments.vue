@@ -2,7 +2,7 @@
 import type { User } from '@/lib/models/user.model';
 import { createIssuesRepository } from '@/lib/service/issues.service';
 import { onMounted, ref } from 'vue';
-import CreateDiscussion from '../timeline/CreateDiscussion.vue';
+import CreateIssueComment from './CreateIssueComment.vue';
 import IssueComment from './IssueComment.vue';
 
 const props = defineProps<{
@@ -17,17 +17,15 @@ interface IIssueComment {
   author: User;
 }
 
-const newCommentText = ref('');
 const comments = ref<IIssueComment[]>([]);
 
 onMounted(async () => {
   comments.value = await issueRepo.findComments(props.issueId);
 });
 
-async function addComment() {
-  const comment = await issueRepo.addComment(props.issueId, newCommentText.value);
+async function addComment({ text }: any) {
+  const comment = await issueRepo.addComment(props.issueId, { text });
   comments.value.unshift(comment);
-  newCommentText.value = '';
 }
 
 async function removeComment(id: number) {
@@ -42,8 +40,8 @@ async function editComment(id: number, text: string) {
 
 <template>
   <div class="issue-comments flex-vert-lg">
-    <div class="section-title"><b>Comments</b></div>
-    <CreateDiscussion @created="addComment" />
+    <div class="section-title">Comments</div>
+    <CreateIssueComment @created="addComment" />
     <IssueComment
       v-for="(comment, i) of comments"
       :key="comment.id"
@@ -57,6 +55,7 @@ async function editComment(id: number, text: string) {
 <style lang="sass" scoped>
 .section-title
   margin-bottom: 20px
+  font-weight: 600
 
 form
   margin-bottom: 20px

@@ -28,7 +28,7 @@ export const createIssuesRepository = () => ({
     return axios.get(`/issues/${id}/comments`).then((res) => res.data);
   },
 
-  addComment(id: number, text: string) {
+  addComment(id: number, { text }: any) {
     return axios.post(`/issues/${id}/comments`, { text }).then((res) => res.data);
   },
 

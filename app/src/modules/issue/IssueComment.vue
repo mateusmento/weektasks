@@ -34,7 +34,8 @@ function sendEditing() {
 <template>
   <div class="comment card">
     <div class="top-section">
-      <b class="comment-author">{{ comment.author.name }}</b>
+      <img class="user-photo" :src="`http://localhost:3000/users/${comment.author.id}/photo`" />
+      <div class="comment-author">{{ comment.author.name }}</div>
       <div
         class="dropdown"
         :class="{ active: showOptions }"
@@ -69,6 +70,7 @@ function sendEditing() {
 
 .comment-author
   flex: 1
+  font-weight: 600
 
 .dropdown-toggle
   background: white
@@ -86,4 +88,7 @@ function sendEditing() {
   justify-content: flex-end
   gap: 5px
   margin-top: 10px
+
+.user-photo
+  width: 50px
 </style>
