@@ -40,7 +40,7 @@ async function createBacklogItem() {
   padding: 0 10px;
 
   .add-button {
-    background: #6b4ae1;
+    background: #8459ff;
     padding: 5px;
   }
 

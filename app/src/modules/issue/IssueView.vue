@@ -93,7 +93,7 @@ function updateIssueDescription() {
             placeholder="Give a description..."
           />
           <div class="save">
-            <button @click="updateIssueDescription">Save</button>
+            <button class="save-button" @click="updateIssueDescription">Save</button>
           </div>
         </div>
       </div>
@@ -128,7 +128,7 @@ function updateIssueDescription() {
 
 .issue-title {
   font-weight: 400;
-  font-size: 20px;
+  font-size: 24px;
   margin-bottom: 20px;
 }
 
@@ -142,7 +142,7 @@ function updateIssueDescription() {
 }
 
 .user-photo {
-  width: 50px;
+  width: 40px;
   margin-right: -15px;
 }
 
@@ -213,6 +213,11 @@ function updateIssueDescription() {
     overflow: hidden;
     transition: 500ms;
     margin-left: auto;
+  }
+
+  .save-button {
+    background: #8459ff;
+    color: white;
   }
 
   &:focus-within {

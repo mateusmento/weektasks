@@ -57,7 +57,7 @@ async function removeSubtask(subtask: any) {
   border-radius: 10px;
 
   button {
-    background: #773bc3;
+    background: #8459ff;
     padding: 5px;
   }
 
