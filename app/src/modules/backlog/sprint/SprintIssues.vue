@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import type { Sprint } from '@/lib/models/sprint.model';
-import IssueItem from '../components/BacklogItem.vue';
+import BacklogItem from '../components/BacklogItem.vue';
 import draggable from 'vuedraggable';
 import { createSprintsRepository } from '@/lib/service/sprints.service';
 import { AxiosError } from 'axios';
@@ -18,8 +18,6 @@ let sprintIssues = computed({
   get: () => props.sprint.issues,
   set: (issues) => emit('update:sprint', { ...props.sprint, issues }),
 });
-
-let sprintHasNoIssues = computed(() => props.sprint.issues.length === 0);
 
 let hideIssues = ref(false);
 
@@ -71,7 +69,7 @@ async function moveIssue({ moved, added, removed }: any) {
     >
       <template #item="{ element: issue, index: i }">
         <li>
-          <IssueItem v-model:issue="sprintIssues[i]" @remove="removeIssue(issue.id)" />
+          <BacklogItem v-model:issue="sprintIssues[i]" @remove="removeIssue(issue.id)" />
         </li>
       </template>
     </draggable>

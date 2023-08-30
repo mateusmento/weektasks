@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts" setup>
-import { watch, ref, computed } from 'vue';
+import { ref, computed } from 'vue';
 import { vOnClickOutside } from '@vueuse/components';
 
 const props = defineProps<{
@@ -57,7 +57,6 @@ async function onKeyUp() {
   } else {
     options.value = await props.search(props.text);
     showOptions.value = options.value.length > 0;
-    console.log(props.text);
   }
 }
 

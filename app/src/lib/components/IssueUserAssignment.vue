@@ -4,21 +4,23 @@ import WkComboBox from '@/lib/components/form/WkComboBox.vue';
 import { vOnClickOutside } from '@vueuse/components';
 import IconAssignUser from '@/lib/components/icons/IconAssignUser.vue';
 import { ref, watch } from 'vue';
-import { createIssuesRepository } from '../service/issues.service';
 import type { User } from '../models/user.model';
 import type { Issue } from '../models/issue.model';
 import IconTrash from './icons/IconTrash.vue';
 import { envs } from '../utils/envs';
 
-let props = defineProps<{
+defineProps<{
   issue: Issue;
 }>();
 
-let emit = defineEmits(['update:issue']);
+const emit = defineEmits<{
+  (e: 'assign', user: User): void;
+  (e: 'remove', user: User): void;
+}>();
+
+const usersRepo = createUsersRepository();
 
 const showUsers = ref(false);
-
-const issuesRepo = createIssuesRepository();
 
 const userName = ref('');
 const selectedUser = ref<User>();
@@ -31,22 +33,18 @@ async function toggleUserAssigning() {
   showUsers.value = !showUsers.value;
 }
 
-const usersRepo = createUsersRepository();
-
 function searchUsers(name: string) {
   return usersRepo.searchUsers(name);
 }
 
-async function assignUser() {
+async function assign() {
   if (!selectedUser.value) return;
-  const issue = await issuesRepo.assignUser(props.issue.id, selectedUser.value.id);
   showUsers.value = false;
-  emit('update:issue', issue);
+  emit('assign', selectedUser.value);
 }
 
-async function removeAssignee(assigneeId: number) {
-  const issue = await issuesRepo.removeAssignee(props.issue.id, assigneeId);
-  emit('update:issue', issue);
+async function remove(assignee: User) {
+  emit('remove', assignee);
 }
 </script>
 
@@ -57,7 +55,7 @@ async function removeAssignee(assigneeId: number) {
     </span>
 
     <form
-      @submit.prevent="assignUser"
+      @submit.prevent="assign"
       class="flex-vert gap-lg users"
       :class="{ active: showUsers }"
       @click.stop=""
@@ -80,7 +78,7 @@ async function removeAssignee(assigneeId: number) {
         <div v-for="assignee of issue.assignees" :key="assignee.id" class="flex-horz gap-md">
           <img class="assignee-photo" :src="`${envs.API_BASE_URL}/users/${assignee.id}/photo`" />
           {{ assignee.name }}
-          <IconTrash @click="removeAssignee(assignee.id)" />
+          <IconTrash @click="remove(assignee)" />
         </div>
       </div>
     </form>

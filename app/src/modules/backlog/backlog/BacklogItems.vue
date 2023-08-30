@@ -7,6 +7,9 @@ import AddBacklogItem from '../components/AddBacklogItem.vue';
 import { AxiosError } from 'axios';
 import { createBacklogRepository } from '@/lib/service/backlog.service';
 import { Alert } from '@/lib/utils/alert';
+import { createIssuesRepository } from '@/lib/service/issues.service';
+import type { Issue } from '@/lib/models/issue.model';
+import type { User } from '@/lib/models/user.model';
 
 const route = useRoute();
 const productId = computed(() => route.params.id);
@@ -14,6 +17,7 @@ const productId = computed(() => route.params.id);
 const backlogItems = ref<any[]>([]);
 
 const backlogRepo = computed(() => createBacklogRepository(+productId.value));
+const issuesRepo = createIssuesRepository();
 
 onMounted(async () => {
   backlogItems.value = await backlogRepo.value.fetchBacklogItems();
@@ -26,6 +30,18 @@ async function createBacklogItem(createItemData: any) {
   } catch (ex) {
     if (ex instanceof AxiosError) Alert.error(ex.response?.data.message);
   }
+}
+
+async function patchIssue(partial: Partial<Issue>, id: number) {
+  await issuesRepo.patchIssue(id, partial);
+}
+
+function addAssignee(issueId: number, assignee: User) {
+  issuesRepo.assignUser(issueId, assignee.id);
+}
+
+function removeAssignee(issueId: number, assignee: User) {
+  issuesRepo.removeAssignee(issueId, assignee.id);
 }
 
 async function removeIssue(id: number) {
@@ -68,9 +84,15 @@ function moveBacklogItem({ moved, added, removed }: any) {
       :move="canMoveBacklogItemToSprint"
       @change="moveBacklogItem"
     >
-      <template #item="{ element: backlogItem, index: i }">
+      <template #item="{ index: i }">
         <li>
-          <BacklogItem v-model:issue="backlogItems[i]" @remove="removeIssue" />
+          <BacklogItem
+            v-model:issue="backlogItems[i]"
+            @patch="patchIssue"
+            @remove="removeIssue"
+            @add-assignee="addAssignee"
+            @remove-assignee="removeAssignee"
+          />
         </li>
       </template>
     </draggable>

@@ -1,9 +1,8 @@
 <script lang="ts" setup>
-import { ref, computed } from 'vue';
+import { ref } from 'vue';
 import { Check } from '@element-plus/icons-vue';
 import type { Issue } from '@/lib/models/issue.model';
 import WkEditable from '@/lib/components/form/WkEditable.vue';
-import { createIssuesRepository } from '@/lib/service/issues.service';
 import { useIssueModalStore } from '@/lib/stores/issue-modal.store';
 import IconDragHandle from '@/lib/components/icons/IconDragHandle.vue';
 import IconEdit from '@/lib/components/icons/IconEdit.vue';
@@ -12,62 +11,77 @@ import Checkbox from '@/lib/components/form/Checkbox.vue';
 import IssueTypeSelect from './IssueTypeSelect.vue';
 import IssueUserAssignment from '@/lib/components/IssueUserAssignment.vue';
 import { envs } from '@/lib/utils/envs';
+import type { User } from '@/lib/models/user.model';
 
-let props = defineProps<{
+const props = defineProps<{
   issue: Issue;
 }>();
 
-let emit = defineEmits(['remove', 'update:issue']);
+const emit = defineEmits(['update:issue', 'patch', 'remove', 'add-assignee', 'remove-assignee']);
 
-let editable = ref(false);
+const issueModalStore = useIssueModalStore();
 
-let issueTitle = computed({
-  get: () => props.issue.title,
-  set: (title) => emit('update:issue', { ...props.issue, title }),
-});
+const editable = ref(false);
+const selected = ref(false);
 
-const issue = computed({
-  get: () => props.issue,
-  set: (partial) => emit('update:issue', { ...props.issue, ...partial }),
-});
+const title = ref(props.issue.title);
+const estimation = ref(props.issue.estimation);
 
-function removeIssue(id: number) {
+function patch(partial: Partial<Issue>) {
+  emit('update:issue', { ...props.issue, ...partial });
+  emit('patch', partial, props.issue.id);
+}
+
+function remove(id: number) {
   emit('remove', id);
 }
 
-const issuesRepo = createIssuesRepository();
+function udpateIssueType(type: any) {
+  patch({ type });
+}
 
-async function updateIssueTitle() {
-  await issuesRepo.patchIssue(props.issue.id, {
-    title: issueTitle.value,
-    estimation: props.issue.estimation,
+function startEditing() {
+  editable.value = true;
+}
+
+function confirmEditing() {
+  patch({
+    title: title.value,
+    estimation: estimation.value,
   });
   editable.value = false;
 }
 
-async function clearIssueEdit() {
+function cancelEditing() {
+  title.value = props.issue.title;
+  estimation.value = props.issue.estimation;
   editable.value = false;
 }
 
-async function udpateIssueType($event: any) {
-  const data = { type: $event } as any;
-  await issuesRepo.patchIssue(props.issue.id, data);
-  issue.value = data;
+function addAssignee(assignee: User) {
+  emit('update:issue', {
+    ...props.issue,
+    assignees: [...props.issue.assignees, assignee],
+  });
+  emit('add-assignee', props.issue.id, assignee);
 }
 
-const issueModalStore = useIssueModalStore();
+function removeAssignee(assignee: User) {
+  emit('update:issue', {
+    ...props.issue,
+    assignees: props.issue.assignees.filter((a) => a.id !== assignee.id),
+  });
+  emit('remove-assignee', props.issue.id, assignee);
+}
 </script>
 
 <template>
-  <div
-    class="issue backlog-item"
-    :class="{ 'draggable-handle': !editable, selected: issue.selected }"
-  >
+  <div class="issue backlog-item" :class="{ 'draggable-handle': !editable, selected }">
     <IconDragHandle class="hover-hidden" />
-    <Checkbox v-model="issue.selected" radio />
+    <Checkbox v-model="selected" radio />
     <IssueTypeSelect :type="issue.type" @update:type="udpateIssueType" />
 
-    <WkEditable class="small" v-model="issueTitle" :editable="editable">
+    <WkEditable class="small" v-model="title" :editable="editable">
       <template #text="{ value, attrs }">
         <div class="issue-title" v-bind="attrs" @click="issueModalStore.open(issue)">
           {{ value }}
@@ -75,14 +89,15 @@ const issueModalStore = useIssueModalStore();
       </template>
     </WkEditable>
 
-    <IconEdit v-if="!editable" class="hover-hidden" @click="editable = !editable" />
+    <IconEdit v-if="!editable" class="hover-hidden" @click="startEditing" />
+
     <template v-else>
-      <span @click="updateIssueTitle" title="Confirm edit">
+      <span @click="confirmEditing" title="Confirm edit">
         <el-icon>
           <Check />
         </el-icon>
       </span>
-      <span @click="clearIssueEdit" title="Cancel edit">
+      <span @click="cancelEditing" title="Cancel edit">
         <el-icon>
           <Close />
         </el-icon>
@@ -91,7 +106,8 @@ const issueModalStore = useIssueModalStore();
 
     <div class="spacer"></div>
 
-    <IssueUserAssignment v-model:issue="issue" />
+    <IssueUserAssignment :issue="issue" @assign="addAssignee" @remove="removeAssignee" />
+
     <span v-if="issue.assignees.length > 0" class="assigned-to">
       <img
         v-for="assignee of issue.assignees"
@@ -101,13 +117,13 @@ const issueModalStore = useIssueModalStore();
       />
     </span>
 
-    <WkEditable class="small story-points-input" v-model="issue.estimation" :editable="editable">
+    <WkEditable class="small story-points-input" v-model="estimation" :editable="editable">
       <template #text="{ value, attrs }">
         <span v-bind="attrs" class="story-points">{{ value ?? '-' }} pts</span>
       </template>
     </WkEditable>
 
-    <IconTrash class="hover-hidden" @click="removeIssue(issue.id)" />
+    <IconTrash class="hover-hidden" @click="remove(issue.id)" />
   </div>
 </template>
 
