@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { computed, ref } from 'vue';
 import IssueType from '@/modules/board/IssueType.vue';
 import { vOnClickOutside } from '@vueuse/components';
+import { ref } from 'vue';
 
 defineProps<{
   type: string;
