@@ -1,9 +1,8 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
 import type { Issue } from '@/lib/models/issue.model';
 import { createIssuesRepository } from '@/lib/service/issues.service';
-import IconPlus from '@/lib/components/icons/IconPlus.vue';
 import SubTask from './SubTask.vue';
+import CreateSubTask from './CreateSubTask.vue';
 
 const props = defineProps<{
   issue: Issue;
@@ -13,14 +12,9 @@ const emit = defineEmits(['update:issue']);
 
 const issueRepo = createIssuesRepository();
 
-const subtaskTitle = ref('');
-
-async function createSubTask() {
-  const data = { title: subtaskTitle.value };
+async function createSubTask(data: { title: string }) {
   const subtask = await issueRepo.createSubTask(props.issue.id, data);
-  const subtasks = [...props.issue.subtasks, subtask];
-  emit('update:issue', { ...props.issue, subtasks });
-  subtaskTitle.value = '';
+  emit('update:issue', { ...props.issue, subtasks: [...props.issue.subtasks, subtask] });
 }
 
 async function removeSubtask(subtask: any) {
@@ -40,12 +34,7 @@ async function removeSubtask(subtask: any) {
         @remove="removeSubtask"
       />
     </ul>
-    <form class="create-subtask" @submit.prevent="createSubTask">
-      <button pill>
-        <IconPlus />
-      </button>
-      <input v-model="subtaskTitle" placeholder="Add a new subtask..." />
-    </form>
+    <CreateSubTask @create="createSubTask" />
   </div>
 </template>
 

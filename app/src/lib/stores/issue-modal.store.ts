@@ -1,5 +1,6 @@
 import type { Issue } from '@/lib/models/issue.model';
 import { defineStore } from 'pinia';
+import { createIssuesRepository } from '../service/issues.service';
 
 export const useIssueModalStore = defineStore('issue-modal', {
   state: () => ({
@@ -7,9 +8,11 @@ export const useIssueModalStore = defineStore('issue-modal', {
     isOpen: false,
   }),
   actions: {
-    open(issue: Issue) {
+    async open(issue: Issue) {
+      const issueRepo = createIssuesRepository();
+      const comments = await issueRepo.findComments(issue.id);
       this.isOpen = true;
-      this.issue = issue;
+      this.issue = { ...issue, comments };
     },
     close() {
       this.isOpen = false;

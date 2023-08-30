@@ -32,7 +32,7 @@ async function clearIssueEdit() {
 </script>
 
 <template>
-  <li class="subtask flex-horz-md">
+  <div class="subtask flex-horz-md">
     <Checkbox v-model="subtask.completed" />
     <WkEditable class="small" v-model="subtask.title" :editable="editable">
       <template #text="{ value, attrs }">
@@ -47,7 +47,7 @@ async function clearIssueEdit() {
     </span>
     <IconEdit class="hover-hidden" @click="editable = !editable" />
     <IconTrash class="hover-hidden" @click="removeSubtask(subtask)" />
-  </li>
+  </div>
 </template>
 
 <style lang="scss" scoped>

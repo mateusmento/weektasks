@@ -5,7 +5,7 @@ import { ref } from 'vue';
 import { useRoute } from 'vue-router';
 import DiscussionType from './DiscussionType.vue';
 
-const emit = defineEmits(['created']);
+const emit = defineEmits(['update:issue']);
 const route = useRoute();
 
 const discussionService = new DiscussionService();
@@ -16,7 +16,7 @@ const showStatusOptions = ref(false);
 async function createDiscussion() {
   const data = { text: text.value, type: type.value };
   const discussion = await discussionService.createDiscussion(+route.params.id, data);
-  emit('created', discussion);
+  emit('update:issue', discussion);
   text.value = '';
 }
 

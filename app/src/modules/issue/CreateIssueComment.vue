@@ -2,12 +2,12 @@
 import { ref } from 'vue';
 import { vTextareaAutosize } from '@/lib/directives/textarea-autosize.directive';
 
-const emit = defineEmits(['created']);
+const emit = defineEmits(['update:issue']);
 
 const text = ref('');
 
 async function create() {
-  emit('created', { text: text.value });
+  emit('update:issue', { text: text.value });
   text.value = '';
 }
 </script>

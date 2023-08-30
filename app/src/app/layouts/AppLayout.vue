@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import ColorfulBar from '@/lib/components/layout/ColorfulBar.vue';
 import TopbarHeader from '@/lib/components/layout/TopbarHeader.vue';
 import { useIssueModalStore } from '@/lib/stores/issue-modal.store';
-import IssueView from '@/modules/issue/IssueView.vue';
+import Issue from '@/modules/issue/Issue.vue';
 import { vOnClickOutside } from '@vueuse/components';
 import { RouterView } from 'vue-router';
 
@@ -13,11 +14,14 @@ const issueModalStore = useIssueModalStore();
   <RouterView></RouterView>
 
   <aside class="drawer" :class="{ 'drawer--show': issueModalStore.isOpen }">
-    <IssueView
-      v-if="issueModalStore.issue !== null"
-      :issue="issueModalStore.issue"
-      v-on-click-outside="() => issueModalStore.close()"
-    />
+    <div class="issue-view">
+      <ColorfulBar thick />
+      <Issue
+        v-if="issueModalStore.issue !== null"
+        v-model:issue="issueModalStore.issue"
+        v-on-click-outside="() => issueModalStore.close()"
+      />
+    </div>
   </aside>
 
   <!-- <teleport to="#modal">
@@ -28,6 +32,15 @@ const issueModalStore = useIssueModalStore();
     </div>
   </teleport> -->
 </template>
+
+<style lang="scss" scoped>
+.issue-view {
+  width: 720px;
+  margin: 0 auto;
+  background-color: #f6faff;
+  min-height: 100%;
+}
+</style>
 
 <style lang="sass" scoped>
 .drawer

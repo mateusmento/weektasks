@@ -8,11 +8,11 @@ const props = defineProps<{
   comment: any;
 }>();
 
-const emit = defineEmits(['remove', 'edit', 'update:comment']);
+const emit = defineEmits(['remove', 'patch', 'update:comment']);
 
 const showOptions = ref(false);
 const isEditting = ref(false);
-const commentText = ref('');
+const text = ref('');
 
 function remove() {
   showOptions.value = false;
@@ -22,14 +22,15 @@ function remove() {
 function startEditing() {
   showOptions.value = false;
   isEditting.value = true;
-  commentText.value = props.comment.text;
+  text.value = props.comment.text;
 }
 
 function sendEditing() {
   isEditting.value = false;
-  emit('update:comment', { ...props.comment, text: commentText.value });
-  emit('edit', props.comment.id, commentText.value);
-  commentText.value = '';
+  const partial = { text: text.value };
+  emit('update:comment', { ...props.comment, ...partial });
+  emit('patch', partial, props.comment.id);
+  text.value = '';
 }
 </script>
 
@@ -44,7 +45,7 @@ function sendEditing() {
           <pre>{{ comment.text }}</pre>
         </div>
         <form v-else @submit.prevent="sendEditing">
-          <textarea v-model="commentText"></textarea>
+          <textarea v-model="text"></textarea>
           <div class="comment-actions">
             <button type="button" class="small" @click="isEditting = false">Cancel</button>
             <button type="submit" class="small">Send</button>

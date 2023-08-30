@@ -1,9 +1,9 @@
 import { axios } from '@/lib/axios';
-import type { Issue } from '@/lib/models/issue.model';
+import type { Issue, IssueComment } from '@/lib/models/issue.model';
 
 export const createIssuesRepository = () => ({
   fetchIssue(id: number) {
-    return axios.get('/issues/' + id).then((res) => res.data);
+    return axios.get<Issue>('/issues/' + id).then((res) => res.data);
   },
 
   findIssues(productId: number, search: string) {
@@ -25,7 +25,7 @@ export const createIssuesRepository = () => ({
   },
 
   findComments(id: number) {
-    return axios.get(`/issues/${id}/comments`).then((res) => res.data);
+    return axios.get<IssueComment[]>(`/issues/${id}/comments`).then((res) => res.data);
   },
 
   addComment(id: number, { text }: any) {

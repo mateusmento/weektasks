@@ -13,6 +13,7 @@ export interface Issue {
   subtasks: SubTask[];
   estimation: number;
   selected?: boolean;
+  comments: IssueComment[];
 }
 
 export interface SubTask {
@@ -23,4 +24,10 @@ export interface SubTask {
 
 export interface Epic extends Issue {
   issues: Issue[];
+}
+
+export interface IssueComment {
+  id: number;
+  text: string;
+  author: User;
 }
