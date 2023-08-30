@@ -10,12 +10,10 @@ import BacklogHeader from './backlog/BacklogHeader.vue';
       <h1>Sprints</h1>
       <SprintsSection />
     </section>
-    <section class="product-backlog-section">
-      <div class="product-backlog">
-        <BacklogHeader />
-        <div class="product-backlog-label">Product Backlog</div>
-        <BacklogItems />
-      </div>
+    <section class="product-backlog">
+      <BacklogHeader />
+      <div class="product-backlog-label">Product Backlog</div>
+      <BacklogItems />
     </section>
   </main>
 </template>
@@ -32,25 +30,16 @@ import BacklogHeader from './backlog/BacklogHeader.vue';
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding-top: 60px;
   min-width: 650px;
-}
-
-.product-backlog-section {
-  position: relative;
-  top: 0;
-  bottom: 0;
+  padding-top: 60px;
 }
 
 .product-backlog {
-  background-color: white;
   width: 700px;
+  min-height: 100%;
   padding: 60px;
-  position: relative;
-  top: 0;
-  bottom: 0;
+  background-color: white;
   box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.25);
-  height: 100%;
 }
 
 .product-backlog-label {
