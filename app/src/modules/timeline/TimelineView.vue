@@ -34,9 +34,10 @@ function addDiscussion($event: any) {
   flex-direction: column;
   justify-content: center;
   max-width: 830px;
-  margin: auto;
+  margin: 0 auto;
   padding: 60px;
   gap: 40px;
+  width: 100%;
 }
 
 .timeline-event {
