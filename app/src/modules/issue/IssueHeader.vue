@@ -8,7 +8,7 @@ defineProps<{
 </script>
 
 <template>
-  <div class="header">
+  <div class="issue-header">
     <div class="issue-title">{{ issue.title }}</div>
     <div class="issue-assigned-to">
       <img
@@ -22,17 +22,14 @@ defineProps<{
 </template>
 
 <style lang="scss" scoped>
-.header {
-  margin-bottom: 40px;
-  .issue-title {
-    font-weight: 400;
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
+.issue-title {
+  font-weight: 400;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
 
-  .issue-assigned-to {
-    flex: 1;
-  }
+.issue-assigned-to {
+  flex: 1;
 }
 
 .user-photo {

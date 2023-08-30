@@ -71,7 +71,7 @@ async function patchComment(partial: Partial<IIssueComment>, id: number) {
 </script>
 
 <template>
-  <div class="issue-view-content">
+  <div class="issue">
     <IssueHeader :issue="issue" />
 
     <div class="section">
@@ -97,8 +97,10 @@ async function patchComment(partial: Partial<IIssueComment>, id: number) {
       </div>
     </div>
 
-    <div class="issue-comments flex-vert-lg">
-      <div class="section-title">Comments</div>
+    <div class="section">
+      <div class="top">
+        <div class="title">Comments</div>
+      </div>
       <CreateIssueComment @create="addComment" />
       <template v-if="issue.comments">
         <IssueComment
@@ -114,30 +116,24 @@ async function patchComment(partial: Partial<IIssueComment>, id: number) {
 </template>
 
 <style lang="scss" scoped>
-.section-title {
-  margin-bottom: 20px;
-  font-weight: 600;
-}
-
-.add-comment {
-  display: block;
-  margin-left: auto;
-  margin-top: 10px;
-}
-</style>
-
-<style lang="scss" scoped>
-.issue-view-content {
+.issue {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
   padding: 30px;
-  height: 100%;
+}
+
+.issue-header {
+  margin-bottom: 40px;
 }
 
 .section {
-  margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 
   .top {
     margin-left: 20px;
-    margin-bottom: 20px;
   }
 
   .title {
@@ -146,39 +142,6 @@ async function patchComment(partial: Partial<IIssueComment>, id: number) {
 
   .subtitle {
     color: #aaa;
-  }
-}
-</style>
-
-<style lang="scss" scoped>
-.create-subtask {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  border-radius: 10px;
-
-  button {
-    background: #8459ff;
-    padding: 5px;
-  }
-
-  input {
-    border: none;
-    background: none;
-    padding: 5px 10px;
-    outline: none;
-    border: 2px solid transparent;
-    transition: border-color 100ms;
-    background-color: #e7e8ff;
-    color: #8459ff;
-  }
-
-  input::placeholder {
-    color: #a888ff;
-  }
-
-  input:focus {
-    border-color: #8459ff;
   }
 }
 </style>
