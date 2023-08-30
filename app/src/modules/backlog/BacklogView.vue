@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import SprintsSection from './sprint/SprintsSection.vue';
-import BacklogSection from './backlog/BacklogSection.vue';
+import BacklogItems from './backlog/BacklogItems.vue';
+import BacklogHeader from './backlog/BacklogHeader.vue';
 </script>
 
 <template>
@@ -10,7 +11,11 @@ import BacklogSection from './backlog/BacklogSection.vue';
       <SprintsSection />
     </section>
     <section class="product-backlog-section">
-      <BacklogSection />
+      <div class="product-backlog">
+        <BacklogHeader />
+        <div class="product-backlog-label">Product Backlog</div>
+        <BacklogItems />
+      </div>
     </section>
   </main>
 </template>
@@ -36,7 +41,21 @@ import BacklogSection from './backlog/BacklogSection.vue';
   top: 0;
   bottom: 0;
 }
+
 .product-backlog {
+  background-color: white;
+  width: 700px;
+  padding: 60px;
+  position: relative;
+  top: 0;
+  bottom: 0;
+  box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.25);
   height: 100%;
+}
+
+.product-backlog-label {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 20px;
 }
 </style>
