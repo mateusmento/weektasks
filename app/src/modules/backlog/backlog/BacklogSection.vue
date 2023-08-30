@@ -77,4 +77,3 @@ const activeProductStore = useActiveProductStore();
   margin-right: -15px;
 }
 </style>
-@/lib/stores/active0product.store
