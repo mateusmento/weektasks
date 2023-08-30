@@ -1,7 +1,6 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import type { SubTask } from '@/lib/models/issue.model';
-import { createIssuesRepository } from '@/lib/service/issues.service';
 import IconEdit from '@/lib/components/icons/IconEdit.vue';
 import IconTrash from '@/lib/components/icons/IconTrash.vue';
 import Checkbox from '@/lib/components/form/Checkbox.vue';
@@ -11,42 +10,57 @@ const props = defineProps<{
   subtask: SubTask;
 }>();
 
-const emit = defineEmits(['update:issue', 'remove']);
-
-const issueRepo = createIssuesRepository();
+const emit = defineEmits(['update:subtask', 'patch', 'remove']);
 
 const editable = ref(false);
+const title = ref(props.subtask.title);
 
-async function removeSubtask(subtask: any) {
-  emit('remove', subtask);
+const completed = computed({
+  get: () => props.subtask.completed,
+  set: (completed) => patch({ completed }),
+});
+
+function patch(partial: Partial<SubTask>) {
+  emit('update:subtask', { ...props.subtask, ...partial });
+  emit('patch', partial, props.subtask.id);
 }
 
-async function updateIssueTitle() {
-  await issueRepo.patchSubTask(props.subtask.id, { title: props.subtask.title });
+function remove() {
+  emit('remove', props.subtask);
+}
+
+function startEditing() {
+  editable.value = true;
+  title.value = props.subtask.title;
+}
+
+function confirmEditing() {
+  patch({ title: title.value });
   editable.value = false;
 }
 
-async function clearIssueEdit() {
+function cancelEditing() {
+  title.value = props.subtask.title;
   editable.value = false;
 }
 </script>
 
 <template>
-  <div class="subtask flex-horz-md">
-    <Checkbox v-model="subtask.completed" />
-    <WkEditable class="small" v-model="subtask.title" :editable="editable">
+  <div class="subtask">
+    <Checkbox v-model="completed" />
+    <WkEditable class="small" v-model="title" :editable="editable">
       <template #text="{ value, attrs }">
-        <div class="issue-title" v-bind="attrs">{{ value }}</div>
+        <div class="title" v-bind="attrs">{{ value }}</div>
       </template>
     </WkEditable>
-    <span v-if="editable" @click="updateIssueTitle" title="Confirm edit">
+    <span v-if="editable" @click="confirmEditing" title="Confirm edit">
       <el-icon><Check /></el-icon>
     </span>
-    <span v-if="editable" @click="clearIssueEdit" title="Confirm edit">
+    <span v-if="editable" @click="cancelEditing" title="Confirm edit">
       <el-icon><Close /></el-icon>
     </span>
-    <IconEdit class="hover-hidden" @click="editable = !editable" />
-    <IconTrash class="hover-hidden" @click="removeSubtask(subtask)" />
+    <IconEdit v-if="!editable" class="hover-hidden" @click="startEditing" />
+    <IconTrash class="hover-hidden" @click="remove" />
   </div>
 </template>
 
@@ -54,6 +68,7 @@ async function clearIssueEdit() {
 .subtask {
   display: flex;
   align-items: center;
+  gap: 10px;
 }
 
 .hover-hidden {
@@ -63,7 +78,7 @@ async function clearIssueEdit() {
   opacity: 0;
 }
 
-.issue-title {
+.title {
   cursor: pointer;
   white-space: nowrap;
   text-overflow: ellipsis;

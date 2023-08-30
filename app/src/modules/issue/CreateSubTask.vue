@@ -2,12 +2,12 @@
 import { ref } from 'vue';
 import IconPlus from '@/lib/components/icons/IconPlus.vue';
 
-const emit = defineEmits(['update:issue']);
+const emit = defineEmits(['create']);
 
 const title = ref('');
 
-async function create() {
-  emit('update:issue', { title: title.value });
+function create() {
+  emit('create', { title: title.value });
   title.value = '';
 }
 </script>

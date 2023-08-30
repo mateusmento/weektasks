@@ -41,6 +41,10 @@ async function createSubTask(data: any) {
   };
 }
 
+async function patchSubTask(partial: Partial<ISubTask>, id: number) {
+  await issueRepo.patchSubTask(id, partial);
+}
+
 async function removeSubtask(subtask: ISubTask) {
   await issueRepo.removeSubtask(subtask.id);
   issue.value = {
@@ -88,10 +92,11 @@ async function patchComment(partial: Partial<IIssueComment>, id: number) {
       </div>
       <div class="card card-lg flex-vert-md">
         <SubTask
-          v-for="subtask of issue.subtasks"
+          v-for="(subtask, i) of issue.subtasks"
           :key="subtask.id"
-          :subtask="subtask"
+          v-model:subtask="issue.subtasks[i]"
           @remove="removeSubtask"
+          @patch="patchSubTask"
         />
         <CreateSubTask @create="createSubTask" />
       </div>
@@ -102,15 +107,13 @@ async function patchComment(partial: Partial<IIssueComment>, id: number) {
         <div class="title">Comments</div>
       </div>
       <CreateIssueComment @create="addComment" />
-      <template v-if="issue.comments">
-        <IssueComment
-          v-for="(comment, i) of issue.comments"
-          :key="comment.id"
-          v-model:comment="issue.comments[i]"
-          @remove="removeComment"
-          @patch="patchComment"
-        />
-      </template>
+      <IssueComment
+        v-for="(comment, i) of issue.comments"
+        :key="comment.id"
+        v-model:comment="issue.comments[i]"
+        @remove="removeComment"
+        @patch="patchComment"
+      />
     </div>
   </div>
 </template>

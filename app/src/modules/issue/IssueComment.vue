@@ -3,34 +3,42 @@ import { ref } from 'vue';
 import { vOnClickOutside } from '@vueuse/components';
 import { envs } from '@/lib/utils/envs';
 import LikeButton from '../timeline/LikeButton.vue';
+import type { IssueComment } from '@/lib/models/issue.model';
 
 const props = defineProps<{
-  comment: any;
+  comment: IssueComment;
 }>();
 
-const emit = defineEmits(['remove', 'patch', 'update:comment']);
+const emit = defineEmits(['update:comment', 'patch', 'remove']);
 
 const showOptions = ref(false);
-const isEditting = ref(false);
+const editable = ref(false);
 const text = ref('');
+
+function patch(partial: Partial<IssueComment>) {
+  emit('update:comment', { ...props.comment, ...partial });
+  emit('patch', partial, props.comment.id);
+}
 
 function remove() {
   showOptions.value = false;
-  emit('remove', props.comment.id);
+  emit('remove', props.comment);
 }
 
 function startEditing() {
-  showOptions.value = false;
-  isEditting.value = true;
   text.value = props.comment.text;
+  showOptions.value = false;
+  editable.value = true;
 }
 
-function sendEditing() {
-  isEditting.value = false;
-  const partial = { text: text.value };
-  emit('update:comment', { ...props.comment, ...partial });
-  emit('patch', partial, props.comment.id);
-  text.value = '';
+function confirmEditing() {
+  patch({ text: text.value });
+  editable.value = false;
+}
+
+function cancelEditing() {
+  text.value = props.comment.text;
+  editable.value = false;
 }
 </script>
 
@@ -41,13 +49,13 @@ function sendEditing() {
 
       <div class="flex-vert-md spacer">
         <div class="comment-author">{{ comment.author.name }}</div>
-        <div class="comment-text" v-if="!isEditting">
+        <div class="comment-text" v-if="!editable">
           <pre>{{ comment.text }}</pre>
         </div>
-        <form v-else @submit.prevent="sendEditing">
+        <form v-else @submit.prevent="confirmEditing">
           <textarea v-model="text"></textarea>
           <div class="comment-actions">
-            <button type="button" class="small" @click="isEditting = false">Cancel</button>
+            <button type="button" class="small" @click="cancelEditing">Cancel</button>
             <button type="submit" class="small">Send</button>
           </div>
         </form>

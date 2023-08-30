@@ -2,27 +2,25 @@
 import { ref } from 'vue';
 import { vTextareaAutosize } from '@/lib/directives/textarea-autosize.directive';
 
-const emit = defineEmits(['update:issue']);
+const emit = defineEmits(['create']);
 
 const text = ref('');
 
-async function create() {
-  emit('update:issue', { text: text.value });
+function create() {
+  emit('create', { text: text.value });
   text.value = '';
 }
 </script>
 
 <template>
-  <div class="create-post flex-vert gap-md">
-    <form class="create-discussion" @submit.prevent="create">
-      <textarea v-model="text" v-textarea-autosize placeholder="Give a feedback..."></textarea>
-      <button>Send</button>
-    </form>
-  </div>
+  <form class="create-comment" @submit.prevent="create">
+    <textarea v-model="text" v-textarea-autosize placeholder="Give a feedback..."></textarea>
+    <button>Send</button>
+  </form>
 </template>
 
 <style scoped>
-.create-discussion {
+.create-comment {
   display: flex;
   align-items: flex-start;
   background: #e7e8ff;
@@ -32,7 +30,7 @@ async function create() {
   border: 2px solid transparent;
 }
 
-.create-discussion:focus-within {
+.create-comment:focus-within {
   border-color: #8459ff;
 }
 
