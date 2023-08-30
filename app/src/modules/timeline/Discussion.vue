@@ -4,6 +4,7 @@ import { RouterLink, useRoute } from 'vue-router';
 import DiscussionType from './DiscussionType.vue';
 import LikeButton from './LikeButton.vue';
 import { DiscussionService } from './discussion.service';
+import { envs } from '@/lib/utils/envs';
 
 const route = useRoute();
 
@@ -23,7 +24,7 @@ async function toggleLiked([liked, count]: any) {
 
 <template>
   <div class="discussion">
-    <img class="userphoto" src="/img/user1.png" />
+    <img class="userphoto" :src="`${envs.API_BASE_URL}/users/${discussion.authorId}/photo`" />
     <div class="header">
       <div>
         <div class="name">Mateus Sarmento</div>
