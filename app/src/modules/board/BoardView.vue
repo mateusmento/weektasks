@@ -144,6 +144,9 @@ async function moveDoneItems({ added }: any) {
 
 .draggable {
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .top-section {
@@ -177,7 +180,7 @@ async function moveDoneItems({ added }: any) {
 }
 
 .issue-card {
-  box-shadow: 0 1px 3px rgba(#000, 0.25);
+  box-shadow: 0 0 1px rgba(#000, 0.25);
 }
 
 .card-list {

@@ -41,7 +41,7 @@ const activeProductStore = useActiveProductStore();
   position: relative;
   top: 0;
   bottom: 0;
-  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.25);
 }
 
 .topsection {

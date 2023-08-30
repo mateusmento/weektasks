@@ -17,10 +17,6 @@ async function createBacklogItem() {
 
 <template>
   <form class="add-task" @submit.prevent="createBacklogItem">
-    <button class="add-button" type="submit" pill data-testid="create-issue-btn">
-      <IconPlus />
-    </button>
-
     <IssueTypeSelect v-model:type="itemType" />
 
     <input
@@ -28,6 +24,10 @@ async function createBacklogItem() {
       data-testid="issue-title-input"
       placeholder="Add a new user story..."
     />
+
+    <button class="add-button" type="submit" pill data-testid="create-issue-btn">
+      <IconPlus />
+    </button>
   </form>
 </template>
 

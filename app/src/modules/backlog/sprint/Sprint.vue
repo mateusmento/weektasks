@@ -6,7 +6,6 @@ import SprintIssues from './SprintIssues.vue';
 import { createSprintsRepository } from '@/lib/service/sprints.service';
 import { AxiosError } from 'axios';
 import IconArrowDown from '@/lib/components/icons/IconArrowDown.vue';
-import IconArrowUp from '@/lib/components/icons/IconArrowDown.vue';
 import IconTrash from '@/lib/components/icons/IconTrash.vue';
 import IconEdit from '@/lib/components/icons/IconEdit.vue';
 import moment from 'moment';

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import TopbarHeader from '@/lib/components/layout/TopbarHeader.vue';
-import type { Issue } from '@/lib/models/issue.model';
 import { useIssueModalStore } from '@/lib/stores/issue-modal.store';
 import IssueView from '@/modules/issue/IssueView.vue';
 import { vOnClickOutside } from '@vueuse/components';
