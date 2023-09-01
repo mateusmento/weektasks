@@ -2,7 +2,7 @@
 import { computed, ref } from 'vue';
 import { AxiosError } from 'axios';
 import { createUsersRepository } from '@/lib/service/users.service';
-import { useAuthStore } from '../auth.store';
+import { useAuthStore } from './auth.store';
 import { useRouter } from 'vue-router';
 import { Alert } from '@/lib/utils/alert';
 
