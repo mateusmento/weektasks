@@ -1,19 +1,30 @@
 <script lang="ts" setup>
-import SprintsSection from './sprint/SprintsSection.vue';
-import BacklogItems from './backlog/BacklogItems.vue';
-import BacklogHeader from './backlog/BacklogHeader.vue';
+import BacklogHeader from './components/BacklogHeader.vue';
+import Sprints from './Sprints.vue';
+import { useActiveProductStore } from '@/lib/stores/active-product.store';
+import BacklogItems from './BacklogItems.vue';
+import { useRoute } from 'vue-router';
+import { computed } from 'vue';
+
+const route = useRoute();
+const productId = computed(() => +route.params.id);
+
+const activeProductStore = useActiveProductStore();
 </script>
 
 <template>
   <main class="backlog-view">
     <section class="sprints-section">
       <h1>Sprints</h1>
-      <SprintsSection />
+      <Sprints :product-id="productId" />
     </section>
     <section class="product-backlog">
-      <BacklogHeader />
+      <BacklogHeader
+        v-if="activeProductStore.product"
+        :active-product="activeProductStore.product"
+      />
       <div class="product-backlog-label">Product Backlog</div>
-      <BacklogItems />
+      <BacklogItems :product-id="productId" />
     </section>
   </main>
 </template>

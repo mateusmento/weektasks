@@ -1,22 +1,24 @@
 <script lang="ts" setup>
 import { envs } from '@/lib/utils/envs';
-import { useActiveProductStore } from '@/lib/stores/active-product.store';
+import type { Product } from '@/modules/products/product.model';
 
-const activeProductStore = useActiveProductStore();
+defineProps<{
+  activeProduct: Product;
+}>();
 </script>
 
 <template>
   <div class="topsection">
     <div>
       <div class="subtitle">Product</div>
-      <div class="title">{{ activeProductStore.product?.name }}</div>
+      <div class="title">{{ activeProduct.name }}</div>
     </div>
 
     <div class="product-collaborators">
       <div class="subtitle">Collaborators</div>
       <div class="user-photos">
         <img
-          v-for="collaborator of activeProductStore.product?.collaborators"
+          v-for="collaborator of activeProduct.collaborators"
           :key="collaborator.id"
           class="user-photo"
           :src="`${envs.API_BASE_URL}/users/${collaborator.user.id}/photo`"

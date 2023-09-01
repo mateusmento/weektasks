@@ -17,7 +17,12 @@ const props = defineProps<{
   issue: Issue;
 }>();
 
-const emit = defineEmits(['update:issue', 'patch', 'remove', 'add-assignee', 'remove-assignee']);
+const emit = defineEmits<{
+  (e: 'patch', partial: Partial<Issue>, id: number): void;
+  (e: 'remove', id: number): void;
+  (e: 'add-assignee', user: User): void;
+  (e: 'remove-assignee', user: User): void;
+}>();
 
 const issueModalStore = useIssueModalStore();
 
@@ -28,7 +33,6 @@ const title = ref(props.issue.title);
 const estimation = ref(props.issue.estimation);
 
 function patch(partial: Partial<Issue>) {
-  emit('update:issue', { ...props.issue, ...partial });
   emit('patch', partial, props.issue.id);
 }
 
@@ -59,19 +63,11 @@ function cancelEditing() {
 }
 
 function addAssignee(assignee: User) {
-  emit('update:issue', {
-    ...props.issue,
-    assignees: [...props.issue.assignees, assignee],
-  });
-  emit('add-assignee', props.issue.id, assignee);
+  emit('add-assignee', assignee);
 }
 
 function removeAssignee(assignee: User) {
-  emit('update:issue', {
-    ...props.issue,
-    assignees: props.issue.assignees.filter((a) => a.id !== assignee.id),
-  });
-  emit('remove-assignee', props.issue.id, assignee);
+  emit('remove-assignee', assignee);
 }
 </script>
 

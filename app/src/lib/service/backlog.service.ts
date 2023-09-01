@@ -1,4 +1,5 @@
 import { axios } from '@/lib/axios';
+import type { Issue } from '../models/issue.model';
 
 export const createBacklogRepository = (productId: number) => ({
   async fetchBacklogItems() {
@@ -8,7 +9,7 @@ export const createBacklogRepository = (productId: number) => ({
 
   async createIssue(item: any) {
     const url = `/products/${productId}/issues`;
-    return axios.post<any[]>(url, item).then((res) => res.data);
+    return axios.post<Issue>(url, item).then((res) => res.data);
   },
 
   removeIssue(id: number) {

@@ -1,47 +1,34 @@
 <script lang="ts" setup>
-import { computed, ref, onMounted } from 'vue';
-import draggable from 'vuedraggable';
-import { useRoute } from 'vue-router';
-import BacklogItem from '../components/BacklogItem.vue';
-import AddBacklogItem from '../components/AddBacklogItem.vue';
-import { AxiosError } from 'axios';
+import type { Issue } from '@/lib/models/issue.model';
 import { createBacklogRepository } from '@/lib/service/backlog.service';
 import { Alert } from '@/lib/utils/alert';
-import { createIssuesRepository } from '@/lib/service/issues.service';
-import type { Issue } from '@/lib/models/issue.model';
-import type { User } from '@/lib/models/user.model';
+import { AxiosError } from 'axios';
+import { computed, onMounted, ref } from 'vue';
+import draggable from 'vuedraggable';
+import AddBacklogItem from './components/AddBacklogItem.vue';
+import BacklogItem from './components/BacklogItem.vue';
+import { patchIssue, addAssignee, removeAssignee } from './issue-mutations';
 
-const route = useRoute();
-const productId = computed(() => route.params.id);
+const props = defineProps<{
+  productId: number;
+}>();
 
-const backlogItems = ref<any[]>([]);
+const backlogRepo = computed(() => createBacklogRepository(props.productId));
 
-const backlogRepo = computed(() => createBacklogRepository(+productId.value));
-const issuesRepo = createIssuesRepository();
+const backlogItems = ref<Issue[]>([]);
 
 onMounted(async () => {
   backlogItems.value = await backlogRepo.value.fetchBacklogItems();
 });
 
-async function createBacklogItem(createItemData: any) {
+async function createBacklogItem(data: any) {
   try {
-    let item = await backlogRepo.value.createIssue(createItemData);
-    backlogItems.value.push(item);
+    let item = await backlogRepo.value.createIssue(data);
+    backlogItems.value = [...backlogItems.value, item];
   } catch (ex) {
     if (ex instanceof AxiosError) Alert.error(ex.response?.data.message);
+    throw ex;
   }
-}
-
-async function patchIssue(partial: Partial<Issue>, id: number) {
-  await issuesRepo.patchIssue(id, partial);
-}
-
-function addAssignee(issueId: number, assignee: User) {
-  issuesRepo.assignUser(issueId, assignee.id);
-}
-
-function removeAssignee(issueId: number, assignee: User) {
-  issuesRepo.removeAssignee(issueId, assignee.id);
 }
 
 async function removeIssue(id: number) {
@@ -84,14 +71,14 @@ function moveBacklogItem({ moved, added, removed }: any) {
       :move="canMoveBacklogItemToSprint"
       @change="moveBacklogItem"
     >
-      <template #item="{ index: i }">
+      <template #item="{ element: issue, index: i }">
         <li>
           <BacklogItem
-            v-model:issue="backlogItems[i]"
-            @patch="patchIssue"
+            :issue="issue"
+            @patch="async (e) => (backlogItems[i] = await patchIssue(issue, e))"
             @remove="removeIssue"
-            @add-assignee="addAssignee"
-            @remove-assignee="removeAssignee"
+            @add-assignee="async (e) => (backlogItems[i] = await addAssignee(issue, e))"
+            @remove-assignee="async (e) => (backlogItems[i] = await removeAssignee(issue, e))"
           />
         </li>
       </template>
@@ -112,9 +99,5 @@ function moveBacklogItem({ moved, added, removed }: any) {
   display: flex;
   flex-direction: column;
   gap: 2px;
-}
-
-.backlog-title {
-  margin-bottom: 20px;
 }
 </style>

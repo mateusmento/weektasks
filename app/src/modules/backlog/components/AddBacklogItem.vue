@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import IconPlus from '@/lib/components/icons/IconPlus.vue';
 import IssueTypeSelect from './IssueTypeSelect.vue';
 
-const emit = defineEmits(['update:issue']);
+const emit = defineEmits(['created']);
 
 const backlogItemTitle = ref('');
 const itemType = ref('story');
@@ -11,7 +11,7 @@ const itemType = ref('story');
 async function createBacklogItem() {
   let createItemData = { title: backlogItemTitle.value, type: itemType.value };
   backlogItemTitle.value = '';
-  emit('update:issue', createItemData);
+  emit('created', createItemData);
 }
 </script>
 
