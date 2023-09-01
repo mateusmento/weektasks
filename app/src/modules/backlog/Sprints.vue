@@ -77,8 +77,9 @@ const end = async (i: number, sprint: Sprint) =>
 <template>
   <div class="sprints">
     <draggable
-      v-model="sprints"
       class="sprint-list"
+      v-model="sprints"
+      item-key="id"
       tag="ul"
       group="sprints"
       handle=".draggable-handle"
