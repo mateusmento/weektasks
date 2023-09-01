@@ -46,7 +46,6 @@ async function signout() {
         <router-link :to="{ name: 'board', params: { id } }">Board</router-link>
         <router-link :to="{ name: 'calendar', params: { id } }">Calendar</router-link>
         <router-link :to="{ name: 'collaborators', params: { id } }">Collaborators</router-link>
-        <router-link :to="{ name: 'history', params: { id } }">History</router-link>
       </nav>
 
       <SearchBar v-if="productId" :productId="productId" />
