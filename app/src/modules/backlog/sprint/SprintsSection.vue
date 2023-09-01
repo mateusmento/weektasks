@@ -1,27 +1,3 @@
-<template>
-  <div class="sprints">
-    <draggable
-      v-model="sprints"
-      class="sprint-list"
-      item-key="id"
-      tag="ul"
-      group="sprints"
-      handle=".draggable-handle"
-      @change="moveSprint"
-    >
-      <template #item="{ element: sprint, index: i }">
-        <li>
-          <Sprint v-model:sprint="sprints[i]" @remove="removeSprint(sprint.id)" />
-        </li>
-      </template>
-    </draggable>
-
-    <div class="add-sprint" @click="createSprint">
-      <IconBigPlus />
-    </div>
-  </div>
-</template>
-
 <script lang="ts" setup>
 import { computed, ref, onMounted } from 'vue';
 import Sprint from './Sprint.vue';
@@ -35,7 +11,6 @@ import { Alert } from '@/lib/utils/alert';
 const route = useRoute();
 const productId = computed(() => route.params.id);
 
-const sprintTitle = ref('');
 const sprints = ref<any[]>([]);
 
 const sprintsRepo = createSprintsRepository();
@@ -46,10 +21,9 @@ onMounted(async () => {
 
 async function createSprint() {
   try {
-    const sprint = await sprintsRepo.createSprint(+productId.value, { title: sprintTitle.value });
+    const sprint = await sprintsRepo.createSprint(+productId.value, {});
     sprint.issues = [];
     sprints.value.push(sprint);
-    sprintTitle.value = '';
   } catch (ex) {
     if (ex instanceof AxiosError) Alert.error(ex.response?.data.message);
   }
@@ -65,6 +39,27 @@ function moveSprint({ moved }: any) {
   }
 }
 </script>
+
+<template>
+  <div class="sprints">
+    <draggable
+      v-model="sprints"
+      class="sprint-list"
+      tag="ul"
+      group="sprints"
+      handle=".draggable-handle"
+      @change="moveSprint"
+    >
+      <template #item="{ element: sprint, index: i }">
+        <Sprint v-model:sprint="sprints[i]" @remove="removeSprint(sprint.id)" />
+      </template>
+    </draggable>
+
+    <div class="add-sprint" @click="createSprint">
+      <IconBigPlus />
+    </div>
+  </div>
+</template>
 
 <style lang="sass" scoped>
 .sprints
