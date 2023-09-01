@@ -94,7 +94,7 @@ async function moveDoneItems({ added }: any) {
           @change="moveTodoItems"
           :component-data="{ class: 'draggable' }"
         >
-          <template #item="{ element: item, index: i }">
+          <template #item="{ index: i }">
             <IssueCard v-model:issue="board.issues.todo[i]" />
           </template>
         </draggable>
@@ -109,7 +109,7 @@ async function moveDoneItems({ added }: any) {
           @change="moveDoingItems"
           :component-data="{ class: 'draggable' }"
         >
-          <template #item="{ element: item, index: i }">
+          <template #item="{ index: i }">
             <IssueCard v-model:issue="board.issues.doing[i]" />
           </template>
         </draggable>
@@ -124,7 +124,7 @@ async function moveDoneItems({ added }: any) {
           @change="moveDoneItems"
           :component-data="{ class: 'draggable' }"
         >
-          <template #item="{ element: item, index: i }">
+          <template #item="{ index: i }">
             <IssueCard v-model:issue="board.issues.done[i]" />
           </template>
         </draggable>
