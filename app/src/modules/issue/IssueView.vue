@@ -27,7 +27,7 @@ async function fetchIssue(issueId: number): Promise<IIssue> {
 
 <template>
   <div class="issue-view" v-if="issue">
-    <Issue :issue="issue" />
+    <Issue v-model:issue="issue" />
   </div>
 </template>
 
