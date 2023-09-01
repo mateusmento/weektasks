@@ -11,6 +11,7 @@ import BacklogItem from './components/BacklogItem.vue';
 import AddBacklogItem from './components/AddBacklogItem.vue';
 import SprintCard from './components/SprintCard.vue';
 import { addIssue, endSprint, patchSprint, removeIssue, startSprint } from './sprint-mutations';
+import { requestApi } from '@/lib/utils/api';
 
 const sprintsRepo = createSprintsRepository();
 
@@ -62,6 +63,15 @@ async function moveIssue(sprint: Sprint, { moved, added, removed }: any) {
     sprintsRepo.moveItem(sprint.id, id, moved.newIndex);
   }
 }
+
+const patch = async (i: number, sprint: Sprint, partial: Partial<Sprint>) =>
+  (sprints.value[i] = await requestApi(patchSprint(sprint, partial)));
+
+const start = async (i: number, sprint: Sprint) =>
+  (sprints.value[i] = await requestApi(startSprint(sprint.id)));
+
+const end = async (i: number, sprint: Sprint) =>
+  (sprints.value[i] = await requestApi(endSprint(sprint.id)));
 </script>
 
 <template>
@@ -78,10 +88,10 @@ async function moveIssue(sprint: Sprint, { moved, added, removed }: any) {
         <SprintCard
           :sprint="sprint"
           v-model:editable="editable"
-          @patch="async (p) => (sprints[i] = await patchSprint(sprint, p))"
+          @patch="patch(i, sprint, $event)"
           @remove="removeSprint(sprint.id)"
-          @start-sprint="async () => (sprints[i] = await startSprint(sprint.id))"
-          @end-sprint="async () => (sprints[i] = await endSprint(sprint.id))"
+          @start-sprint="start(i, sprint)"
+          @end-sprint="end(i, sprint)"
           #default="{ hideIssues }"
         >
           <div class="sprint-issues" :class="{ hide: hideIssues }">
