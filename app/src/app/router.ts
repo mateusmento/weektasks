@@ -4,7 +4,6 @@ import backlogRoutes from '@/modules/backlog/backlog.routes';
 import boardRoutes from '@/modules/board/board.routes';
 import calendarRoutes from '@/modules/calendar/calendar.routes';
 import collaboratorsRoutes from '@/modules/collaborators/collaborators.routes';
-import historyRoutes from '@/modules/history/history.routes';
 import issueRoutes from '@/modules/issue/issue.routes';
 import timelineRoutes from '@/modules/timeline/timeline.routes';
 import { createRouter, createWebHistory } from 'vue-router';
@@ -32,7 +31,6 @@ const router = createRouter({
         ...backlogRoutes,
         ...collaboratorsRoutes,
         ...boardRoutes,
-        ...historyRoutes,
         ...issueRoutes,
         ...calendarRoutes,
       ],
