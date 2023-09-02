@@ -37,7 +37,7 @@ export class CreateIssueInBacklogHandler
     );
     const order = await this.findNextOrder(productId);
     await this.backlogItemRepo.save({ issueId: issue.id, productId, order });
-    return issue;
+    return { ...issue, order };
   }
 
   async findNextOrder(productId: number) {
