@@ -64,8 +64,10 @@ async function moveIssue(sprint: Sprint, { moved, added, removed }: any) {
   }
 }
 
-const patch = async (i: number, sprint: Sprint, partial: Partial<Sprint>) =>
-  (sprints.value[i] = await requestApi(patchSprint(sprint, partial)));
+const patch = async (i: number, sprint: Sprint, partial: Partial<Sprint>) => {
+  sprints.value[i] = await requestApi(patchSprint(sprint, partial));
+  editable.value = false;
+};
 
 const start = async (i: number, sprint: Sprint) =>
   (sprints.value[i] = await requestApi(startSprint(sprint.id)));
