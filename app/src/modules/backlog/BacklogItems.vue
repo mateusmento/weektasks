@@ -1,13 +1,13 @@
 <script lang="ts" setup>
 import type { Issue } from '@/lib/models/issue.model';
 import { createBacklogRepository } from '@/lib/service/backlog.service';
-import { Alert } from '@/lib/utils/alert';
-import { AxiosError } from 'axios';
 import { computed, onMounted, ref } from 'vue';
 import draggable from 'vuedraggable';
 import AddBacklogItem from './components/AddBacklogItem.vue';
 import BacklogItem from './components/BacklogItem.vue';
-import { patchIssue, addAssignee, removeAssignee } from './issue-mutations';
+import * as issueMutations from './issue-mutations';
+import { requestApi } from '@/lib/utils/api';
+import type { User } from '@/lib/models/user.model';
 
 const props = defineProps<{
   productId: number;
@@ -22,19 +22,23 @@ onMounted(async () => {
 });
 
 async function createBacklogItem(data: any) {
-  try {
-    let item = await backlogRepo.value.createIssue(data);
-    backlogItems.value = [...backlogItems.value, item];
-  } catch (ex) {
-    if (ex instanceof AxiosError) Alert.error(ex.response?.data.message);
-    throw ex;
-  }
+  let item = await requestApi(backlogRepo.value.createIssue(data));
+  backlogItems.value = [...backlogItems.value, item];
 }
 
 async function removeIssue(id: number) {
   await backlogRepo.value.removeIssue(id);
   backlogItems.value = backlogItems.value.filter((i) => i.id !== id);
 }
+
+const patchIssue = async (i: number, issue: Issue, e: Partial<Issue>) =>
+  (backlogItems.value[i] = await issueMutations.patchIssue(issue, e));
+
+const addAssignee = async (i: number, issue: Issue, e: User) =>
+  (backlogItems.value[i] = await issueMutations.addAssignee(issue, e));
+
+const removeAssignee = async (i: number, issue: Issue, e: User) =>
+  (backlogItems.value[i] = await issueMutations.removeAssignee(issue, e));
 
 function canMoveBacklogItemToSprint({ relatedContext }: any) {
   let dropzone = relatedContext.component.$attrs['data-dropzone'];
@@ -75,10 +79,10 @@ function moveBacklogItem({ moved, added, removed }: any) {
         <li>
           <BacklogItem
             :issue="issue"
-            @patch="async (e) => (backlogItems[i] = await patchIssue(issue, e))"
+            @patch="patchIssue(i, issue, $event)"
             @remove="removeIssue"
-            @add-assignee="async (e) => (backlogItems[i] = await addAssignee(issue, e))"
-            @remove-assignee="async (e) => (backlogItems[i] = await removeAssignee(issue, e))"
+            @add-assignee="addAssignee(i, issue, $event)"
+            @remove-assignee="removeAssignee(i, issue, $event)"
           />
         </li>
       </template>

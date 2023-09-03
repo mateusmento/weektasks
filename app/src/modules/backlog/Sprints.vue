@@ -1,17 +1,17 @@
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue';
 import draggable from 'vuedraggable';
-import { AxiosError } from 'axios';
 import IconBigPlus from '@/lib/components/icons/IconBigPlus.vue';
 import { createSprintsRepository } from '@/lib/service/sprints.service';
-import { Alert } from '@/lib/utils/alert';
 import type { Sprint } from '@/lib/models/sprint.model';
-import { addAssignee, patchIssue, removeAssignee } from './issue-mutations';
+import * as issueMutations from './issue-mutations';
 import BacklogItem from './components/BacklogItem.vue';
 import AddBacklogItem from './components/AddBacklogItem.vue';
 import SprintCard from './components/SprintCard.vue';
-import { addIssue, endSprint, patchSprint, removeIssue, startSprint } from './sprint-mutations';
+import * as sprintMutations from './sprint-mutations';
 import { requestApi } from '@/lib/utils/api';
+import type { User } from '@/lib/models/user.model';
+import type { Issue } from '@/lib/models/issue.model';
 
 const sprintsRepo = createSprintsRepository();
 
@@ -27,19 +27,41 @@ onMounted(async () => {
 });
 
 async function createSprint() {
-  try {
-    const sprint = await sprintsRepo.createSprint(props.productId, {});
-    sprint.issues = [];
-    sprints.value.push(sprint);
-  } catch (ex) {
-    if (ex instanceof AxiosError) Alert.error(ex.response?.data.message);
-  }
+  const sprint = await requestApi(sprintsRepo.createSprint(props.productId, {}));
+  sprint.issues = [];
+  sprints.value.push(sprint);
 }
 
 async function removeSprint(id: number) {
-  await sprintsRepo.removeSprint(id);
+  await requestApi(sprintsRepo.removeSprint(id));
   sprints.value = sprints.value.filter((s) => s.id !== id);
 }
+
+const patchSprint = async (i: number, sprint: Sprint, partial: Partial<Sprint>) => {
+  sprints.value[i] = await requestApi(sprintMutations.patchSprint(sprint, partial));
+  editable.value = false;
+};
+
+const startSprint = async (i: number, sprint: Sprint) =>
+  (sprints.value[i] = await requestApi(sprintMutations.startSprint(sprint.id)));
+
+const endSprint = async (i: number, sprint: Sprint) =>
+  (sprints.value[i] = await requestApi(sprintMutations.endSprint(sprint.id)));
+
+const addIssue = async (i: number, sprint: Sprint, data: Partial<Issue>) =>
+  (sprint.issues = await sprintMutations.addIssue(sprint, data));
+
+const removeIssue = async (i: number, sprint: Sprint) =>
+  (sprint.issues = await sprintMutations.removeIssue(sprint, sprint.issues[i]));
+
+const patchIssue = async (i: number, sprint: Sprint, partial: Partial<Issue>) =>
+  (sprint.issues[i] = await issueMutations.patchIssue(sprint.issues[i], partial));
+
+const addAssignee = async (i: number, sprint: Sprint, assignee: User) =>
+  (sprint.issues[i] = await issueMutations.addAssignee(sprint.issues[i], assignee));
+
+const removeAssignee = async (i: number, sprint: Sprint, assignee: User) =>
+  (sprint.issues[i] = await issueMutations.removeAssignee(sprint.issues[i], assignee));
 
 function moveSprint({ moved }: any) {
   if (moved) {
@@ -63,17 +85,6 @@ async function moveIssue(sprint: Sprint, { moved, added, removed }: any) {
     sprintsRepo.moveItem(sprint.id, id, moved.newIndex);
   }
 }
-
-const patch = async (i: number, sprint: Sprint, partial: Partial<Sprint>) => {
-  sprints.value[i] = await requestApi(patchSprint(sprint, partial));
-  editable.value = false;
-};
-
-const start = async (i: number, sprint: Sprint) =>
-  (sprints.value[i] = await requestApi(startSprint(sprint.id)));
-
-const end = async (i: number, sprint: Sprint) =>
-  (sprints.value[i] = await requestApi(endSprint(sprint.id)));
 </script>
 
 <template>
@@ -91,10 +102,10 @@ const end = async (i: number, sprint: Sprint) =>
         <SprintCard
           :sprint="sprint"
           v-model:editable="editable"
-          @patch="patch(i, sprint, $event)"
+          @patch="patchSprint(i, sprint, $event)"
           @remove="removeSprint(sprint.id)"
-          @start-sprint="start(i, sprint)"
-          @end-sprint="end(i, sprint)"
+          @start-sprint="startSprint(i, sprint)"
+          @end-sprint="endSprint(i, sprint)"
           #default="{ hideIssues }"
         >
           <div class="sprint-issues" :class="{ hide: hideIssues }">
@@ -111,18 +122,14 @@ const end = async (i: number, sprint: Sprint) =>
                 <BacklogItem
                   :issue="issue"
                   @remove="async () => (sprint.issues = await removeIssue(sprint, issue))"
-                  @patch="async (e) => (sprint.issues[j] = await patchIssue(issue, e))"
-                  @add-assignee="async (e) => (sprint.issues[j] = await addAssignee(issue, e))"
-                  @remove-assignee="
-                    async (e) => (sprint.issues[j] = await removeAssignee(issue, e))
-                  "
+                  @patch="patchIssue(j, sprint, $event)"
+                  @add-assignee="addAssignee(j, sprint, $event)"
+                  @remove-assignee="removeAssignee(j, sprint, $event)"
                 />
               </template>
             </draggable>
 
-            <AddBacklogItem
-              @created="async (data) => (sprint.issues = await addIssue(sprint, data))"
-            />
+            <AddBacklogItem @created="addIssue(i, sprint, $event)" />
           </div>
         </SprintCard>
       </template>

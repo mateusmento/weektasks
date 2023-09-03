@@ -5,12 +5,11 @@ import { useRoute, useRouter } from 'vue-router';
 import type { Issue } from '@/lib/models/issue.model';
 import type { Sprint } from '@/lib/models/sprint.model';
 import draggable from 'vuedraggable';
-import { AxiosError } from 'axios';
 import { createSprintsRepository } from '@/lib/service/sprints.service';
 import { createIssuesRepository } from '@/lib/service/issues.service';
 import IssueCard from './IssueCard.vue';
 import CardList from './CardList.vue';
-import { Alert } from '@/lib/utils/alert';
+import { requestApi } from '@/lib/utils/api';
 
 const route = useRoute();
 const router = useRouter();
@@ -30,11 +29,7 @@ const sprintsRepo = createSprintsRepository();
 const issuesRepo = createIssuesRepository();
 
 onMounted(async () => {
-  try {
-    board.value = await fetchBoard(+route.params.id);
-  } catch (ex) {
-    if (ex instanceof AxiosError) Alert.error(ex.response?.data.message);
-  }
+  board.value = await requestApi(fetchBoard(+route.params.id));
 });
 
 function fetchBoard(id: number) {
@@ -42,14 +37,9 @@ function fetchBoard(id: number) {
 }
 
 async function endSprint() {
-  try {
-    if (!board.value) return;
-    await sprintsRepo.endSprint(board.value.sprint.id);
-    router.push({ name: 'backlog' });
-  } catch (ex) {
-    if (ex instanceof AxiosError) Alert.error(ex.response?.data.message);
-    else throw ex;
-  }
+  if (!board.value) return;
+  await requestApi(sprintsRepo.endSprint(board.value.sprint.id));
+  router.push({ name: 'backlog' });
 }
 
 async function moveTodoItems({ added }: any) {
