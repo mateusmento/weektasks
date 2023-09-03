@@ -51,8 +51,8 @@ const endSprint = async (i: number, sprint: Sprint) =>
 const addIssue = async (i: number, sprint: Sprint, data: Partial<Issue>) =>
   (sprint.issues = await sprintMutations.addIssue(sprint, data));
 
-const removeIssue = async (i: number, sprint: Sprint) =>
-  (sprint.issues = await sprintMutations.removeIssue(sprint, sprint.issues[i]));
+const removeIssue = async (sprint: Sprint, issue: Issue) =>
+  (sprint.issues = await sprintMutations.removeIssue(sprint, issue));
 
 const patchIssue = async (i: number, sprint: Sprint, partial: Partial<Issue>) =>
   (sprint.issues[i] = await issueMutations.patchIssue(sprint.issues[i], partial));
@@ -121,7 +121,7 @@ async function moveIssue(sprint: Sprint, { moved, added, removed }: any) {
               <template #item="{ element: issue, index: j }">
                 <BacklogItem
                   :issue="issue"
-                  @remove="async () => (sprint.issues = await removeIssue(sprint, issue))"
+                  @remove="removeIssue(sprint, issue)"
                   @patch="patchIssue(j, sprint, $event)"
                   @add-assignee="addAssignee(j, sprint, $event)"
                   @remove-assignee="removeAssignee(j, sprint, $event)"
@@ -152,7 +152,8 @@ async function moveIssue(sprint: Sprint, { moved, added, removed }: any) {
 <style scoped>
 .sprint-issues {
   margin-top: 5px;
-  background: #f6faff;
+  /* background: #f6faff; */
+  background-color: #f0f7ff;
   border-radius: 8px;
   padding: 5px;
 }
