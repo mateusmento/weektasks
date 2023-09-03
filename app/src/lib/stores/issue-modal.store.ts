@@ -11,8 +11,11 @@ export const useIssueModalStore = defineStore('issue-modal', {
     async open(issue: Issue) {
       const issueRepo = createIssuesRepository();
       const comments = await issueRepo.findComments(issue.id);
-      this.isOpen = true;
-      this.issue = { ...issue, comments };
+      this.issue = null;
+      setTimeout(() => {
+        this.isOpen = true;
+        this.issue = { ...issue, comments };
+      });
     },
     close() {
       this.isOpen = false;

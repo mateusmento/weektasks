@@ -7,13 +7,21 @@ import { vOnClickOutside } from '@vueuse/components';
 import { RouterView } from 'vue-router';
 
 const issueModalStore = useIssueModalStore();
+
+function closeIssue() {
+  if (!issueModalStore.isOpen) issueModalStore.issue = null;
+}
 </script>
 
 <template>
   <TopbarHeader />
-  <RouterView></RouterView>
+  <RouterView />
 
-  <aside class="drawer" :class="{ 'drawer--show': issueModalStore.isOpen }">
+  <aside
+    class="drawer"
+    :class="{ 'drawer--show': issueModalStore.isOpen }"
+    @transitionend="closeIssue"
+  >
     <div class="issue-view">
       <ColorfulBar thick />
       <Issue
