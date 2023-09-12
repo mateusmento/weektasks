@@ -38,7 +38,7 @@ async function signout() {
 </script>
 
 <template>
-  <div class="header-content">
+  <div class="topbar-header">
     <nav>
       <router-link :to="{ name: 'timeline', params: { id } }">Timeline</router-link>
       <router-link :to="{ name: 'backlog', params: { id } }">Backlog</router-link>
@@ -75,16 +75,21 @@ async function signout() {
 </template>
 
 <style scoped>
-.header-content {
+.topbar-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 15px 30px;
+  background-color: #fff;
 }
 
 nav {
   display: flex;
   gap: 30px;
+}
+
+.search-bar {
+  width: 360px;
 }
 
 .active-product {

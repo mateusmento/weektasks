@@ -44,9 +44,12 @@ function closeResults() {
 }
 </script>
 
-<style lang="sass" setup>
-.combo-box
-  width: 360px
-.icon
-  width: 20px
+<style setup>
+.combo-box {
+  width: 100%;
+}
+
+.icon {
+  width: 20px;
+}
 </style>

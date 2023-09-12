@@ -14,35 +14,43 @@ function closeIssue() {
 </script>
 
 <template>
-  <header>
-    <TopbarHeader />
-  </header>
-  <main>
-    <aside></aside>
-    <RouterView />
-  </main>
+  <div class="app-layout">
+    <header>
+      <TopbarHeader />
+    </header>
 
-  <div
-    class="drawer"
-    :class="{ 'drawer--show': issueModalStore.isOpen }"
-    @transitionend="closeIssue"
-  >
-    <div class="issue-view">
-      <ColorfulBar thick />
-      <Issue
-        v-if="issueModalStore.issue !== null"
-        v-model:issue="issueModalStore.issue"
-        v-on-click-outside="() => issueModalStore.close()"
-      />
-    </div>
+    <main>
+      <aside class="aside-menu"></aside>
+      <RouterView />
+    </main>
+
+    <aside
+      class="drawer"
+      :class="{ 'drawer--show': issueModalStore.isOpen }"
+      @transitionend="closeIssue"
+    >
+      <div class="issue-view">
+        <ColorfulBar thick />
+        <Issue
+          v-if="issueModalStore.issue !== null"
+          v-model:issue="issueModalStore.issue"
+          v-on-click-outside="() => issueModalStore.close()"
+        />
+      </div>
+    </aside>
   </div>
 </template>
 
 <style lang="scss" scoped>
+.app-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 header {
   position: sticky;
   top: 0;
-  background-color: #fff;
   z-index: 1;
 
   height: 71px;
@@ -54,7 +62,7 @@ main {
   height: calc(100% - 71px);
 }
 
-aside {
+.aside-menu {
   width: 300px;
   background-color: #242424;
 }
