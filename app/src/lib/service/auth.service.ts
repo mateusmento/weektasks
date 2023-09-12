@@ -1,8 +1,8 @@
 import { axios } from '@/lib/axios';
 
-export const createAuthService = () => new AuthService();
+export const createAuthService = () => new AuthApi();
 
-class AuthService {
+export class AuthApi {
   signin(credentials: any) {
     return axios.post('/auth/access', credentials);
   }
