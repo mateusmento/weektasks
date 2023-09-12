@@ -79,7 +79,7 @@ async function removeCollaborator(collabId: number) {
   display: flex
   justify-content: center
   align-items: center
-  min-height: calc(100vh - 200px)
+  // min-height: calc(100vh - 200px)
 
 .page-title
   display: block

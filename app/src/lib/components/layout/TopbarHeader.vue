@@ -97,10 +97,9 @@ nav {
 }
 
 .active-product {
-  background: #c5b5fd;
-  color: #7755f3;
-  background: #d2d3ff;
-  color: #8568ec;
+  background-color: transparent;
+  border: 1px solid #7559f0;
+  color: #7559f0;
   font-weight: 600;
 }
 

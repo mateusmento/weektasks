@@ -55,15 +55,15 @@ function cancelEditing() {
         <form v-else @submit.prevent="confirmEditing">
           <textarea v-model="text"></textarea>
           <div class="comment-actions">
-            <button type="button" class="small" @click="cancelEditing">Cancel</button>
-            <button type="submit" class="small">Send</button>
+            <button type="submit" class="primary">Send</button>
+            <button type="button" class="secondary" @click="cancelEditing">Cancel</button>
           </div>
         </form>
         <div class="footer">
           <LikeButton :liked="false" :count="10" />
           <div>Reply</div>
           <RouterLink to="">
-            <button class="light-purple" hover>See Discussion</button>
+            <button class="small light-purple" hover>See Discussion</button>
           </RouterLink>
         </div>
       </div>
@@ -101,8 +101,6 @@ function cancelEditing() {
 }
 
 button {
-  font-size: 12px;
-  padding: 2px 7px;
   border-radius: 5px;
 }
 </style>

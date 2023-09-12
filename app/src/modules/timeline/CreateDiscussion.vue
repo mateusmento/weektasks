@@ -4,8 +4,9 @@ import { vOnClickOutside } from '@vueuse/components';
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
 import DiscussionType from './DiscussionType.vue';
+import { requestApi } from '@/lib/utils/api';
 
-const emit = defineEmits(['update:issue']);
+const emit = defineEmits(['created']);
 const route = useRoute();
 
 const discussionService = new DiscussionService();
@@ -15,8 +16,8 @@ const showStatusOptions = ref(false);
 
 async function createDiscussion() {
   const data = { text: text.value, type: type.value };
-  const discussion = await discussionService.createDiscussion(+route.params.id, data);
-  emit('update:issue', discussion);
+  const discussion = await requestApi(discussionService.createDiscussion(+route.params.id, data));
+  emit('created', discussion);
   text.value = '';
 }
 

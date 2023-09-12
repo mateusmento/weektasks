@@ -57,7 +57,7 @@ async function end() {
     <div class="topbar">
       <WkEditable class="title small" v-model="title" :editable="editable" />
 
-      <IconEdit v-if="!editable" @click="editable = !editable" title="Edit sprint" />
+      <IconEdit v-if="!editable" @click="editable = true" title="Edit sprint" />
       <template v-else>
         <span @click="updateTitle" title="Confirm edit">
           <el-icon>

@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import BacklogHeader from './components/BacklogHeader.vue';
-import Sprints from './Sprints.vue';
 import { useActiveProductStore } from '@/lib/stores/active-product.store';
-import BacklogItems from './BacklogItems.vue';
-import { useRoute } from 'vue-router';
 import { computed } from 'vue';
+import { useRoute } from 'vue-router';
+import BacklogItems from './BacklogItems.vue';
+import Sprints from './Sprints.vue';
+import BacklogHeader from './components/BacklogHeader.vue';
 
 const route = useRoute();
 const productId = computed(() => +route.params.id);
@@ -15,7 +15,9 @@ const activeProductStore = useActiveProductStore();
 <template>
   <main class="backlog-view">
     <section class="sprints-section">
-      <h1>Sprints</h1>
+      <div class="flex-horz x-justify">
+        <h1>Sprints</h1>
+      </div>
       <Sprints :product-id="productId" />
     </section>
     <section class="product-backlog">
@@ -23,7 +25,7 @@ const activeProductStore = useActiveProductStore();
         v-if="activeProductStore.product"
         :active-product="activeProductStore.product"
       />
-      <div class="product-backlog-label">Product Backlog</div>
+      <div class="product-backlog-label">Backlog</div>
       <BacklogItems :product-id="productId" />
     </section>
   </main>
@@ -47,10 +49,11 @@ const activeProductStore = useActiveProductStore();
 
 .product-backlog {
   width: 700px;
+  /* flex: 1; */
   min-height: 100%;
   padding: 60px;
   background-color: white;
-  box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.25);
+  /* box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.25); */
 }
 
 .product-backlog-label {

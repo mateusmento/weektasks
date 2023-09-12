@@ -17,6 +17,28 @@ function closeIssue() {
   <TopbarHeader />
   <RouterView />
 
+  <!-- <div class="wrapper">
+    <div class="section">
+      <div class="item">Hello world</div>
+      <div class="item">Hello world</div>
+      <div class="item">Hello world</div>
+      <div class="item">Hello world</div>
+      <div class="item">Hello world</div>
+      <div class="item">Hello world</div>
+      <div class="item">Hello world</div>
+    </div>
+
+    <div class="section">
+      <div class="item">Hello world</div>
+      <div class="item">Hello world</div>
+      <div class="item">Hello world</div>
+      <div class="item">Hello world</div>
+      <div class="item">Hello world</div>
+      <div class="item">Hello world</div>
+      <div class="item">Hello world</div>
+    </div>
+  </div> -->
+
   <aside
     class="drawer"
     :class="{ 'drawer--show': issueModalStore.isOpen }"
@@ -31,17 +53,33 @@ function closeIssue() {
       />
     </div>
   </aside>
-
-  <!-- <teleport to="#modal">
-    <div class="backscreen" v-if="issueModalStore.isOpen">
-      <div class="modal" v-on-click-outside="() => issueModalStore.close()">
-        <IssueView v-if="issueModalStore.issue" :issue-id="issueModalStore.issue.id"/>
-      </div>
-    </div>
-  </teleport> -->
 </template>
 
 <style lang="scss" scoped>
+.wrapper {
+  flex: 1;
+  display: flex;
+  overflow-y: hidden;
+}
+
+.section {
+  flex: 1;
+  overflow-y: auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  padding: 10px;
+  background-color: red;
+}
+
+.item {
+  min-height: 150px;
+  background-color: #fff;
+  border: 1px solid #777;
+}
+
 .issue-view {
   width: 720px;
   margin: 0 auto;
@@ -62,26 +100,4 @@ function closeIssue() {
 
 .drawer--show
   transform: translateX(0)
-
-.product-content
-  padding: 60px 80px
-  flex: 1
-  background: #F6FAFF
-
-.backscreen
-  background-color: rgb(0, 0, 0, .2)
-  position: fixed
-  top: 0
-  width: 100vw
-  height: 100vh
-  z-index: 10
-  overflow: auto
-  padding: 20px
-
-.modal
-  background-color: white
-  width: fit-content
-  margin: auto
-  min-height: calc(100vh - 40px)
-  padding: 20px
 </style>

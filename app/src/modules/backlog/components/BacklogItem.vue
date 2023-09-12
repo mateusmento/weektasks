@@ -179,7 +179,7 @@ input.story-points-input {
 }
 
 .selected {
-  background-color: aliceblue;
+  background-color: #e9e8f0;
 }
 </style>
 

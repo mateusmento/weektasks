@@ -152,7 +152,7 @@ async function moveIssue(sprint: Sprint, { moved, added, removed }: any) {
 <style scoped>
 .sprint-issues {
   margin-top: 5px;
-  /* background: #f6faff; */
+  background: #f6faff;
   background-color: #f0f7ff;
   border-radius: 8px;
   padding: 5px;
@@ -172,8 +172,6 @@ async function moveIssue(sprint: Sprint, { moved, added, removed }: any) {
   flex-direction: column;
   gap: 2px;
   padding: 5px;
-
-  background: #f6faff;
   border-radius: 8px;
 }
 </style>
@@ -184,6 +182,7 @@ async function moveIssue(sprint: Sprint, { moved, added, removed }: any) {
   margin: auto;
   margin-top: 40px;
   background-color: #bbcbdf;
+  background: #8459ff;
   padding: 10px;
   border-radius: 20px;
   line-height: 0;

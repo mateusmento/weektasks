@@ -10,6 +10,11 @@
   font-family: inherit;
 }
 
+::selection {
+  background-color: #a381ff;
+  color: white;
+}
+
 body {
   transition:
     color 0.5s,
@@ -32,14 +37,16 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #f6faff;
+  /* background-color: #f6faff; */
+  background: #f0f7ff;
   color: #474747;
 }
 
 #app {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: 50vh;
+  max-height: 100vh;
 }
 
 ul {

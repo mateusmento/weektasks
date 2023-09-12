@@ -5,25 +5,21 @@ import IssueTypeSelect from './IssueTypeSelect.vue';
 
 const emit = defineEmits(['created']);
 
-const backlogItemTitle = ref('');
-const itemType = ref('story');
+const title = ref('');
+const type = ref('story');
 
 async function createBacklogItem() {
-  let createItemData = { title: backlogItemTitle.value, type: itemType.value };
-  backlogItemTitle.value = '';
-  emit('created', createItemData);
+  let data = { title: title.value, type: type.value };
+  title.value = '';
+  emit('created', data);
 }
 </script>
 
 <template>
   <form class="add-task" @submit.prevent="createBacklogItem">
-    <IssueTypeSelect v-model:type="itemType" />
+    <IssueTypeSelect v-model:type="type" />
 
-    <input
-      v-model="backlogItemTitle"
-      data-testid="issue-title-input"
-      placeholder="Add a new user story..."
-    />
+    <input v-model="title" data-testid="issue-title-input" placeholder="Add a new user story..." />
 
     <button class="add-button" type="submit" pill data-testid="create-issue-btn">
       <IconPlus />
@@ -41,6 +37,7 @@ async function createBacklogItem() {
 
   .add-button {
     background: #8459ff;
+    background-color: #bbcbdf;
     padding: 5px;
   }
 
@@ -48,7 +45,7 @@ async function createBacklogItem() {
     border: none;
     background-color: inherit;
     outline: none;
-    /* color: #8459FF; */
+    color: #8459ff;
     margin: 10px;
     padding: 5px;
     transition: 200ms;
@@ -56,7 +53,7 @@ async function createBacklogItem() {
   }
 
   input::placeholder {
-    color: #653ecf;
+    color: #4813db;
   }
 }
 </style>

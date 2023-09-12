@@ -92,7 +92,7 @@ function moveBacklogItem({ moved, added, removed }: any) {
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .backlog {
   background: #f0f7ff;
   border-radius: 8px;

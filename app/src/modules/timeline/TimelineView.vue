@@ -4,6 +4,7 @@ import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import CreateDiscussion from './CreateDiscussion.vue';
 import Discussion from './Discussion.vue';
+import CollaboratorsView from '../collaborators/CollaboratorsView.vue';
 
 const route = useRoute();
 
@@ -21,26 +22,65 @@ function addDiscussion($event: any) {
 
 <template>
   <main class="timeline-view">
-    <CreateDiscussion @created="addDiscussion" />
-    <div v-for="(discussion, i) in discussions" :key="discussion.id" class="card card-lg p-md">
-      <Discussion v-model:discussion="discussions[i]" />
+    <div class="flex-vert-lg p-lg">
+      <ul class="list">
+        <li>Timeline</li>
+        <li>Backlog</li>
+        <li>Calendar</li>
+      </ul>
+      <CollaboratorsView />
+    </div>
+    <div style="min-height: 0px">
+      <div class="discussions">
+        <CreateDiscussion @created="addDiscussion" class="p-lg" />
+        <ul>
+          <li v-for="(discussion, i) in discussions" :key="discussion.id">
+            <Discussion v-model:discussion="discussions[i]" class="p-lg" />
+          </li>
+          <li class="bottom-item"></li>
+        </ul>
+      </div>
     </div>
   </main>
 </template>
 
 <style lang="scss" scoped>
 .timeline-view {
+  flex: 1;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  max-width: 830px;
-  margin: 0 auto;
-  padding: 60px;
-  gap: 40px;
-  width: 100%;
+  overflow-y: hidden;
 }
 
-.timeline-event {
-  width: 100%;
+.discussions {
+  display: flex;
+  flex-direction: column;
+
+  max-width: 640px;
+  height: 100%;
+  overflow-y: auto;
+
+  background-color: white;
+
+  border: 1px solid #ccc;
+  border-top: none;
+  border-bottom: none;
+}
+
+.discussions {
+  ul {
+    border: none;
+  }
+
+  li:first-of-type {
+    border-top: 1px solid #ccc;
+  }
+
+  li:not(:last-of-type) {
+    border-bottom: 1px solid #ccc;
+  }
+}
+
+.bottom-item {
+  height: 20px;
 }
 </style>
