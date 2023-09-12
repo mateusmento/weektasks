@@ -38,40 +38,43 @@ async function signout() {
 </script>
 
 <template>
-  <div class="topbar-header">
-    <nav>
-      <router-link :to="{ name: 'timeline', params: { id } }">Timeline</router-link>
-      <router-link :to="{ name: 'backlog', params: { id } }">Backlog</router-link>
-      <router-link :to="{ name: 'board', params: { id } }">Board</router-link>
-      <router-link :to="{ name: 'calendar', params: { id } }">Calendar</router-link>
-      <router-link :to="{ name: 'collaborators', params: { id } }">Collaborators</router-link>
-    </nav>
+  <header>
+    <div class="topbar-header">
+      <nav>
+        <router-link :to="{ name: 'timeline', params: { id } }">Timeline</router-link>
+        <router-link :to="{ name: 'backlog', params: { id } }">Backlog</router-link>
+        <router-link :to="{ name: 'board', params: { id } }">Board</router-link>
+        <router-link :to="{ name: 'calendar', params: { id } }">Calendar</router-link>
+        <router-link :to="{ name: 'collaborators', params: { id } }">Collaborators</router-link>
+      </nav>
 
-    <SearchBar v-if="productId" :productId="productId" />
+      <SearchBar v-if="productId" :productId="productId" />
 
-    <div class="right-side">
-      <router-link to="/products">
-        <button class="active-product" pill>{{ activeProductStore.product?.name }}</button>
-      </router-link>
-      <div class="dropdown" :class="{ active: showDropdown }" v-on-click-outside="hideDropdown">
-        <div class="dropdown-toggle" @click="toggleDropdown">
-          <img
-            class="user-photo"
-            :src="`${envs.API_BASE_URL}/users/${authUserStore.user?.id}/photo`"
-          />
+      <div class="right-side">
+        <router-link to="/products">
+          <button class="active-product" pill>{{ activeProductStore.product?.name }}</button>
+        </router-link>
+        <div class="dropdown" :class="{ active: showDropdown }" v-on-click-outside="hideDropdown">
+          <div class="dropdown-toggle" @click="toggleDropdown">
+            <img
+              class="user-photo"
+              :src="`${envs.API_BASE_URL}/users/${authUserStore.user?.id}/photo`"
+            />
+          </div>
+          <ul class="dropdown-menu menu list">
+            <li>Welcome, {{ authUserStore.user?.name }}</li>
+            <li class="menu-item">
+              <RouterLink to="" @click="toggleDropdown" @click.prevent="signout">
+                Sign Out
+              </RouterLink>
+            </li>
+          </ul>
         </div>
-        <ul class="dropdown-menu menu list">
-          <li>Welcome, {{ authUserStore.user?.name }}</li>
-          <li class="menu-item">
-            <RouterLink to="" @click="toggleDropdown" @click.prevent="signout">
-              Sign Out
-            </RouterLink>
-          </li>
-        </ul>
       </div>
     </div>
-  </div>
-  <ColorfulBar />
+
+    <ColorfulBar />
+  </header>
 </template>
 
 <style scoped>

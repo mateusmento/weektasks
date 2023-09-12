@@ -48,6 +48,10 @@ const activeProductStore = useActiveProductStore();
 }
 
 .product-backlog {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+
   width: 700px;
   /* flex: 1; */
   min-height: 100%;
@@ -59,6 +63,6 @@ const activeProductStore = useActiveProductStore();
 .product-backlog-label {
   font-size: 20px;
   font-weight: 600;
-  margin-bottom: 20px;
+  margin-bottom: -20px;
 }
 </style>

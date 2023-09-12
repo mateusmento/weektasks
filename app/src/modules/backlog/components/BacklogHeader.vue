@@ -45,7 +45,6 @@ const open = ref(false);
 .backlog-header {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 40px;
 }
 
 .subtitle {

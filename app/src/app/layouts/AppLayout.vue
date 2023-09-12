@@ -15,14 +15,9 @@ function closeIssue() {
 
 <template>
   <div class="app-layout">
-    <header>
-      <TopbarHeader />
-    </header>
+    <TopbarHeader />
 
-    <main>
-      <aside class="aside-menu"></aside>
-      <RouterView />
-    </main>
+    <RouterView />
 
     <aside
       class="drawer"
@@ -58,13 +53,7 @@ header {
 }
 
 main {
-  display: flex;
   height: calc(100% - 71px);
-}
-
-.aside-menu {
-  width: 300px;
-  background-color: #242424;
 }
 
 .issue-view {
