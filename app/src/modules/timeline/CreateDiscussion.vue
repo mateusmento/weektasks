@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { DiscussionService } from '@/modules/timeline/discussion.service';
+import { DiscussionApi } from '@/modules/timeline/discussion.service';
 import { vOnClickOutside } from '@vueuse/components';
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
@@ -9,14 +9,14 @@ import { requestApi } from '@/lib/utils/api';
 const emit = defineEmits(['created']);
 const route = useRoute();
 
-const discussionService = new DiscussionService();
+const discussionApi = new DiscussionApi();
 const text = ref('');
 const type = ref('progress');
 const showStatusOptions = ref(false);
 
 async function createDiscussion() {
   const data = { text: text.value, type: type.value };
-  const discussion = await requestApi(discussionService.createDiscussion(+route.params.id, data));
+  const discussion = await requestApi(discussionApi.createDiscussion(+route.params.id, data));
   emit('created', discussion);
   text.value = '';
 }
@@ -98,3 +98,4 @@ button {
   margin-left: 10px;
 }
 </style>
+@/modules/timeline/discussion.api

@@ -1,6 +1,6 @@
 import { axios } from '@/lib/axios';
 
-export class DiscussionService {
+export class DiscussionApi {
   findDiscussions(productId: number, page: number, pageSize: number) {
     return axios
       .get(`/products/${productId}/discussions`, { params: { page, pageSize } })

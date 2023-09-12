@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
 import Discussion from './Discussion.vue';
-import { DiscussionService } from './discussion.service';
+import { DiscussionApi } from './discussion.service';
 
 const props = defineProps<{
   id: string;
@@ -10,15 +10,15 @@ const props = defineProps<{
 
 const discussion = ref<any>(null);
 const replies = ref<any[]>([]);
-const discussionService = new DiscussionService();
+const discussionApi = new DiscussionApi();
 
 onMounted(async () => {
-  discussion.value = await discussionService.findDiscussion(+props.discussionId);
-  replies.value = await discussionService.findReplies(+props.discussionId);
+  discussion.value = await discussionApi.findDiscussion(+props.discussionId);
+  replies.value = await discussionApi.findReplies(+props.discussionId);
 });
 
 async function createReply(reply: any) {
-  reply = await discussionService.createReply(+props.discussionId, reply);
+  reply = await discussionApi.createReply(+props.discussionId, reply);
   reply.type = 'feedback';
   replies.value.push(reply);
   console.log(replies);
@@ -38,3 +38,4 @@ async function createReply(reply: any) {
 </template>
 
 <style lang="scss" scoped></style>
+./discussion.api

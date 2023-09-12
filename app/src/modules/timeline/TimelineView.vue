@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { DiscussionService } from '@/modules/timeline/discussion.service';
+import { DiscussionApi } from '@/modules/timeline/discussion.service';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import CreateDiscussion from './CreateDiscussion.vue';
@@ -8,11 +8,11 @@ import CollaboratorsView from '../collaborators/CollaboratorsView.vue';
 
 const route = useRoute();
 
-const discussionService = new DiscussionService();
+const discussionApi = new DiscussionApi();
 const discussions = ref<any[]>([]);
 
 onMounted(async () => {
-  discussions.value = await discussionService.findDiscussions(+route.params.id, 1, 10);
+  discussions.value = await discussionApi.findDiscussions(+route.params.id, 1, 10);
 });
 
 function addDiscussion($event: any) {
@@ -84,3 +84,4 @@ function addDiscussion($event: any) {
   height: 20px;
 }
 </style>
+@/modules/timeline/discussion.api

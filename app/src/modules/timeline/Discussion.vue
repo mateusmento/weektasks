@@ -3,12 +3,12 @@ import IconChecked from '@/lib/components/icons/IconChecked.vue';
 import { RouterLink, useRoute } from 'vue-router';
 import DiscussionType from './DiscussionType.vue';
 import LikeButton from './LikeButton.vue';
-import { DiscussionService } from './discussion.service';
+import { DiscussionApi } from './discussion.service';
 import { envs } from '@/lib/utils/envs';
 
 const route = useRoute();
 
-const discussionService = new DiscussionService();
+const discussionApi = new DiscussionApi();
 
 const props = defineProps<{
   discussion: any;
@@ -17,7 +17,7 @@ const props = defineProps<{
 const emit = defineEmits(['update:discussion']);
 
 async function toggleLiked([liked, count]: any) {
-  discussionService.likeDiscussion(props.discussion.id);
+  discussionApi.likeDiscussion(props.discussion.id);
   emit('update:discussion', { ...props.discussion, liked, likes: count });
 }
 </script>
@@ -105,3 +105,4 @@ button {
   border-radius: 5px;
 }
 </style>
+./discussion.api
