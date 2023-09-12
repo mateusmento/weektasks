@@ -54,7 +54,7 @@ async function end() {
 
 <template>
   <div class="sprint card" :class="{ 'draggable-handle': !editable }">
-    <div class="topbar">
+    <div class="sprint-card__header">
       <WkEditable class="title small" v-model="title" :editable="editable" />
 
       <IconEdit v-if="!editable" @click="editable = true" title="Edit sprint" />
@@ -91,7 +91,9 @@ async function end() {
       </div>
     </div>
 
-    <slot :hideIssues="hideIssues" />
+    <div class="sprint-card__content" :class="{ hide: hideIssues }">
+      <slot :hideIssues="hideIssues" />
+    </div>
   </div>
 </template>
 
@@ -102,11 +104,23 @@ async function end() {
   border-radius: 10px;
 }
 
-.topbar {
+.sprint-card__header {
   display: flex;
   align-items: center;
   padding: 0 10px;
   gap: 10px;
+}
+
+.sprint-card__content {
+  margin-top: 10px;
+  padding: 5px;
+  border-radius: 8px;
+  background: #f6faff;
+  background-color: #f0f7ff;
+}
+
+.sprint-card__content.hide {
+  display: none;
 }
 
 .icon-arrow {

@@ -30,10 +30,10 @@ async function createBacklogItem() {
 <style lang="scss" scoped>
 .add-task {
   display: flex;
-  gap: 10px;
+  gap: 20px;
   align-items: center;
   border-radius: 10px;
-  padding: 0 10px;
+  padding: 10px;
 
   .add-button {
     background: #8459ff;
@@ -46,7 +46,6 @@ async function createBacklogItem() {
     background-color: inherit;
     outline: none;
     color: #8459ff;
-    margin: 10px;
     padding: 5px;
     transition: 200ms;
     border-radius: 0px;

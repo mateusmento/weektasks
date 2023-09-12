@@ -106,31 +106,28 @@ async function moveIssue(sprint: Sprint, { moved, added, removed }: any) {
           @remove="removeSprint(sprint.id)"
           @start-sprint="startSprint(i, sprint)"
           @end-sprint="endSprint(i, sprint)"
-          #default="{ hideIssues }"
         >
-          <div class="sprint-issues" :class="{ hide: hideIssues }">
-            <draggable
-              class="sprint-backlog"
-              v-model="sprints[i].issues"
-              item-key="id"
-              data-dropzone="sprint"
-              handle=".draggable-handle"
-              group="issues"
-              @change="(e) => moveIssue(sprint, e)"
-            >
-              <template #item="{ element: issue, index: j }">
-                <BacklogItem
-                  :issue="issue"
-                  @remove="removeIssue(sprint, issue)"
-                  @patch="patchIssue(j, sprint, $event)"
-                  @add-assignee="addAssignee(j, sprint, $event)"
-                  @remove-assignee="removeAssignee(j, sprint, $event)"
-                />
-              </template>
-            </draggable>
+          <draggable
+            class="sprint-backlog"
+            v-model="sprints[i].issues"
+            item-key="id"
+            data-dropzone="sprint"
+            handle=".draggable-handle"
+            group="issues"
+            @change="(e) => moveIssue(sprint, e)"
+          >
+            <template #item="{ element: issue, index: j }">
+              <BacklogItem
+                :issue="issue"
+                @remove="removeIssue(sprint, issue)"
+                @patch="patchIssue(j, sprint, $event)"
+                @add-assignee="addAssignee(j, sprint, $event)"
+                @remove-assignee="removeAssignee(j, sprint, $event)"
+              />
+            </template>
+          </draggable>
 
-            <AddBacklogItem @created="addIssue(i, sprint, $event)" />
-          </div>
+          <AddBacklogItem @created="addIssue(i, sprint, $event)" />
         </SprintCard>
       </template>
     </draggable>
@@ -141,25 +138,13 @@ async function moveIssue(sprint: Sprint, { moved, added, removed }: any) {
   </div>
 </template>
 
-<style lang="sass" scoped>
-.sprints
-  margin-bottom: 20px
-
-.sprint-list .sprint
-  margin-bottom: 10px
-</style>
-
 <style scoped>
-.sprint-issues {
-  margin-top: 5px;
-  background: #f6faff;
-  background-color: #f0f7ff;
-  border-radius: 8px;
-  padding: 5px;
+.sprints {
+  margin-bottom: 20px;
 }
 
-.sprint-issues.hide {
-  display: none;
+.sprint-list .sprint {
+  margin-bottom: 10px;
 }
 
 .issue-placeholder {
@@ -171,7 +156,6 @@ async function moveIssue(sprint: Sprint, { moved, added, removed }: any) {
   display: flex;
   flex-direction: column;
   gap: 2px;
-  padding: 5px;
   border-radius: 8px;
 }
 </style>
