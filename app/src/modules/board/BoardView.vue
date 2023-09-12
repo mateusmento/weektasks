@@ -5,8 +5,8 @@ import { useRoute, useRouter } from 'vue-router';
 import type { Issue } from '@/lib/models/issue.model';
 import type { Sprint } from '@/lib/models/sprint.model';
 import draggable from 'vuedraggable';
-import { createSprintsRepository } from '@/lib/service/sprints.service';
-import { createIssuesRepository } from '@/lib/service/issues.service';
+import { createSprintsRepository } from '@/lib/api/sprints.api';
+import { createIssuesRepository } from '@/lib/api/issues.api';
 import IssueCard from './IssueCard.vue';
 import CardList from './CardList.vue';
 import { requestApi } from '@/lib/utils/api';
@@ -178,3 +178,4 @@ async function moveDoneItems({ added }: any) {
   flex: 1;
 }
 </style>
+@/lib/api/sprints.api@/lib/api/issues.api

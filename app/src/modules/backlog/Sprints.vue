@@ -2,7 +2,7 @@
 import { ref, onMounted } from 'vue';
 import draggable from 'vuedraggable';
 import IconBigPlus from '@/lib/components/icons/IconBigPlus.vue';
-import { createSprintsRepository } from '@/lib/service/sprints.service';
+import { createSprintsRepository } from '@/lib/api/sprints.api';
 import type { Sprint } from '@/lib/models/sprint.model';
 import * as issueMutations from './issue-mutations';
 import BacklogItem from './components/BacklogItem.vue';
@@ -188,3 +188,4 @@ async function moveIssue(sprint: Sprint, { moved, added, removed }: any) {
   line-height: 0;
 }
 </style>
+@/lib/api/sprints.api

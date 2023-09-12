@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { ref, onMounted, reactive } from 'vue';
-import { createProductsRepository } from '@/lib/service/products.service';
+import { createProductsRepository } from '@/lib/api/products.api';
 import type { Product } from './product.model';
 
 const products = reactive({
@@ -81,3 +81,4 @@ async function createProduct() {
   margin-bottom: 10px;
 }
 </style>
+@/lib/api/products.api

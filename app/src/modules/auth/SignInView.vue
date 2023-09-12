@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { createAuthService } from '@/lib/service/auth.service';
+import { createAuthService } from '@/lib/api/auth.api';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from './auth.store';
@@ -72,3 +72,4 @@ input {
   margin-left: auto;
 }
 </style>
+@/lib/api/auth.api

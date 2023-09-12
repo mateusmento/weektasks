@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { DiscussionApi } from '@/modules/timeline/discussion.service';
+import { DiscussionApi } from '@/modules/timeline/discussion.api';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import CreateDiscussion from './CreateDiscussion.vue';

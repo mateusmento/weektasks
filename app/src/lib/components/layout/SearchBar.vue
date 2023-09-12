@@ -21,7 +21,7 @@
 
 <script lang="ts" setup>
 import type { Issue } from '@/lib/models/issue.model';
-import { createIssuesRepository } from '@/lib/service/issues.service';
+import { createIssuesRepository } from '@/lib/api/issues.api';
 import { ref, watch } from 'vue';
 import IconSearch from '../icons/IconSearch.vue';
 
@@ -50,3 +50,4 @@ function closeResults() {
 .icon
   width: 20px
 </style>
+@/lib/api/issues.api

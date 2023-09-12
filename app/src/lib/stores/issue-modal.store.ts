@@ -1,6 +1,6 @@
 import type { Issue } from '@/lib/models/issue.model';
 import { defineStore } from 'pinia';
-import { createIssuesRepository } from '../service/issues.service';
+import { createIssuesRepository } from '../api/issues.api';
 
 export const useIssueModalStore = defineStore('issue-modal', {
   state: () => ({

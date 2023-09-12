@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { Issue } from '@/lib/models/issue.model';
-import { createBacklogRepository } from '@/lib/service/backlog.service';
+import { createBacklogRepository } from '@/lib/api/backlog.api';
 import { computed, onMounted, ref } from 'vue';
 import draggable from 'vuedraggable';
 import AddBacklogItem from './components/AddBacklogItem.vue';
@@ -105,3 +105,4 @@ function moveBacklogItem({ moved, added, removed }: any) {
   gap: 2px;
 }
 </style>
+@/lib/api/backlog.api

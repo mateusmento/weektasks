@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
 import Discussion from './Discussion.vue';
-import { DiscussionApi } from './discussion.service';
+import { DiscussionApi } from './discussion.api';
 
 const props = defineProps<{
   id: string;

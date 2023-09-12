@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { DiscussionApi } from '@/modules/timeline/discussion.service';
+import { DiscussionApi } from '@/modules/timeline/discussion.api';
 import { vOnClickOutside } from '@vueuse/components';
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';

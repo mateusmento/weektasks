@@ -4,7 +4,7 @@ import type {
   SubTask as ISubTask,
   Issue,
 } from '@/lib/models/issue.model';
-import { createIssuesRepository } from '@/lib/service/issues.service';
+import { createIssuesRepository } from '@/lib/api/issues.api';
 import { computed } from 'vue';
 import IssueDescription from './IssueDescription.vue';
 import IssueHeader from './IssueHeader.vue';
@@ -148,3 +148,4 @@ async function patchComment(partial: Partial<IIssueComment>, id: number) {
   }
 }
 </style>
+@/lib/api/issues.api

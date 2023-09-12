@@ -1,6 +1,6 @@
 import type { Issue } from '@/lib/models/issue.model';
 import type { Sprint } from '@/lib/models/sprint.model';
-import { createSprintsRepository } from '@/lib/service/sprints.service';
+import { createSprintsRepository } from '@/lib/api/sprints.api';
 
 const sprintsRepo = createSprintsRepository();
 

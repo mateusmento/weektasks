@@ -2,8 +2,8 @@
 import WkComboBox from '@/lib/components/form/WkComboBox.vue';
 import { onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import { createUsersRepository } from '@/lib/service/users.service';
-import { createProductsRepository } from '@/lib/service/products.service';
+import { createUsersRepository } from '@/lib/api/users.api';
+import { createProductsRepository } from '@/lib/api/products.api';
 import type { Collaborator } from '../products/product.model';
 import type { User } from '@/lib/models/user.model';
 import { envs } from '@/lib/utils/envs';
@@ -102,3 +102,4 @@ async function removeCollaborator(collabId: number) {
   width: 30px;
 }
 </style>
+@/lib/api/users.api@/lib/api/products.api

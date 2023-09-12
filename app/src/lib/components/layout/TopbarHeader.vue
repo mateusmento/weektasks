@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useAuthUserStore } from '@/lib/auth/auth-user.store';
-import { createAuthService } from '@/lib/service/auth.service';
+import { createAuthService } from '@/lib/api/auth.api';
 import { vOnClickOutside } from '@vueuse/components';
 import { computed, ref } from 'vue';
 import { RouterLink, useRoute, useRouter } from 'vue-router';
@@ -120,3 +120,4 @@ nav {
   right: 0
   margin-top: 10px
 </style>
+@/lib/api/auth.api

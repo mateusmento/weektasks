@@ -1,6 +1,6 @@
 import { authenticate } from '@/lib/auth/authenticate';
 import { useAuthUserStore } from '@/lib/auth/auth-user.store';
-import { createProductsRepository } from '../service/products.service';
+import { createProductsRepository } from '../api/products.api';
 import { useActiveProductStore } from '../stores/active-product.store';
 
 export async function beforeEnter(to: any) {

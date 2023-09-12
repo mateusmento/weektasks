@@ -3,7 +3,7 @@ import IconChecked from '@/lib/components/icons/IconChecked.vue';
 import { RouterLink, useRoute } from 'vue-router';
 import DiscussionType from './DiscussionType.vue';
 import LikeButton from './LikeButton.vue';
-import { DiscussionApi } from './discussion.service';
+import { DiscussionApi } from './discussion.api';
 import { envs } from '@/lib/utils/envs';
 
 const route = useRoute();

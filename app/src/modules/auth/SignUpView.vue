@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
 import { AxiosError } from 'axios';
-import { createUsersRepository } from '@/lib/service/users.service';
+import { createUsersRepository } from '@/lib/api/users.api';
 import { useAuthStore } from './auth.store';
 import { useRouter } from 'vue-router';
 import { Alert } from '@/lib/utils/alert';
@@ -207,3 +207,4 @@ input {
   margin-bottom: 0;
 }
 </style>
+@/lib/api/users.api

@@ -1,6 +1,6 @@
 import type { Issue } from '@/lib/models/issue.model';
 import type { User } from '@/lib/models/user.model';
-import { createIssuesRepository } from '@/lib/service/issues.service';
+import { createIssuesRepository } from '@/lib/api/issues.api';
 
 const issuesRepo = createIssuesRepository();
 

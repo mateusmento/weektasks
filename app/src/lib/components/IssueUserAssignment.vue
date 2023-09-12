@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { createUsersRepository } from '@/lib/service/users.service';
+import { createUsersRepository } from '@/lib/api/users.api';
 import WkComboBox from '@/lib/components/form/WkComboBox.vue';
 import { vOnClickOutside } from '@vueuse/components';
 import IconAssignUser from '@/lib/components/icons/IconAssignUser.vue';
@@ -125,3 +125,4 @@ async function remove(assignee: User) {
   width: 17px;
 }
 </style>
+@/lib/api/users.api
