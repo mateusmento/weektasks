@@ -21,46 +21,27 @@ function addDiscussion($event: any) {
 </script>
 
 <template>
-  <main class="timeline-view">
-    <div class="flex-vert-lg p-lg">
-      <ul class="list">
-        <li>Timeline</li>
-        <li>Backlog</li>
-        <li>Calendar</li>
-      </ul>
-      <CollaboratorsView />
-    </div>
-    <div style="min-height: 0px">
-      <div class="discussions">
-        <CreateDiscussion @created="addDiscussion" class="p-lg" />
-        <ul>
-          <li v-for="(discussion, i) in discussions" :key="discussion.id">
-            <Discussion v-model:discussion="discussions[i]" class="p-lg" />
-          </li>
-          <li class="bottom-item"></li>
-        </ul>
-      </div>
-    </div>
-  </main>
+  <div class="discussions">
+    <CreateDiscussion @created="addDiscussion" class="p-lg" />
+    <ul>
+      <li v-for="(discussion, i) in discussions" :key="discussion.id">
+        <Discussion v-model:discussion="discussions[i]" class="p-lg" />
+      </li>
+      <li class="bottom-item"></li>
+    </ul>
+  </div>
 </template>
 
 <style lang="scss" scoped>
-.timeline-view {
-  flex: 1;
-  display: flex;
-  overflow-y: hidden;
-}
-
 .discussions {
+  max-width: 640px;
+  overflow-y: auto;
+  height: 100%;
+
   display: flex;
   flex-direction: column;
 
-  max-width: 640px;
-  height: 100%;
-  overflow-y: auto;
-
   background-color: white;
-
   border: 1px solid #ccc;
   border-top: none;
   border-bottom: none;

@@ -14,32 +14,15 @@ function closeIssue() {
 </script>
 
 <template>
-  <TopbarHeader />
-  <RouterView />
+  <header>
+    <TopbarHeader />
+  </header>
+  <main>
+    <aside></aside>
+    <RouterView />
+  </main>
 
-  <!-- <div class="wrapper">
-    <div class="section">
-      <div class="item">Hello world</div>
-      <div class="item">Hello world</div>
-      <div class="item">Hello world</div>
-      <div class="item">Hello world</div>
-      <div class="item">Hello world</div>
-      <div class="item">Hello world</div>
-      <div class="item">Hello world</div>
-    </div>
-
-    <div class="section">
-      <div class="item">Hello world</div>
-      <div class="item">Hello world</div>
-      <div class="item">Hello world</div>
-      <div class="item">Hello world</div>
-      <div class="item">Hello world</div>
-      <div class="item">Hello world</div>
-      <div class="item">Hello world</div>
-    </div>
-  </div> -->
-
-  <aside
+  <div
     class="drawer"
     :class="{ 'drawer--show': issueModalStore.isOpen }"
     @transitionend="closeIssue"
@@ -52,32 +35,28 @@ function closeIssue() {
         v-on-click-outside="() => issueModalStore.close()"
       />
     </div>
-  </aside>
+  </div>
 </template>
 
 <style lang="scss" scoped>
-.wrapper {
-  flex: 1;
-  display: flex;
-  overflow-y: hidden;
-}
-
-.section {
-  flex: 1;
-  overflow-y: auto;
-
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-
-  padding: 10px;
-  background-color: red;
-}
-
-.item {
-  min-height: 150px;
+header {
+  position: sticky;
+  top: 0;
   background-color: #fff;
-  border: 1px solid #777;
+  z-index: 1;
+
+  height: 71px;
+  box-sizing: border-box;
+}
+
+main {
+  display: flex;
+  height: calc(100% - 71px);
+}
+
+aside {
+  width: 300px;
+  background-color: #242424;
 }
 
 .issue-view {

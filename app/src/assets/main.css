@@ -16,6 +16,10 @@
 }
 
 body {
+  height: 100vh;
+  /* padding: 20px;
+  box-sizing: border-box; */
+
   transition:
     color 0.5s,
     background-color 0.5s;
@@ -43,10 +47,10 @@ body {
 }
 
 #app {
+  height: 100%;
+
   display: flex;
   flex-direction: column;
-  min-height: 50vh;
-  max-height: 100vh;
 }
 
 ul {
