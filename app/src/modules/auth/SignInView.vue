@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { createAuthService } from '@/lib/api/auth.api';
+import { AuthApi } from '@/lib/api/auth.api';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from './auth.store';
@@ -11,7 +11,7 @@ const authStore = useAuthStore();
 const email = ref(authStore.createdUser?.credential.username);
 const password = ref('');
 
-const authService = createAuthService();
+const authApi = new AuthApi();
 
 async function singin() {
   const credentials = {
@@ -20,7 +20,7 @@ async function singin() {
   };
 
   try {
-    await authService.signin(credentials);
+    await authApi.signin(credentials);
     router.push({ name: 'products' });
   } catch (ex) {
     Alert.error('Unauthorized');
@@ -72,4 +72,3 @@ input {
   margin-left: auto;
 }
 </style>
-@/lib/api/auth.api

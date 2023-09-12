@@ -5,8 +5,8 @@ import { useRoute, useRouter } from 'vue-router';
 import type { Issue } from '@/lib/models/issue.model';
 import type { Sprint } from '@/lib/models/sprint.model';
 import draggable from 'vuedraggable';
-import { createSprintsRepository } from '@/lib/api/sprints.api';
-import { createIssuesRepository } from '@/lib/api/issues.api';
+import { SprintApi } from '@/lib/api/sprints.api';
+import { IssueApi } from '@/lib/api/issues.api';
 import IssueCard from './IssueCard.vue';
 import CardList from './CardList.vue';
 import { requestApi } from '@/lib/utils/api';
@@ -25,8 +25,8 @@ interface Board {
 
 const board = ref<Board>();
 
-const sprintsRepo = createSprintsRepository();
-const issuesRepo = createIssuesRepository();
+const sprintApi = new SprintApi();
+const issueApi = new IssueApi();
 
 onMounted(async () => {
   board.value = await requestApi(fetchBoard(+route.params.id));
@@ -38,27 +38,27 @@ function fetchBoard(id: number) {
 
 async function endSprint() {
   if (!board.value) return;
-  await requestApi(sprintsRepo.endSprint(board.value.sprint.id));
+  await requestApi(sprintApi.endSprint(board.value.sprint.id));
   router.push({ name: 'backlog' });
 }
 
 async function moveTodoItems({ added }: any) {
   if (added) {
-    const data = await issuesRepo.patchIssue(added.element.id, { status: 'todo' });
+    const data = await issueApi.patchIssue(added.element.id, { status: 'todo' });
     if (board.value) board.value.issues.todo[added.newIndex] = { ...added.element, ...data };
   }
 }
 
 async function moveDoingItems({ added }: any) {
   if (added) {
-    const data = await issuesRepo.patchIssue(added.element.id, { status: 'doing' });
+    const data = await issueApi.patchIssue(added.element.id, { status: 'doing' });
     if (board.value) board.value.issues.doing[added.newIndex] = { ...added.element, ...data };
   }
 }
 
 async function moveDoneItems({ added }: any) {
   if (added) {
-    const data = await issuesRepo.patchIssue(added.element.id, { status: 'done' });
+    const data = await issueApi.patchIssue(added.element.id, { status: 'done' });
     if (board.value) board.value.issues.done[added.newIndex] = { ...added.element, ...data };
   }
 }
@@ -178,4 +178,3 @@ async function moveDoneItems({ added }: any) {
   flex: 1;
 }
 </style>
-@/lib/api/sprints.api@/lib/api/issues.api

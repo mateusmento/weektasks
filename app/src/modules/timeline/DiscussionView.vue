@@ -38,4 +38,3 @@ async function createReply(reply: any) {
 </template>
 
 <style lang="scss" scoped></style>
-./discussion.api

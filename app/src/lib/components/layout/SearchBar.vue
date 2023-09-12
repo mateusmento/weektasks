@@ -21,7 +21,7 @@
 
 <script lang="ts" setup>
 import type { Issue } from '@/lib/models/issue.model';
-import { createIssuesRepository } from '@/lib/api/issues.api';
+import { IssueApi } from '@/lib/api/issues.api';
 import { ref, watch } from 'vue';
 import IconSearch from '../icons/IconSearch.vue';
 
@@ -31,11 +31,11 @@ const props = defineProps<{
 
 const searchQuery = ref('');
 const results = ref<Issue[]>([]);
-const issuesRepo = createIssuesRepository();
+const issuesApi = new IssueApi();
 
 watch(searchQuery, async () => {
   if (searchQuery.value.trim())
-    results.value = await issuesRepo.findIssues(props.productId, searchQuery.value);
+    results.value = await issuesApi.findIssues(props.productId, searchQuery.value);
   else results.value = [];
 });
 
@@ -50,4 +50,3 @@ function closeResults() {
 .icon
   width: 20px
 </style>
-@/lib/api/issues.api

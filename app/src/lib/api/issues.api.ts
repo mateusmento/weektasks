@@ -1,8 +1,6 @@
 import { axios } from '@/lib/axios';
 import type { Issue, IssueComment } from '@/lib/models/issue.model';
 
-export const createIssuesRepository = () => new IssueApi();
-
 export class IssueApi {
   fetchIssue(id: number) {
     return axios.get<Issue>('/issues/' + id).then((res) => res.data);

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { Issue as IIssue } from '@/lib/models/issue.model';
-import { createIssuesRepository } from '@/lib/api/issues.api';
+import { IssueApi } from '@/lib/api/issues.api';
 import { onMounted, ref } from 'vue';
 import Issue from './Issue.vue';
 
@@ -8,7 +8,7 @@ const props = defineProps<{
   issueId: string;
 }>();
 
-const issueRepo = createIssuesRepository();
+const issueRepo = new IssueApi();
 
 const issue = ref<IIssue>();
 
@@ -39,4 +39,3 @@ async function fetchIssue(issueId: number): Promise<IIssue> {
   min-height: 100%;
 }
 </style>
-@/lib/api/issues.api

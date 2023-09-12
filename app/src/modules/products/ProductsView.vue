@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { ref, onMounted, reactive } from 'vue';
-import { createProductsRepository } from '@/lib/api/products.api';
+import { ProductApi } from '@/lib/api/products.api';
 import type { Product } from './product.model';
 
 const products = reactive({
@@ -10,16 +10,16 @@ const products = reactive({
 
 const productName = ref('');
 
-const productsRepo = createProductsRepository();
+const productApi = new ProductApi();
 
 onMounted(async () => {
-  const { own, collaborating } = await productsRepo.fetchProducts();
+  const { own, collaborating } = await productApi.fetchProducts();
   products.own = own;
   products.collaborating = collaborating;
 });
 
 async function createProduct() {
-  const product = await productsRepo.createProduct({ name: productName.value });
+  const product = await productApi.createProduct({ name: productName.value });
   products.own.push(product);
 }
 </script>
@@ -81,4 +81,3 @@ async function createProduct() {
   margin-bottom: 10px;
 }
 </style>
-@/lib/api/products.api

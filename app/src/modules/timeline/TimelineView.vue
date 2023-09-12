@@ -84,4 +84,3 @@ function addDiscussion($event: any) {
   height: 20px;
 }
 </style>
-@/modules/timeline/discussion.api

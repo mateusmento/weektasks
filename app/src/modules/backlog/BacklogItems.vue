@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { Issue } from '@/lib/models/issue.model';
-import { createBacklogRepository } from '@/lib/api/backlog.api';
+import { BacklogApi } from '@/lib/api/backlog.api';
 import { computed, onMounted, ref } from 'vue';
 import draggable from 'vuedraggable';
 import AddBacklogItem from './components/AddBacklogItem.vue';
@@ -13,21 +13,21 @@ const props = defineProps<{
   productId: number;
 }>();
 
-const backlogRepo = computed(() => createBacklogRepository(props.productId));
+const backlogRepo = new BacklogApi();
 
 const backlogItems = ref<Issue[]>([]);
 
 onMounted(async () => {
-  backlogItems.value = await backlogRepo.value.fetchBacklogItems();
+  backlogItems.value = await backlogRepo.fetchBacklogItems(props.productId);
 });
 
 async function createBacklogItem(data: any) {
-  let item = await requestApi(backlogRepo.value.createIssue(data));
+  let item = await requestApi(backlogRepo.createIssue(props.productId, data));
   backlogItems.value = [...backlogItems.value, item];
 }
 
 async function removeIssue(id: number) {
-  await backlogRepo.value.removeIssue(id);
+  await backlogRepo.removeIssue(id);
   backlogItems.value = backlogItems.value.filter((i) => i.id !== id);
 }
 
@@ -50,15 +50,15 @@ function moveBacklogItem({ moved, added, removed }: any) {
   if (added) {
     const { id } = added.element;
     const item = { issueId: id, order: added.newIndex };
-    backlogRepo.value.includeItem(item);
+    backlogRepo.includeItem(props.productId, item);
   }
 
   if (removed) {
-    backlogRepo.value.removeItem(removed.element.id);
+    backlogRepo.removeItem(props.productId, removed.element.id);
   }
 
   if (moved) {
-    backlogRepo.value.moveItem(moved.element.id, moved.newIndex);
+    backlogRepo.moveItem(props.productId, moved.element.id, moved.newIndex);
   }
 }
 </script>
@@ -105,4 +105,3 @@ function moveBacklogItem({ moved, added, removed }: any) {
   gap: 2px;
 }
 </style>
-@/lib/api/backlog.api

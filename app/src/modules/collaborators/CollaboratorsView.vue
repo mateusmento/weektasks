@@ -2,8 +2,8 @@
 import WkComboBox from '@/lib/components/form/WkComboBox.vue';
 import { onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import { createUsersRepository } from '@/lib/api/users.api';
-import { createProductsRepository } from '@/lib/api/products.api';
+import { UserApi } from '@/lib/api/users.api';
+import { ProductApi } from '@/lib/api/products.api';
 import type { Collaborator } from '../products/product.model';
 import type { User } from '@/lib/models/user.model';
 import { envs } from '@/lib/utils/envs';
@@ -15,11 +15,11 @@ const userName = ref('');
 
 const collaborators = ref<Collaborator[]>([]);
 
-const productRepo = createProductsRepository();
-const usersRepo = createUsersRepository();
+const productApi = new ProductApi();
+const userApi = new UserApi();
 
 onMounted(async () => {
-  collaborators.value = await productRepo.fetchCollaborators(+route.params.id);
+  collaborators.value = await productApi.fetchCollaborators(+route.params.id);
 });
 
 watch(selectedUser, () => {
@@ -27,12 +27,12 @@ watch(selectedUser, () => {
 });
 
 function searchUsers(name: string) {
-  return usersRepo.searchUsers(name);
+  return userApi.searchUsers(name);
 }
 
 async function includeCollaborator() {
   if (!selectedUser.value) return;
-  const collaborator = await productRepo.includeCollaborator(
+  const collaborator = await productApi.includeCollaborator(
     +route.params.id,
     selectedUser.value.id
   );
@@ -40,7 +40,7 @@ async function includeCollaborator() {
 }
 
 async function removeCollaborator(collabId: number) {
-  await productRepo.removeCollaborator(+route.params.id, collabId);
+  await productApi.removeCollaborator(+route.params.id, collabId);
   collaborators.value = collaborators.value.filter((c) => c.id !== collabId);
 }
 </script>
@@ -102,4 +102,3 @@ async function removeCollaborator(collabId: number) {
   width: 30px;
 }
 </style>
-@/lib/api/users.api@/lib/api/products.api

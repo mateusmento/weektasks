@@ -1,6 +1,6 @@
 import type { Issue } from '@/lib/models/issue.model';
 import { defineStore } from 'pinia';
-import { createIssuesRepository } from '../api/issues.api';
+import { IssueApi } from '../api/issues.api';
 
 export const useIssueModalStore = defineStore('issue-modal', {
   state: () => ({
@@ -9,8 +9,8 @@ export const useIssueModalStore = defineStore('issue-modal', {
   }),
   actions: {
     async open(issue: Issue) {
-      const issueRepo = createIssuesRepository();
-      const comments = await issueRepo.findComments(issue.id);
+      const issueApi = new IssueApi();
+      const comments = await issueApi.findComments(issue.id);
       this.issue = null;
       setTimeout(() => {
         this.isOpen = true;

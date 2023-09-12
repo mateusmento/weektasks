@@ -6,8 +6,6 @@ type FindProductsResult = {
   collaborating: Product[];
 };
 
-export const createProductsRepository = () => new ProductApi();
-
 export class ProductApi {
   fetchProducts() {
     return axios.get<FindProductsResult>('/products').then((res) => res.data);

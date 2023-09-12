@@ -1,8 +1,6 @@
 import { axios } from '@/lib/axios';
 import type { User } from '@/lib/models/user.model';
 
-export const createUsersRepository = () => new UserApi();
-
 export class UserApi {
   searchUsers(name: string) {
     return axios.get<User[]>('/users', { params: { name } }).then((res) => res.data);

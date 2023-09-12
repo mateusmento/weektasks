@@ -2,7 +2,7 @@
 import Checkbox from '@/lib/components/form/Checkbox.vue';
 import IconMore from '@/lib/components/icons/IconMore.vue';
 import type { Issue, SubTask } from '@/lib/models/issue.model';
-import { createIssuesRepository } from '@/lib/api/issues.api';
+import { IssueApi } from '@/lib/api/issues.api';
 import { useIssueModalStore } from '@/lib/stores/issue-modal.store';
 import { sortBy } from 'lodash';
 import { computed, ref } from 'vue';
@@ -17,10 +17,10 @@ const sortedSubtasks = computed(() => sortBy(props.issue.subtasks, (s) => s.id))
 
 const seeCompletedSubtasks = ref(false);
 
-const issueRepo = createIssuesRepository();
+const issueApi = new IssueApi();
 
 function toggleSubtaskCompletion(subtask: SubTask) {
-  issueRepo.toggleSubtaskCompletion(subtask.id);
+  issueApi.toggleSubtaskCompletion(subtask.id);
 }
 
 const issueModalStore = useIssueModalStore();
@@ -171,4 +171,3 @@ const issueColor = computed(
   width: 17px;
 }
 </style>
-@/lib/api/issues.api

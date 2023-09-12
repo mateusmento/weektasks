@@ -4,7 +4,7 @@ import type {
   SubTask as ISubTask,
   Issue,
 } from '@/lib/models/issue.model';
-import { createIssuesRepository } from '@/lib/api/issues.api';
+import { IssueApi } from '@/lib/api/issues.api';
 import { computed } from 'vue';
 import IssueDescription from './IssueDescription.vue';
 import IssueHeader from './IssueHeader.vue';
@@ -21,7 +21,7 @@ const props = defineProps<{
 
 const emit = defineEmits(['update:issue']);
 
-const issueRepo = createIssuesRepository();
+const issueRepo = new IssueApi();
 
 const issue = computed({
   get: () => props.issue,
@@ -148,4 +148,3 @@ async function patchComment(partial: Partial<IIssueComment>, id: number) {
   }
 }
 </style>
-@/lib/api/issues.api

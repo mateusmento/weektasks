@@ -2,7 +2,7 @@
 import { ref, onMounted } from 'vue';
 import draggable from 'vuedraggable';
 import IconBigPlus from '@/lib/components/icons/IconBigPlus.vue';
-import { createSprintsRepository } from '@/lib/api/sprints.api';
+import { SprintApi } from '@/lib/api/sprints.api';
 import type { Sprint } from '@/lib/models/sprint.model';
 import * as issueMutations from './issue-mutations';
 import BacklogItem from './components/BacklogItem.vue';
@@ -13,7 +13,7 @@ import { requestApi } from '@/lib/utils/api';
 import type { User } from '@/lib/models/user.model';
 import type { Issue } from '@/lib/models/issue.model';
 
-const sprintsRepo = createSprintsRepository();
+const sprintApi = new SprintApi();
 
 const props = defineProps<{
   productId: number;
@@ -23,17 +23,17 @@ const sprints = ref<any[]>([]);
 const editable = ref(false);
 
 onMounted(async () => {
-  sprints.value = await sprintsRepo.fetchSprints(props.productId);
+  sprints.value = await sprintApi.fetchSprints(props.productId);
 });
 
 async function createSprint() {
-  const sprint = await requestApi(sprintsRepo.createSprint(props.productId, {}));
+  const sprint = await requestApi(sprintApi.createSprint(props.productId, {}));
   sprint.issues = [];
   sprints.value.push(sprint);
 }
 
 async function removeSprint(id: number) {
-  await requestApi(sprintsRepo.removeSprint(id));
+  await requestApi(sprintApi.removeSprint(id));
   sprints.value = sprints.value.filter((s) => s.id !== id);
 }
 
@@ -65,24 +65,24 @@ const removeAssignee = async (i: number, sprint: Sprint, assignee: User) =>
 
 function moveSprint({ moved }: any) {
   if (moved) {
-    sprintsRepo.moveSprint(moved.element.id, moved.newIndex);
+    sprintApi.moveSprint(moved.element.id, moved.newIndex);
   }
 }
 
 async function moveIssue(sprint: Sprint, { moved, added, removed }: any) {
   if (added) {
     let { id } = added.element;
-    sprintsRepo.includeItem(sprint.id, { issueId: id, order: added.newIndex });
+    sprintApi.includeItem(sprint.id, { issueId: id, order: added.newIndex });
   }
 
   if (removed) {
     let { id } = removed.element;
-    sprintsRepo.removeItem(sprint.id, id);
+    sprintApi.removeItem(sprint.id, id);
   }
 
   if (moved) {
     let { id } = moved.element;
-    sprintsRepo.moveItem(sprint.id, id, moved.newIndex);
+    sprintApi.moveItem(sprint.id, id, moved.newIndex);
   }
 }
 </script>
@@ -188,4 +188,3 @@ async function moveIssue(sprint: Sprint, { moved, added, removed }: any) {
   line-height: 0;
 }
 </style>
-@/lib/api/sprints.api

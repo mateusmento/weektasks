@@ -1,28 +1,28 @@
 import type { Issue } from '@/lib/models/issue.model';
 import type { Sprint } from '@/lib/models/sprint.model';
-import { createSprintsRepository } from '@/lib/api/sprints.api';
+import { SprintApi } from '@/lib/api/sprints.api';
 
-const sprintsRepo = createSprintsRepository();
+const sprintApi = new SprintApi();
 
 export async function patchSprint(sprint: Sprint, partial: Partial<Sprint>) {
-  await sprintsRepo.patchSprint(sprint.id, partial);
+  await sprintApi.patchSprint(sprint.id, partial);
   return { ...sprint, ...partial };
 }
 
 export async function startSprint(sprintId: number) {
-  return await sprintsRepo.startSprint(sprintId);
+  return await sprintApi.startSprint(sprintId);
 }
 
 export async function endSprint(sprintId: number) {
-  return await sprintsRepo.endSprint(sprintId);
+  return await sprintApi.endSprint(sprintId);
 }
 
 export async function addIssue(sprint: Sprint, createIssueData: any) {
-  const issue = await sprintsRepo.createIssue(sprint.id, createIssueData);
+  const issue = await sprintApi.createIssue(sprint.id, createIssueData);
   return [...sprint.issues, issue];
 }
 
 export async function removeIssue(sprint: Sprint, issue: Issue) {
-  await sprintsRepo.removeIssue(issue.id);
+  await sprintApi.removeIssue(issue.id);
   return sprint.issues.filter((i) => i.id !== issue.id);
 }

@@ -1,14 +1,14 @@
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
 import { AxiosError } from 'axios';
-import { createUsersRepository } from '@/lib/api/users.api';
+import { UserApi } from '@/lib/api/users.api';
 import { useAuthStore } from './auth.store';
 import { useRouter } from 'vue-router';
 import { Alert } from '@/lib/utils/alert';
 
 const router = useRouter();
 const authStore = useAuthStore();
-const usersRepo = createUsersRepository();
+const userApi = new UserApi();
 
 const name = ref('');
 const email = ref('');
@@ -48,7 +48,7 @@ async function signup() {
   };
 
   try {
-    authStore.createdUser = await usersRepo.createUser(userData);
+    authStore.createdUser = await userApi.createUser(userData);
     router.push('/auth/signin');
   } catch (ex) {
     if (ex instanceof AxiosError) {
@@ -207,4 +207,3 @@ input {
   margin-bottom: 0;
 }
 </style>
-@/lib/api/users.api

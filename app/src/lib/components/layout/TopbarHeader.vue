@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useAuthUserStore } from '@/lib/auth/auth-user.store';
-import { createAuthService } from '@/lib/api/auth.api';
+import { AuthApi } from '@/lib/api/auth.api';
 import { vOnClickOutside } from '@vueuse/components';
 import { computed, ref } from 'vue';
 import { RouterLink, useRoute, useRouter } from 'vue-router';
@@ -28,10 +28,10 @@ function hideDropdown() {
   showDropdown.value = false;
 }
 
-const authService = createAuthService();
+const authApi = new AuthApi();
 
 async function signout() {
-  await authService.signout();
+  await authApi.signout();
   authUserStore.user = null;
   router.push('/auth/signin');
 }
@@ -120,4 +120,3 @@ nav {
   right: 0
   margin-top: 10px
 </style>
-@/lib/api/auth.api

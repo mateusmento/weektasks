@@ -1,8 +1,6 @@
 import { axios } from '@/lib/axios';
 import type { Sprint } from '@/lib/models/sprint.model';
 
-export const createSprintsRepository = () => new SprintApi();
-
 export class SprintApi {
   fetchSprints(productId: number) {
     return axios.get<any[]>(`/products/${productId}/sprints`).then((res) => res.data);
