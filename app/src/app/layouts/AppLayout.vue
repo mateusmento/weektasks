@@ -15,9 +15,9 @@ function closeIssue() {
 
 <template>
   <div class="app-layout">
-    <TopbarHeader />
+    <TopbarHeader class="app-header" />
 
-    <RouterView />
+    <RouterView class="app-main" />
 
     <aside
       class="drawer"
@@ -43,7 +43,7 @@ function closeIssue() {
   height: 100%;
 }
 
-header {
+.app-header {
   position: sticky;
   top: 0;
   z-index: 1;
@@ -52,7 +52,7 @@ header {
   box-sizing: border-box;
 }
 
-main {
+.app-main {
   height: calc(100% - 71px);
 }
 
@@ -64,16 +64,18 @@ main {
 }
 </style>
 
-<style lang="sass" scoped>
-.drawer
-  position: fixed
-  overflow: auto
-  inset: 70.4px 0 0 auto
-  transform: translateX(100%)
-  box-shadow: 0 0 5px rgba(0, 0, 0, .25)
-  transition: 200ms
-  z-index: 1
+<style scoped>
+.drawer {
+  position: fixed;
+  overflow: auto;
+  inset: 70.4px 0 0 auto;
+  transform: translateX(100%);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+  transition: 200ms;
+  z-index: 1;
+}
 
-.drawer--show
-  transform: translateX(0)
+.drawer--show {
+  transform: translateX(0);
+}
 </style>
