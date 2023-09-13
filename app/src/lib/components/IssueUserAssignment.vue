@@ -74,11 +74,15 @@ async function remove(assignee: User) {
         />
         <button class="small" type="submit">Assign</button>
       </div>
-      <div class="flex-vert gap-md">
-        <div v-for="assignee of issue.assignees" :key="assignee.id" class="flex-horz gap-md">
+      <div class="flex-vert gap-sm">
+        <div
+          v-for="assignee of issue.assignees"
+          :key="assignee.id"
+          class="flex-horz gap-md y-center"
+        >
           <img class="assignee-photo" :src="`${envs.API_BASE_URL}/users/${assignee.id}/photo`" />
           {{ assignee.name }}
-          <IconTrash @click="remove(assignee)" />
+          <IconTrash class="ml-auto" @click="remove(assignee)" />
         </div>
       </div>
     </form>
@@ -105,10 +109,7 @@ async function remove(assignee: User) {
   top: 20px;
   right: -20px;
   z-index: 1;
-
-  .combo-box {
-    max-width: 180px;
-  }
+  min-width: 240px;
 
   button {
     display: block;
@@ -122,6 +123,6 @@ async function remove(assignee: User) {
 }
 
 .assignee-photo {
-  width: 17px;
+  height: 26px;
 }
 </style>

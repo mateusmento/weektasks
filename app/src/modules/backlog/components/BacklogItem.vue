@@ -183,7 +183,7 @@ input.story-points-input {
 }
 </style>
 
-<style lang="scss" scoped>
+<style scoped>
 .assigned-to {
   white-space: nowrap;
 }
