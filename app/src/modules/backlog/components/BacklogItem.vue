@@ -123,7 +123,7 @@ function removeAssignee(assignee: User) {
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .backlog-item {
   box-sizing: border-box;
 
@@ -147,15 +147,6 @@ function removeAssignee(assignee: User) {
 
 .backlog-item:not(:hover) .hover-hidden {
   opacity: 0;
-}
-
-.issue-data {
-  overflow: hidden;
-
-  input,
-  textarea {
-    margin-top: 5px;
-  }
 }
 
 .issue-title {
