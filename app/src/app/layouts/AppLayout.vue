@@ -38,6 +38,8 @@ function closeIssue() {
 
 <style lang="scss" scoped>
 .app-layout {
+  --header-height: 71px;
+
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -48,12 +50,12 @@ function closeIssue() {
   top: 0;
   z-index: 1;
 
-  height: 71px;
   box-sizing: border-box;
+  height: var(--header-height);
 }
 
 .app-main {
-  height: calc(100% - 71px);
+  height: calc(100% - var(--header-height));
 }
 
 .issue-view {
