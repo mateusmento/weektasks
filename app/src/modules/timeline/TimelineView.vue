@@ -1,18 +1,26 @@
 <script lang="ts" setup>
 import { DiscussionApi } from '@/modules/timeline/discussion.api';
 import { onMounted, ref } from 'vue';
-import { useRoute } from 'vue-router';
 import CreateDiscussion from './CreateDiscussion.vue';
 import Discussion from './Discussion.vue';
-import CollaboratorsView from '../collaborators/CollaboratorsView.vue';
+import { ProductApi } from '@/lib/api/products.api';
+import type { Collaborator } from '../products/product.model';
+import { envs } from '@/lib/utils/envs';
+import Collaborators from './Collaborators.vue';
 
-const route = useRoute();
+const props = defineProps<{
+  id: string;
+}>();
 
 const discussionApi = new DiscussionApi();
 const discussions = ref<any[]>([]);
 
+const productApi = new ProductApi();
+const collaborators = ref<Collaborator[]>([]);
+
 onMounted(async () => {
-  discussions.value = await discussionApi.findDiscussions(+route.params.id, 1, 10);
+  discussions.value = await discussionApi.findDiscussions(+props.id, 1, 10);
+  collaborators.value = await productApi.fetchCollaborators(props.id);
 });
 
 function addDiscussion($event: any) {
@@ -28,11 +36,17 @@ function addDiscussion($event: any) {
         <li>Backlog</li>
         <li>Calendar</li>
       </ul>
-      <CollaboratorsView />
+      <Collaborators />
     </section>
-    <section class="discussions">
+    <section class="discussions-section">
       <CreateDiscussion @created="addDiscussion" class="p-lg" />
-      <ul>
+      <ul class="collaborators">
+        <li v-for="collab of collaborators" :key="collab.id" class="collab">
+          <img :src="`${envs.API_BASE_URL}/users/${collab.user.id}/photo`" />
+          <div>{{ collab.user.name }}</div>
+        </li>
+      </ul>
+      <ul class="discussions">
         <li v-for="(discussion, i) in discussions" :key="discussion.id">
           <Discussion v-model:discussion="discussions[i]" class="p-lg" />
         </li>
@@ -47,7 +61,31 @@ main {
   display: flex;
 }
 
-.discussions {
+.create-post {
+  padding-bottom: 0;
+}
+
+.collaborators {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 10px;
+}
+
+.collab {
+  width: 60px;
+}
+
+.collab img {
+  width: 100%;
+}
+
+.collab div {
+  text-align: center;
+  white-space: wrap;
+}
+
+.discussions-section {
   max-width: 640px;
   overflow-y: auto;
 
