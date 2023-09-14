@@ -1,6 +1,12 @@
 import { Expose } from 'class-transformer';
 import { UserEntity } from 'src/auth/domain/user.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class Reply {
@@ -24,4 +30,7 @@ export class Reply {
 
   @ManyToOne(() => UserEntity)
   author: UserEntity;
+
+  @CreateDateColumn()
+  createdAt: Date;
 }

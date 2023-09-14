@@ -50,6 +50,9 @@ function formatDate(date: string) {
         <button class="light-purple" hover>See Discussion</button>
       </RouterLink>
     </div>
+    <div class="replies">
+
+    </div>
   </div>
 </template>
 
