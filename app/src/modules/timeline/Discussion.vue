@@ -5,8 +5,7 @@ import DiscussionType from './DiscussionType.vue';
 import LikeButton from './LikeButton.vue';
 import { DiscussionApi } from './discussion.api';
 import { envs } from '@/lib/utils/envs';
-
-const route = useRoute();
+import moment from 'moment';
 
 const discussionApi = new DiscussionApi();
 
@@ -20,6 +19,10 @@ async function toggleLiked([liked, count]: any) {
   discussionApi.likeDiscussion(props.discussion.id);
   emit('update:discussion', { ...props.discussion, liked, likes: count });
 }
+
+function formatDate(date: string) {
+  return moment(date).format('MMM D, YYYY');
+}
 </script>
 
 <template>
@@ -28,7 +31,7 @@ async function toggleLiked([liked, count]: any) {
     <div class="header">
       <div>
         <div class="name">Mateus Sarmento</div>
-        <div class="posted-at">Set 12, 2022</div>
+        <div class="posted-at">{{ formatDate(discussion.createdAt) }}</div>
       </div>
       <DiscussionType :type="discussion.type" />
       <div v-if="discussion.type === 'progress'" class="task-link flex-horz gap-sm">
