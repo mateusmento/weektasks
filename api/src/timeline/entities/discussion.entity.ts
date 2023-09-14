@@ -1,7 +1,13 @@
 import { Expose } from 'class-transformer';
 import { patchObject } from 'src/object.functions';
 import { UserEntity } from 'src/auth/domain/user.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class Discussion {
@@ -31,6 +37,9 @@ export class Discussion {
 
   @Expose()
   liked = false;
+
+  @CreateDateColumn()
+  createdAt: Date;
 
   constructor(partial: Partial<Discussion> = {}) {
     patchObject(this, partial);
