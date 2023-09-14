@@ -30,7 +30,7 @@ function formatDate(date: string) {
     <img class="userphoto" :src="`${envs.API_BASE_URL}/users/${discussion.authorId}/photo`" />
     <div class="header">
       <div>
-        <div class="name">Mateus Sarmento</div>
+        <div class="name">{{discussion.author.name}}</div>
         <div class="posted-at">{{ formatDate(discussion.createdAt) }}</div>
       </div>
       <DiscussionType :type="discussion.type" />
