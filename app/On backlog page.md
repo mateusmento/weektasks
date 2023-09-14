@@ -57,3 +57,56 @@ and post discussions
 
 Also, it's a perfect place where infos about the team and product can be, like
 team's collaborators, product name and configurations like sprint durations.
+
+Timeline
+
+Communicate and keep track of everything that is happening or will happen within a sprint
+
+- Timeline Events
+  - Meeting Schedules (scheduled datetime)
+  - Issue Due Dates
+  - Scrum Cerimonies (schedule recurrent datetime)
+    - Daily Scrum (every day)
+    - Sprint Planning (first day within a sprint)
+    - Sprint Review (last day within a sprint or the day before)
+    - Sprint Retrospective (last day within a sprint)
+- Daily Planning
+  - Issue Order
+  - Issue Story Points
+- Discussions (posted datetime)
+  - Replies
+  - Likes
+  - Types
+    - Feedback
+    - Progress
+    - Blockers
+
+Channel
+
+Communicate with members of your team via text messages and video calls.
+
+- List of team's member contact
+- List other contacts possibily from other teams
+- Direct Messages (sent time and date)
+- Virtual Meetings (meeting start and end datetime)
+- Meeting Scheduling
+
+17 set
+
+16 set
+
+15 set
+17:00 - Daily Meeting
+
+14 set
+17:00 - Daily Meeting
+
+13 set
+17:00 - Daily Meeting
+
+12 set
+17:00 - Daily Meeting
+
+11 set
+17:00 - Daily Meeting
+09:30 - Sprint Planning
