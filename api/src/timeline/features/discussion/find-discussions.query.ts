@@ -34,6 +34,7 @@ export class FindDiscussionsQuery implements IQueryHandler<FindDiscussions> {
       order: { id: 'desc' },
       skip: (page - 1) * pageSize,
       take: pageSize,
+      relations: { author: true },
     });
     const ids = discussions.map((p) => p.id);
     const likes = await this.likeRepo.find({
