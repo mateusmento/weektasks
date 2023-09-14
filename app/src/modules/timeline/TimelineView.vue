@@ -48,7 +48,7 @@ function addDiscussion($event: any) {
       </ul>
       <ul class="discussions">
         <li v-for="(discussion, i) in discussions" :key="discussion.id">
-          <Discussion v-model:discussion="discussions[i]" class="p-md" />
+          <Discussion v-model:discussion="discussions[i]" :productId="+id" class="p-md" />
         </li>
         <li class="bottom-item"></li>
       </ul>

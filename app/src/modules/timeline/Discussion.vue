@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import IconChecked from '@/lib/components/icons/IconChecked.vue';
-import { RouterLink, useRoute } from 'vue-router';
+import { RouterLink } from 'vue-router';
 import DiscussionType from './DiscussionType.vue';
 import LikeButton from './LikeButton.vue';
 import { DiscussionApi } from './discussion.api';
@@ -11,6 +11,7 @@ const discussionApi = new DiscussionApi();
 
 const props = defineProps<{
   discussion: any;
+  productId: number;
 }>();
 
 const emit = defineEmits(['update:discussion']);
@@ -44,7 +45,7 @@ function formatDate(date: string) {
       <LikeButton :liked="discussion.liked" :count="discussion.likes" @toggled="toggleLiked" />
       <div>Reply</div>
       <RouterLink
-        :to="{ name: 'discussion', params: { id: route.params.id, discussionId: discussion.id } }"
+        :to="{ name: 'discussion', params: { id: productId, discussionId: discussion.id } }"
       >
         <button class="light-purple" hover>See Discussion</button>
       </RouterLink>
@@ -75,7 +76,7 @@ function formatDate(date: string) {
 
 .posted-at {
   color: #777;
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .task-link {

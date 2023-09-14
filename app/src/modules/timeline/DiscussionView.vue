@@ -28,11 +28,16 @@ async function createReply(reply: any) {
 <template>
   <div class="discussion-view container vertical">
     <div class="card card-lg p-md">
-      <Discussion v-if="discussion" v-model:discussion="discussion" />
+      <Discussion v-if="discussion" v-model:discussion="discussion" :product-id="+id" />
       <FormKit type="form" @submit="createReply">
         <FormKit type="textarea" name="text" />
       </FormKit>
-      <Discussion v-for="(reply, i) in replies" :key="reply.id" v-model:discussion="replies[i]" />
+      <Discussion
+        v-for="(reply, i) in replies"
+        :key="reply.id"
+        v-model:discussion="replies[i]"
+        :product-id="+id"
+      />
     </div>
   </div>
 </template>
