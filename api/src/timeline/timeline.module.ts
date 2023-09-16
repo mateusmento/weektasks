@@ -13,6 +13,7 @@ import { LikeDiscussionCommand } from './features/discussion/like-discussion.com
 import { CreateReplyCommand } from './features/reply/create-reply.command';
 import { FindRepliesQuery } from './features/reply/find-replies.query';
 import { LikeReplyCommand } from './features/reply/like-reply.command';
+import { DiscussionRepository } from './domain/discussion.repository';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { LikeReplyCommand } from './features/reply/like-reply.command';
     CqrsModule,
   ],
   providers: [
+    DiscussionRepository,
     FindDiscussionsQuery,
     CreateDiscussionCommand,
     LikeDiscussionCommand,

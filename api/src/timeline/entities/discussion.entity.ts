@@ -6,8 +6,10 @@ import {
   CreateDateColumn,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { Reply } from './reply.entity';
 
 @Entity()
 export class Discussion {
@@ -40,6 +42,9 @@ export class Discussion {
 
   @CreateDateColumn()
   createdAt: Date;
+
+  @OneToMany(() => Reply, (r) => r.discussion)
+  replies: Reply[];
 
   constructor(partial: Partial<Discussion> = {}) {
     patchObject(this, partial);

@@ -19,6 +19,10 @@ export class CreateReplyCommand implements ICommandHandler<CreateReply> {
   ) {}
 
   async execute(command: CreateReply): Promise<any> {
-    return this.replyRepo.save(command);
+    const { id } = await this.replyRepo.save(command);
+    return this.replyRepo.findOne({
+      where: { id },
+      relations: { author: true },
+    });
   }
 }

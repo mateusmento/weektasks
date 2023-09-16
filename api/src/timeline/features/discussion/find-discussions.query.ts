@@ -2,8 +2,8 @@ import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { InjectRepository } from '@nestjs/typeorm';
 import { IsNumber } from 'class-validator';
 import { In, Repository } from 'typeorm';
-import { Discussion } from '../../entities/discussion.entity';
 import { Like } from '../../entities/like.entity';
+import { DiscussionRepository } from 'src/timeline/domain/discussion.repository';
 
 export class FindDiscussions {
   productId: number;
@@ -17,10 +17,9 @@ export class FindDiscussions {
 @QueryHandler(FindDiscussions)
 export class FindDiscussionsQuery implements IQueryHandler<FindDiscussions> {
   constructor(
-    @InjectRepository(Discussion)
-    private discussionRepo: Repository<Discussion>,
     @InjectRepository(Like)
-    private likeRepo: Repository<Like>
+    private likeRepo: Repository<Like>,
+    private discussionRepo: DiscussionRepository
   ) {}
 
   async execute({
@@ -29,13 +28,12 @@ export class FindDiscussionsQuery implements IQueryHandler<FindDiscussions> {
     pageSize,
     userId,
   }: FindDiscussions): Promise<any> {
-    const discussions = await this.discussionRepo.find({
-      where: { productId },
-      order: { id: 'desc' },
-      skip: (page - 1) * pageSize,
-      take: pageSize,
-      relations: { author: true },
-    });
+    const discussions = await this.discussionRepo.findTimelineDiscussions(
+      productId,
+      page,
+      pageSize
+    );
+
     const ids = discussions.map((p) => p.id);
     const likes = await this.likeRepo.find({
       where: { userId, discussionId: In(ids) },

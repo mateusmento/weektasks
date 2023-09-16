@@ -7,6 +7,8 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { Discussion } from './discussion.entity';
+import { patchObject } from 'src/object.functions';
 
 @Entity()
 export class Reply {
@@ -25,6 +27,9 @@ export class Reply {
   @Column()
   discussionId: number;
 
+  @ManyToOne(() => Discussion)
+  discussion: Discussion;
+
   @Column()
   authorId: number;
 
@@ -33,4 +38,8 @@ export class Reply {
 
   @CreateDateColumn()
   createdAt: Date;
+
+  constructor(partial: Partial<Reply> = {}) {
+    patchObject(this, partial);
+  }
 }

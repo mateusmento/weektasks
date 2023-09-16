@@ -6,15 +6,29 @@ import LikeButton from './LikeButton.vue';
 import { DiscussionApi } from './discussion.api';
 import { envs } from '@/lib/utils/envs';
 import moment from 'moment';
-
-const discussionApi = new DiscussionApi();
+import Reply from './Reply.vue';
+import type { Discussion } from '@/lib/models/discussion.model';
+import { computed, ref } from 'vue';
+import TextareaForm from './TextareaForm.vue';
+import { useAuthUserStore } from '@/lib/auth/auth-user.store';
+import { requestApi } from '@/lib/utils/api';
 
 const props = defineProps<{
-  discussion: any;
+  discussion: Discussion;
   productId: number;
 }>();
 
 const emit = defineEmits(['update:discussion']);
+
+const discussionApi = new DiscussionApi();
+const authUserStore = useAuthUserStore();
+
+const showCreateDiscussion = ref(false);
+
+const discussion = computed({
+  get: () => props.discussion,
+  set: (v) => emit('update:discussion', v),
+});
 
 async function toggleLiked([liked, count]: any) {
   discussionApi.likeDiscussion(props.discussion.id);
@@ -24,6 +38,19 @@ async function toggleLiked([liked, count]: any) {
 function formatDate(date: string) {
   return moment(date).format('MMM D, YYYY');
 }
+
+async function addReply(text: string) {
+  const data = {
+    text,
+    discussionId: props.discussion.id,
+    authorId: authUserStore.user?.id,
+  };
+  const reply = await requestApi(discussionApi.createReply(props.discussion.id, data));
+  discussion.value = {
+    ...discussion.value,
+    replies: [...props.discussion.replies, reply],
+  };
+}
 </script>
 
 <template>
@@ -31,19 +58,19 @@ function formatDate(date: string) {
     <img class="userphoto" :src="`${envs.API_BASE_URL}/users/${discussion.authorId}/photo`" />
     <div class="header">
       <div>
-        <div class="name">{{discussion.author.name}}</div>
+        <div>{{ discussion.author.name }}</div>
         <div class="posted-at">{{ formatDate(discussion.createdAt) }}</div>
       </div>
       <DiscussionType :type="discussion.type" />
-      <div v-if="discussion.type === 'progress'" class="task-link flex-horz gap-sm">
+      <div v-if="discussion.type === 'progress'" class="task flex-horz gap-sm">
         <IconChecked />
         Maintain issues ordering in sprint
       </div>
     </div>
-    <p class="text-content"><pre>{{ discussion.text }}</pre></p>
+    <p class="text">{{ discussion.text }}</p>
     <div class="footer">
       <LikeButton :liked="discussion.liked" :count="discussion.likes" @toggled="toggleLiked" />
-      <div>Reply</div>
+      <button @click="showCreateDiscussion = !showCreateDiscussion">Reply</button>
       <RouterLink
         :to="{ name: 'discussion', params: { id: productId, discussionId: discussion.id } }"
       >
@@ -51,17 +78,23 @@ function formatDate(date: string) {
       </RouterLink>
     </div>
     <div class="replies">
-
+      <Reply v-for="reply of discussion.replies" :key="reply.id" :reply="reply" />
     </div>
+    <TextareaForm v-if="showCreateDiscussion" placeholder="Give a reply..." @send="addReply" />
   </div>
 </template>
 
 <style lang="scss" scoped>
 .discussion {
   display: grid;
-  grid-template-columns: fit-content(0) 1fr fit-content(0);
-  grid-template-rows: fit-content(0) 1fr fit-content(0);
-  grid-template-areas: 'userphoto header' 'userphoto content' 'userphoto footer';
+  grid-template-columns: fit-content(0) 1fr;
+  grid-template-rows: fit-content(0) 1fr fit-content(0) fit-content(0) fit-content(0);
+  grid-template-areas:
+    'userphoto header'
+    'userphoto content'
+    'userphoto footer'
+    'userphoto replies'
+    'userphoto add-reply';
   gap: 10px;
 }
 
@@ -82,14 +115,20 @@ function formatDate(date: string) {
   font-size: 12px;
 }
 
-.task-link {
+.task {
   color: #777;
   font-size: 12px;
 }
 
-.text-content {
+.text {
   grid-area: content;
   color: #5b5b5b;
+  font-size: 15px;
+  white-space: pre-wrap; /* css-3 */
+  white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+  white-space: -pre-wrap; /* Opera 4-6 */
+  white-space: -o-pre-wrap; /* Opera 7 */
+  word-wrap: break-word; /* Internet Explorer 5.5+ */
 }
 
 .footer {
@@ -101,9 +140,18 @@ function formatDate(date: string) {
   font-size: 12px;
 }
 
-.like {
+.replies {
+  grid-area: replies;
   display: flex;
-  gap: 5px;
+  flex-direction: column;
+}
+
+.reply:not(:last-of-type) {
+  border-bottom: 1px solid #ccc;
+}
+
+.textarea-form {
+  grid-area: add-reply;
 }
 
 button {

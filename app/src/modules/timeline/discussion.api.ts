@@ -24,7 +24,7 @@ export class DiscussionApi {
   }
 
   createReply(discussionId: number, reply: any) {
-    return axios.post(`/discussions/${discussionId}/replies`, reply);
+    return axios.post(`/discussions/${discussionId}/replies`, reply).then((res) => res.data);
   }
 
   likeReply(id: number) {
