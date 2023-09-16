@@ -56,50 +56,44 @@ async function addReply(text: string) {
 <template>
   <div class="discussion">
     <img class="userphoto" :src="`${envs.API_BASE_URL}/users/${discussion.authorId}/photo`" />
-    <div class="header">
-      <div>
-        <div>{{ discussion.author.name }}</div>
-        <div class="posted-at">{{ formatDate(discussion.createdAt) }}</div>
+    <div class="flex-vert-md">
+      <div class="header">
+        <div>
+          <div>{{ discussion.author.name }}</div>
+          <div class="posted-at">{{ formatDate(discussion.createdAt) }}</div>
+        </div>
+        <DiscussionType :type="discussion.type" />
+        <div v-if="discussion.type === 'progress'" class="task flex-horz gap-sm">
+          <IconChecked />
+          Maintain issues ordering in sprint
+        </div>
       </div>
-      <DiscussionType :type="discussion.type" />
-      <div v-if="discussion.type === 'progress'" class="task flex-horz gap-sm">
-        <IconChecked />
-        Maintain issues ordering in sprint
+      <p class="text">{{ discussion.text }}</p>
+      <div class="footer">
+        <LikeButton :liked="discussion.liked" :count="discussion.likes" @toggled="toggleLiked" />
+        <button @click="showCreateDiscussion = !showCreateDiscussion">Reply</button>
+        <RouterLink
+          :to="{ name: 'discussion', params: { id: productId, discussionId: discussion.id } }"
+        >
+          <button class="light-purple" hover>See Discussion</button>
+        </RouterLink>
       </div>
+      <div v-if="discussion.replies.length" class="replies">
+        <Reply v-for="reply of discussion.replies" :key="reply.id" :reply="reply" />
+      </div>
+      <TextareaForm v-if="showCreateDiscussion" placeholder="Give a reply..." @send="addReply" />
     </div>
-    <p class="text">{{ discussion.text }}</p>
-    <div class="footer">
-      <LikeButton :liked="discussion.liked" :count="discussion.likes" @toggled="toggleLiked" />
-      <button @click="showCreateDiscussion = !showCreateDiscussion">Reply</button>
-      <RouterLink
-        :to="{ name: 'discussion', params: { id: productId, discussionId: discussion.id } }"
-      >
-        <button class="light-purple" hover>See Discussion</button>
-      </RouterLink>
-    </div>
-    <div class="replies">
-      <Reply v-for="reply of discussion.replies" :key="reply.id" :reply="reply" />
-    </div>
-    <TextareaForm v-if="showCreateDiscussion" placeholder="Give a reply..." @send="addReply" />
   </div>
 </template>
 
 <style lang="scss" scoped>
 .discussion {
-  display: grid;
-  grid-template-columns: fit-content(0) 1fr;
-  grid-template-rows: fit-content(0) 1fr fit-content(0) fit-content(0) fit-content(0);
-  grid-template-areas:
-    'userphoto header'
-    'userphoto content'
-    'userphoto footer'
-    'userphoto replies'
-    'userphoto add-reply';
+  display: flex;
   gap: 10px;
 }
 
 .userphoto {
-  width: 40px;
+  height: 40px;
   grid-area: userphoto;
 }
 
