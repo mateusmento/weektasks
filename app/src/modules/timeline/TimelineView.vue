@@ -9,6 +9,7 @@ import { envs } from '@/lib/utils/envs';
 import Collaborators from './Collaborators.vue';
 import Messaging from './messaging/Messaging.vue';
 import DiscussionView from './DiscussionView.vue';
+import type { User } from '@/lib/models/user.model';
 
 const props = defineProps<{
   id: string;
@@ -18,6 +19,8 @@ const discussionApi = new DiscussionApi();
 const discussions = ref<any[]>([]);
 
 const viewingDiscussion = ref<any>(null);
+const chattingUser = ref<User | null>(null);
+const viewType = ref<'chat' | 'discussion' | null>(null);
 
 const productApi = new ProductApi();
 const collaborators = ref<Collaborator[]>([]);
@@ -29,6 +32,16 @@ onMounted(async () => {
 
 function addDiscussion($event: any) {
   discussions.value.unshift($event);
+}
+
+function chatWith(user: User) {
+  chattingUser.value = user;
+  viewType.value = 'chat';
+}
+
+function viewDiscussion(discussion: any) {
+  viewingDiscussion.value = discussion;
+  viewType.value = 'discussion';
 }
 </script>
 
@@ -45,7 +58,12 @@ function addDiscussion($event: any) {
     <section class="discussions-section">
       <CreateDiscussion @created="addDiscussion" class="p-lg" />
       <ul class="collaborators">
-        <li v-for="collab of collaborators" :key="collab.id" class="collab">
+        <li
+          v-for="collab of collaborators"
+          :key="collab.id"
+          class="collab"
+          @click="chatWith(collab.user)"
+        >
           <img :src="`${envs.API_BASE_URL}/users/${collab.user.id}/photo`" />
           <div>{{ collab.user.name }}</div>
         </li>
@@ -57,16 +75,16 @@ function addDiscussion($event: any) {
             :productId="+id"
             :replies="discussions[i].replies"
             class="p-md"
-            @view="viewingDiscussion = $event"
+            @view="viewDiscussion"
           />
         </li>
         <li class="bottom-item"></li>
       </ul>
     </section>
     <section class="chat-section p-lg">
-      <!-- <Messaging /> -->
+      <Messaging v-if="viewType === 'chat'" />
       <DiscussionView
-        v-if="viewingDiscussion"
+        v-else-if="viewType === 'discussion'"
         v-model:discussion="viewingDiscussion"
         :productId="+id"
       />
