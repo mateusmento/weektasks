@@ -62,7 +62,7 @@ async function addReply(text: string) {
 <template>
   <div class="discussion">
     <img class="userphoto" :src="`${envs.API_BASE_URL}/users/${discussion.authorId}/photo`" />
-    <div class="flex-vert-md">
+    <div class="flex-vert-md w-100">
       <div class="header">
         <div>
           <div>{{ discussion.author.name }}</div>
