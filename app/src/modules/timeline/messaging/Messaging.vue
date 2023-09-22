@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import TextareaForm from '../TextareaForm.vue';
 import Message from './Message.vue';
 </script>
 
@@ -23,6 +24,7 @@ import Message from './Message.vue';
         }"
       />
     </div>
+    <TextareaForm placeholder="Send a message..." />
   </div>
 </template>
 
@@ -30,14 +32,14 @@ import Message from './Message.vue';
 .chat {
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  gap: 20px;
   height: 100%;
 }
 
 .messages {
   flex: 1;
   padding: 10px;
-  border-radius: 15px;
+  border-radius: 20px;
   background-color: aliceblue;
   display: flex;
   flex-direction: column;
