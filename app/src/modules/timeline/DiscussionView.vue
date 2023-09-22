@@ -86,10 +86,8 @@ async function createReply(text: string) {
           <div style="font-size: 16px">{{ emojify(':smile:') }}</div>
         </div>
       </div>
-      <div class="replies-container">
-        <div v-if="replies.length" class="replies">
-          <Reply v-for="reply of replies" :key="reply.id" :reply="reply" />
-        </div>
+      <div v-if="replies.length" class="replies">
+        <Reply v-for="reply of replies" :key="reply.id" :reply="reply" />
       </div>
       <TextareaForm placeholder="Give a reply..." @send="createReply" />
     </div>
@@ -97,12 +95,10 @@ async function createReply(text: string) {
 </template>
 
 <style lang="scss" scoped>
-.replies-container {
+.replies {
   flex: 1;
   overflow-y: auto;
-}
 
-.replies {
   display: flex;
   flex-direction: column;
   gap: 10px;
