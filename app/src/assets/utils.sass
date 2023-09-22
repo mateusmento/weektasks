@@ -1,3 +1,12 @@
+.w-100
+  width: 100%
+
+.w-fit
+  width: fit-content
+
+.h-100
+  height: 100%
+
 .flex-horz
   display: flex
   flex-direction: row
@@ -30,6 +39,14 @@
 
 .ml-4
   margin-left: 20px
+
+.flex-vert-sm
+  @extend .flex-vert
+  @extend .gap-sm
+
+.flex-horz-sm
+  @extend .flex-horz
+  @extend .gap-sm
 
 .flex-vert-md
   @extend .flex-vert

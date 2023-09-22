@@ -1,24 +1,29 @@
 <script lang="ts" setup>
 import IconChecked from '@/lib/components/icons/IconChecked.vue';
-import { RouterLink } from 'vue-router';
 import DiscussionType from './DiscussionType.vue';
 import LikeButton from './LikeButton.vue';
 import { DiscussionApi } from './discussion.api';
 import { envs } from '@/lib/utils/envs';
 import moment from 'moment';
-import Reply from './Reply.vue';
-import type { Discussion } from '@/lib/models/discussion.model';
+import MiniReply from './MiniReply.vue';
+import type { Discussion, Reply as IReply } from '@/lib/models/discussion.model';
 import { computed, ref } from 'vue';
 import TextareaForm from './TextareaForm.vue';
 import { useAuthUserStore } from '@/lib/auth/auth-user.store';
 import { requestApi } from '@/lib/utils/api';
 
-const props = defineProps<{
-  discussion: Discussion;
-  productId: number;
-}>();
+const props = withDefaults(
+  defineProps<{
+    discussion: Discussion;
+    replies: IReply[];
+    productId: number;
+  }>(),
+  {
+    replies: () => [],
+  }
+);
 
-const emit = defineEmits(['update:discussion']);
+const emit = defineEmits(['update:discussion', 'add-reply', 'view']);
 
 const discussionApi = new DiscussionApi();
 const authUserStore = useAuthUserStore();
@@ -50,6 +55,7 @@ async function addReply(text: string) {
     ...discussion.value,
     replies: [...props.discussion.replies, reply],
   };
+  emit('add-reply', reply);
 }
 </script>
 
@@ -71,15 +77,13 @@ async function addReply(text: string) {
       <p class="text">{{ discussion.text }}</p>
       <div class="footer">
         <LikeButton :liked="discussion.liked" :count="discussion.likes" @toggled="toggleLiked" />
-        <button @click="showCreateDiscussion = !showCreateDiscussion">Reply</button>
-        <RouterLink
-          :to="{ name: 'discussion', params: { id: productId, discussionId: discussion.id } }"
-        >
-          <button class="light-purple" hover>See Discussion</button>
-        </RouterLink>
+        <button class="light-purple" hover @click="emit('view', discussion)">See Discussion</button>
       </div>
-      <div v-if="discussion.replies.length" class="replies">
-        <Reply v-for="reply of discussion.replies" :key="reply.id" :reply="reply" />
+      <div v-if="replies.length" class="replies">
+        <MiniReply v-for="reply of replies" :key="reply.id" :reply="reply" />
+        <button class="w-fit" hover @click="showCreateDiscussion = !showCreateDiscussion">
+          Add a reply
+        </button>
       </div>
       <TextareaForm v-if="showCreateDiscussion" placeholder="Give a reply..." @send="addReply" />
     </div>

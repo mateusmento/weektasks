@@ -24,7 +24,10 @@ export class FindRepliesQuery implements IQueryHandler<FindReplies> {
   ) {}
 
   async execute({ userId, discussionId }: FindReplies): Promise<any> {
-    const replies = await this.replyRepo.find({ where: { discussionId } });
+    const replies = await this.replyRepo.find({
+      where: { discussionId },
+      relations: { author: true },
+    });
     const ids = replies.map((p) => p.id);
     const likes = await this.likeRepo.find({
       where: { userId, replyId: In(ids) },

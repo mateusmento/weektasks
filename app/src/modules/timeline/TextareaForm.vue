@@ -22,6 +22,7 @@ const text = ref('');
   padding: 15px;
   gap: 10px;
   border: 2px solid transparent;
+  width: 100%;
 }
 
 .textarea-form:focus-within {
@@ -37,6 +38,7 @@ textarea {
   font-size: 14px;
   outline: none;
   resize: none;
+  width: 100%;
 }
 
 textarea::placeholder {

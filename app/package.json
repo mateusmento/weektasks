@@ -20,6 +20,7 @@
     "axios": "^1.4.0",
     "element-plus": "^2.3.12",
     "moment": "^2.29.4",
+    "node-emoji": "^2.1.0",
     "peerjs": "^1.4.7",
     "pinia": "^2.1.6",
     "socket.io-client": "^4.7.2",

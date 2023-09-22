@@ -7,6 +7,8 @@ import { ProductApi } from '@/lib/api/products.api';
 import type { Collaborator } from '../products/product.model';
 import { envs } from '@/lib/utils/envs';
 import Collaborators from './Collaborators.vue';
+import Messaging from './messaging/Messaging.vue';
+import DiscussionView from './DiscussionView.vue';
 
 const props = defineProps<{
   id: string;
@@ -14,6 +16,8 @@ const props = defineProps<{
 
 const discussionApi = new DiscussionApi();
 const discussions = ref<any[]>([]);
+
+const viewingDiscussion = ref<any>(null);
 
 const productApi = new ProductApi();
 const collaborators = ref<Collaborator[]>([]);
@@ -48,10 +52,24 @@ function addDiscussion($event: any) {
       </ul>
       <ul class="discussions">
         <li v-for="(discussion, i) in discussions" :key="discussion.id">
-          <Discussion v-model:discussion="discussions[i]" :productId="+id" class="p-md" />
+          <Discussion
+            v-model:discussion="discussions[i]"
+            :productId="+id"
+            :replies="discussions[i].replies"
+            class="p-md"
+            @view="viewingDiscussion = $event"
+          />
         </li>
         <li class="bottom-item"></li>
       </ul>
+    </section>
+    <section class="chat-section p-lg">
+      <!-- <Messaging /> -->
+      <DiscussionView
+        v-if="viewingDiscussion"
+        v-model:discussion="viewingDiscussion"
+        :productId="+id"
+      />
     </section>
   </main>
 </template>
@@ -114,5 +132,10 @@ main {
 
 .bottom-item {
   height: 20px;
+}
+
+.chat-section {
+  background-color: #fff;
+  flex: 1;
 }
 </style>

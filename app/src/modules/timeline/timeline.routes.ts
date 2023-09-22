@@ -8,13 +8,6 @@ const timelineRoutes = [
     component: () => import('./TimelineView.vue'),
     beforeEnter,
   },
-  {
-    path: '/products/:id/discussion/:discussionId',
-    name: 'discussion',
-    props: true,
-    component: () => import('./DiscussionView.vue'),
-    beforeEnter,
-  },
 ];
 
 export default timelineRoutes;
