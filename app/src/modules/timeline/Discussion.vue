@@ -77,11 +77,21 @@ async function addReply(text: string) {
       <p class="text">{{ discussion.text }}</p>
       <div class="footer">
         <LikeButton :liked="discussion.liked" :count="discussion.likes" @toggled="toggleLiked" />
-        <button class="light-purple" hover @click="emit('view', discussion)">See Discussion</button>
+        <button v-if="replies.length" class="light-purple" hover @click="emit('view', discussion)">
+          See Discussion
+        </button>
+        <button
+          v-if="!replies.length"
+          class="w-fit"
+          hover
+          @click="showCreateDiscussion = !showCreateDiscussion"
+        >
+          Reply
+        </button>
       </div>
       <div v-if="replies.length" class="replies">
         <MiniReply v-for="reply of replies" :key="reply.id" :reply="reply" />
-        <button class="w-fit" hover @click="showCreateDiscussion = !showCreateDiscussion">
+        <button class="ml-1 mt-1 w-fit" hover @click="showCreateDiscussion = !showCreateDiscussion">
           Add a reply
         </button>
       </div>
