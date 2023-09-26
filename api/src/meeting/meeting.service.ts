@@ -18,8 +18,8 @@ export class MeetingService {
     return this.meetingRepo.findOneBy({ id });
   }
 
-  async startMeeting(contactId: number) {
-    const ongoingMeeting = MeetingEntity.ongoing(contactId);
+  async startMeeting(chatId: number) {
+    const ongoingMeeting = MeetingEntity.ongoing(chatId);
     return await this.meetingRepo.save(ongoingMeeting);
   }
 

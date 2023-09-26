@@ -7,7 +7,7 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { ContactEntity } from '../contact/contact.entity';
+import { ChatEntity } from '../chat/chat.entity';
 import { UserEntity } from '../auth/domain/user.entity';
 
 @Entity({ name: 'meetings' })
@@ -24,16 +24,16 @@ export class MeetingEntity {
   attendees: MeetingAttendeeEntity[];
 
   @Column()
-  contactId: number;
+  chatId: number;
 
-  @OneToOne(() => ContactEntity)
+  @OneToOne(() => ChatEntity)
   @JoinColumn()
-  contact: ContactEntity;
+  chat: ChatEntity;
 
-  static ongoing(contactId: number) {
+  static ongoing(chatId: number) {
     const meeting = new MeetingEntity();
     meeting.ongoing = true;
-    meeting.contactId = contactId;
+    meeting.chatId = chatId;
     meeting.attendees = [];
     return meeting;
   }

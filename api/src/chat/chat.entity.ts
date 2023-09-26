@@ -12,23 +12,23 @@ import {
 import { MeetingEntity } from '../meeting/meeting.entity';
 import { MessageEntity } from '../messaging/message.entity';
 
-type ContactType = 'direct' | 'group';
+type ChatType = 'direct' | 'group';
 
-@Entity({ name: 'contacts' })
-export class ContactEntity {
+@Entity({ name: 'chats' })
+export class ChatEntity {
   @PrimaryGeneratedColumn('identity', { generatedIdentity: 'ALWAYS' })
   id: number;
 
   @Column({ default: 'direct' })
-  type: ContactType;
+  type: ChatType;
 
   @ManyToMany(() => UserEntity)
-  @JoinTable({ name: 'contact_peers' })
+  @JoinTable({ name: 'chat_peers' })
   peers: UserEntity[];
 
   speakingTo: UserEntity;
 
-  @OneToOne(() => MeetingEntity, (m) => m.contact)
+  @OneToOne(() => MeetingEntity, (m) => m.chat)
   meeting: MeetingEntity;
 
   @Column({ default: null })

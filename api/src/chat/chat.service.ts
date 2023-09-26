@@ -1,20 +1,20 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ContactEntity } from './contact.entity';
+import { ChatEntity } from './chat.entity';
 import { Repository } from 'typeorm';
 import { UserEntity } from '../auth/domain/user.entity';
 
 @Injectable()
-export class ContactService {
+export class ChatService {
   constructor(
-    @InjectRepository(ContactEntity)
-    private contactRepo: Repository<ContactEntity>,
+    @InjectRepository(ChatEntity)
+    private chatRepo: Repository<ChatEntity>,
     @InjectRepository(UserEntity)
     private userRepo: Repository<UserEntity>
   ) {}
 
-  async findContacts(userId: number) {
-    const contacts = await this.contactRepo
+  async findChats(userId: number) {
+    const chats = await this.chatRepo
       .createQueryBuilder('c')
       .innerJoin('c.peers', 'peer', 'peer.id = :userId', { userId })
       .leftJoinAndSelect('c.peers', 'p')
@@ -26,14 +26,14 @@ export class ContactService {
       )
       .getMany();
 
-    for (const contact of contacts)
-      if (contact.type === 'direct')
-        contact.speakingTo = contact.peers.find((p) => p.id !== userId);
+    for (const chat of chats)
+      if (chat.type === 'direct')
+        chat.speakingTo = chat.peers.find((p) => p.id !== userId);
 
-    return contacts;
+    return chats;
   }
 
-  async createDirectContact(meId: number, peerUserName: string) {
+  async createDirectChat(meId: number, peerUserName: string) {
     const peers = await this.userRepo
       .createQueryBuilder('user')
       .leftJoin('user.credential', 'cred')
@@ -42,8 +42,8 @@ export class ContactService {
       .getMany();
     console.log(peers);
     if (peers.length < 2) throw new NotFoundException('User not found');
-    const contact = await this.contactRepo.save({ type: 'direct', peers });
-    contact.speakingTo = contact.peers.find((p) => p.id !== meId);
-    return contact;
+    const chat = await this.chatRepo.save({ type: 'direct', peers });
+    chat.speakingTo = chat.peers.find((p) => p.id !== meId);
+    return chat;
   }
 }

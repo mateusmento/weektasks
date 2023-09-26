@@ -1,12 +1,12 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { MessagingService } from './messaging.service';
 
-@Controller('contacts')
+@Controller('chats')
 export class MessagingController {
-  constructor(private contactService: MessagingService) {}
+  constructor(private chatService: MessagingService) {}
 
-  @Get(':contactId/messages')
-  findMessages(@Param('contactId') contactId: number) {
-    return this.contactService.findMessages(contactId);
+  @Get(':chatId/messages')
+  findMessages(@Param('chatId') chatId: number) {
+    return this.chatService.findMessages(chatId);
   }
 }

@@ -8,7 +8,7 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { CredentialEntity } from './auth/domain/credential.entity';
 import { UserEntity } from './auth/domain/user.entity';
 import { BacklogItem } from './backlog/entities/backlog-item.entity';
-import { ContactEntity } from './contact/contact.entity';
+import { ChatEntity } from './chat/chat.entity';
 import { Issue } from './issues/entities/issue.entity';
 import { Epic } from './issues/entities/epic.entity';
 import { IssueComment } from './issues/entities/issue-comment.entity';
@@ -42,7 +42,7 @@ export const typeormConfig: DataSourceOptions = {
     CredentialEntity,
     UserEntity,
     BacklogItem,
-    ContactEntity,
+    ChatEntity,
     Issue,
     Epic,
     IssueComment,

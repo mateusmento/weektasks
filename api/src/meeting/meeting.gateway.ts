@@ -17,20 +17,20 @@ export class MeetingGateway {
 
   @SubscribeMessage('meeting-notification')
   async meetingNotification(
-    @MessageBody() { contactId }: any,
+    @MessageBody() { chatId }: any,
     @ConnectedSocket() socket: Socket
   ) {
-    socket.join(`contact:${contactId}:meeting-notification`);
+    socket.join(`chat:${chatId}:meeting-notification`);
   }
 
   @SubscribeMessage('request-meeting')
   async requestMeeting(
-    @MessageBody() { contactId }: any,
+    @MessageBody() { chatId }: any,
     @ConnectedSocket() socket: Socket
   ) {
-    const meeting = await this.meetingService.startMeeting(contactId);
+    const meeting = await this.meetingService.startMeeting(chatId);
     socket
-      .to(`contact:${contactId}:meeting-notification`)
+      .to(`chat:${chatId}:meeting-notification`)
       .emit('incoming-meeting', { meeting });
     return meeting;
   }
@@ -76,8 +76,8 @@ export class MeetingGateway {
       const meeting = await this.meetingService.findMeeting(meetingId);
       if (!meeting) return;
       socket
-        .to(`contact:${meeting.contactId}:meeting-notification`)
-        .emit('meeting-ended', { meetingId, contactId: meeting.contactId });
+        .to(`chat:${meeting.chatId}:meeting-notification`)
+        .emit('meeting-ended', { meetingId, chatId: meeting.chatId });
       this.meetingService.endMeeting(meetingId);
       this.server.socketsLeave(roomId);
     }
@@ -93,8 +93,8 @@ export class MeetingGateway {
     this.meetingService.endMeeting(meetingId);
     socket.to(roomId).emit('meeting-ended', { meetingId });
     socket
-      .to(`contact:${meeting.contactId}:meeting-notification`)
-      .emit('meeting-ended', { meetingId, contactId: meeting.contactId });
+      .to(`chat:${meeting.chatId}:meeting-notification`)
+      .emit('meeting-ended', { meetingId, chatId: meeting.chatId });
     this.server.socketsLeave(roomId);
   }
 }

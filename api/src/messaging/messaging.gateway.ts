@@ -11,31 +11,28 @@ import { MessagingService } from './messaging.service';
 @WebSocketGateway()
 export class MessagingGateway {
   constructor(
-    private contactService: MessagingService,
+    private chatService: MessagingService,
     private jwtService: JwtService
   ) {}
 
   @SubscribeMessage('join-messaging')
-  joinContact(
-    @MessageBody() { contactId }: any,
-    @ConnectedSocket() socket: Socket
-  ) {
-    socket.join(`messaging:${contactId}`);
+  joinChat(@MessageBody() { chatId }: any, @ConnectedSocket() socket: Socket) {
+    socket.join(`messaging:${chatId}`);
   }
 
   @SubscribeMessage('send-message')
   async sendMessage(
-    @MessageBody() { contactId, message }: any,
+    @MessageBody() { chatId, message }: any,
     @ConnectedSocket() socket: Socket
   ) {
     const token = socket.request.headers.authorization;
     const user = await this.jwtService.verifyAsync(token);
-    message = await this.contactService.createMessage(
+    message = await this.chatService.createMessage(
       message.text,
-      contactId,
+      chatId,
       user.id
     );
-    socket.to(`messaging:${contactId}`).emit('receive-message', message);
+    socket.to(`messaging:${chatId}`).emit('receive-message', message);
     return message;
   }
 }

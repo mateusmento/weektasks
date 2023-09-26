@@ -6,7 +6,7 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { ContactEntity } from '../contact/contact.entity';
+import { ChatEntity } from '../chat/chat.entity';
 
 @Entity({ name: 'messages' })
 export class MessageEntity {
@@ -21,7 +21,7 @@ export class MessageEntity {
   @ManyToOne(() => UserEntity)
   speaker: UserEntity;
   @Column()
-  contactId: number;
-  @ManyToOne(() => ContactEntity)
-  contact: ContactEntity;
+  chatId: number;
+  @ManyToOne(() => ChatEntity)
+  chat: ChatEntity;
 }

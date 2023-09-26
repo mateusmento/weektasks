@@ -6,7 +6,7 @@ import { typeormConfig } from './typeorm.config';
 import { DataSource } from 'typeorm';
 import { addTransactionalDataSource } from 'typeorm-transactional';
 import { AuthModule } from './auth/auth.module';
-import { ContactModule } from './contact/contact.module';
+import { ChatModule } from './chat/chat.module';
 import { MessagingModule } from './messaging/messaging.module';
 import { MeetingModule } from './meeting/meeting.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
@@ -33,7 +33,7 @@ import { ProfileModule } from './profile/profile.module';
     EventEmitterModule.forRoot(),
     AuthModule,
     BacklogModule,
-    ContactModule,
+    ChatModule,
     IssuesModule,
     MeetingModule,
     MessagingModule,
