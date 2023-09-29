@@ -170,10 +170,6 @@ async function moveDoneItems({ added }: any) {
   gap: 10px;
 }
 
-.issue-card {
-  box-shadow: 0 0 1px rgba(#000, 0.25);
-}
-
 .card-list {
   flex: 1;
 }

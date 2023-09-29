@@ -28,12 +28,10 @@ defineProps<{
 <style scoped>
 .message {
   display: grid;
-  grid-template-columns: 1fr fit-content(0);
-  grid-template-rows: fit-content(0) 1fr fit-content(0);
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto 1fr auto;
   gap: 10px;
   max-width: 320px;
-  width: fit-content;
-
   padding: 15px;
 }
 

@@ -27,6 +27,8 @@ defineProps<{
   flex: 1;
   display: flex;
   flex-direction: column;
+
+  mask-image: linear-gradient(white 80%, transparent);
 }
 
 .card-header {

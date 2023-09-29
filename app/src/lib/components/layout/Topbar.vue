@@ -40,20 +40,13 @@ async function signout() {
 <template>
   <header>
     <div class="topbar-header">
-      <nav>
-        <router-link :to="{ name: 'timeline', params: { id } }">Timeline</router-link>
-        <router-link :to="{ name: 'backlog', params: { id } }">Backlog</router-link>
-        <router-link :to="{ name: 'board', params: { id } }">Board</router-link>
-        <router-link :to="{ name: 'calendar', params: { id } }">Calendar</router-link>
-        <router-link :to="{ name: 'collaborators', params: { id } }">Collaborators</router-link>
-      </nav>
+      <router-link to="/products">
+        <button class="active-product" pill>{{ activeProductStore.product?.name }}</button>
+      </router-link>
 
       <SearchBar v-if="productId" :productId="productId" />
 
       <div class="right-side">
-        <router-link to="/products">
-          <button class="active-product" pill>{{ activeProductStore.product?.name }}</button>
-        </router-link>
         <div class="dropdown" :class="{ active: showDropdown }" v-on-click-outside="hideDropdown">
           <div class="dropdown-toggle" @click="toggleDropdown">
             <img
@@ -73,17 +66,18 @@ async function signout() {
       </div>
     </div>
 
-    <ColorfulBar />
+    <!-- <ColorfulBar /> -->
   </header>
 </template>
 
 <style scoped>
 .topbar-header {
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   align-items: center;
+  gap: 40px;
   padding: 15px 30px;
-  background-color: #fff;
+  /* background-color: #fff; */
 }
 
 nav {
@@ -93,6 +87,7 @@ nav {
 
 .search-bar {
   width: 360px;
+  margin-right: auto;
 }
 
 .active-product {
@@ -106,7 +101,7 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  min-width: 200px;
+  /* min-width: 200px; */
 }
 
 .user-photo {

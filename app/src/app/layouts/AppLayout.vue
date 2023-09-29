@@ -1,12 +1,16 @@
 <script setup lang="ts">
 import ColorfulBar from '@/lib/components/layout/ColorfulBar.vue';
-import TopbarHeader from '@/lib/components/layout/TopbarHeader.vue';
+import Topbar from '@/lib/components/layout/Topbar.vue';
 import { useIssueModalStore } from '@/lib/stores/issue-modal.store';
 import Issue from '@/modules/issue/Issue.vue';
 import { vOnClickOutside } from '@vueuse/components';
-import { RouterView } from 'vue-router';
+import { computed } from 'vue';
+import { RouterView, useRoute } from 'vue-router';
 
 const issueModalStore = useIssueModalStore();
+
+const route = useRoute();
+const id = computed(() => route.params.id);
 
 function closeIssue() {
   if (!issueModalStore.isOpen) issueModalStore.issue = null;
@@ -15,9 +19,35 @@ function closeIssue() {
 
 <template>
   <div class="app-layout">
-    <TopbarHeader class="app-header" />
+    <Topbar class="app-header" />
 
-    <RouterView class="app-main" />
+    <div class="app-main">
+      <aside>
+        <nav>
+          <ul class="list flex-vert-md">
+            <li>
+              <router-link :to="{ name: 'timeline', params: { id } }">Timeline</router-link>
+            </li>
+            <li>
+              <router-link :to="{ name: 'backlog', params: { id } }">Backlog</router-link>
+            </li>
+            <li>
+              <router-link :to="{ name: 'board', params: { id } }">Board</router-link>
+            </li>
+            <li>
+              <router-link :to="{ name: 'calendar', params: { id } }">Calendar</router-link>
+            </li>
+            <li>
+              <router-link :to="{ name: 'collaborators', params: { id } }"
+                >Collaborators</router-link
+              >
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <RouterView />
+    </div>
 
     <aside
       class="drawer"
@@ -55,7 +85,11 @@ function closeIssue() {
 }
 
 .app-main {
+  display: flex;
+  gap: 10px;
+  padding: 10px;
   height: calc(100% - var(--header-height));
+  padding-inline: 10px;
 }
 
 .issue-view {

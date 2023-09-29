@@ -40,7 +40,6 @@ export class ChatService {
       .where('cred.username = :peerUserName', { peerUserName })
       .orWhere('user.id = :meId', { meId })
       .getMany();
-    console.log(peers);
     if (peers.length < 2) throw new NotFoundException('User not found');
     const chat = await this.chatRepo.save({ type: 'direct', peers });
     chat.speakingTo = chat.peers.find((p) => p.id !== meId);

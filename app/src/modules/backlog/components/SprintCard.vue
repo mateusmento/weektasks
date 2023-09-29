@@ -99,7 +99,7 @@ async function end() {
 
 <style scoped>
 .sprint {
-  width: 650px;
+  /* width: 650px; */
   padding: 15px;
   border-radius: 10px;
 }

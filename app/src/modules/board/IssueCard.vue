@@ -8,6 +8,7 @@ import { sortBy } from 'lodash';
 import { computed, ref } from 'vue';
 import IssueType from './IssueType.vue';
 import { envs } from '@/lib/utils/envs';
+import IconChat from '@/lib/components/icons/IconChat.vue';
 
 let props = defineProps<{
   issue: Issue;
@@ -44,28 +45,41 @@ const issueColor = computed(
     class="issue-card draggable-handle"
     :style="{ 'border-color': `var(--light-${issueColor}-bg)` }"
   >
-    <div class="top-section">
-      <div class="issue-title" @click="issueModalStore.open(issue)">{{ issue.title }}</div>
-
-      <div class="actions">
-        <IconMore />
-      </div>
-    </div>
-
-    <div class="middle-section">
-      <div class="flex-vert gap-sm">
-        <div
-          v-for="subtask in sortedSubtasks"
-          :key="subtask.id"
-          class="subtask flex-horz gap-sm"
-          :class="{ completed: subtask.completed, seeCompletedSubtasks }"
-        >
-          <Checkbox
-            v-model="subtask.completed"
-            @update:modelValue="toggleSubtaskCompletion(subtask)"
-          />
-          {{ subtask.title }}
+    <section class="card__main">
+      <div class="top-area">
+        <div class="issue-title" @click="issueModalStore.open(issue)">{{ issue.title }}</div>
+        <div class="actions">
+          <IconMore />
         </div>
+        <div v-if="issue.subtasks.length === 0" class="issue-description">
+          {{ issue.description }}
+        </div>
+      </div>
+
+      <div v-if="issue.subtasks.length > 0" class="subtasks">
+        <div class="subtasks__progressbar">
+          <div
+            class="progressbar__progress"
+            :style="{ 'background-color': `var(--light-${issueColor}-bg)` }"
+          ></div>
+          <div class="progressbar__remain"></div>
+        </div>
+
+        <div class="flex-vert-sm">
+          <div
+            v-for="subtask in sortedSubtasks"
+            :key="subtask.id"
+            class="subtask flex-horz gap-sm"
+            :class="{ completed: subtask.completed, seeCompletedSubtasks }"
+          >
+            <Checkbox
+              v-model="subtask.completed"
+              @update:modelValue="toggleSubtaskCompletion(subtask)"
+            />
+            {{ subtask.title }}
+          </div>
+        </div>
+
         <small
           v-if="issue.subtasks.length > 0"
           class="toggle-completed-subtasks"
@@ -74,10 +88,18 @@ const issueColor = computed(
           {{ seeCompletedSubtasks ? 'Hide' : 'See' }} done subtasks
         </small>
       </div>
-    </div>
 
-    <div class="bottom-section">
-      <IssueType :type="issue.type" />
+      <div class="flex-horz-md y-center space-between">
+        <IssueType class="issue-type" :type="issue.type" />
+        <span class="story-points badge">2 pts</span>
+      </div>
+    </section>
+
+    <footer class="card__footer">
+      <div class="comments flex-horz-sm y-center mr-auto">
+        <IconChat />
+        <span>{{ issue.comments?.length ?? 0 }}</span>
+      </div>
       <span v-if="issue.assignees.length > 0" class="assigned-to">
         <img
           v-for="assignee of issue.assignees"
@@ -86,8 +108,7 @@ const issueColor = computed(
           :src="`${envs.API_BASE_URL}/users/${assignee.id}/photo`"
         />
       </span>
-      <span class="story-points">2 pts</span>
-    </div>
+    </footer>
   </div>
 </template>
 
@@ -95,79 +116,127 @@ const issueColor = computed(
 .issue-card {
   background: #fff;
   border-radius: 10px;
-  padding: 10px;
   border-left: 11px solid;
-}
-
-.issue-title {
-  cursor: pointer;
-}
-
-.top-section {
-  display: flex;
+  outline: 1px solid #e2e8f0;
   margin-bottom: 10px;
-  gap: 20px;
 }
 
-.middle-section {
-  display: flex;
+.card__main {
+  display: grid;
+  gap: 15px;
+  padding: 15px;
+}
+
+.card__footer {
+  border-top: 1px solid #e2e8f0;
+  padding: 10px;
+}
+
+.top-area {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-auto-rows: auto;
+  gap: 10px;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 20px;
-}
 
-.bottom-section {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
+  .issue-title {
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 100%;
+    color: #606066;
+  }
 
-.actions {
-  display: flex;
-  gap: 10px;
-  margin-left: auto;
+  .issue-description {
+    white-space: break-spaces;
+    color: #a1a1ac;
+    font-size: 12px;
+    grid-column: span 2;
+  }
 
-  .el-icon {
+  .actions {
+    justify-self: center;
+
+    opacity: 0;
+    transition: opacity 300ms;
+
     cursor: pointer;
   }
-}
 
-.story-points {
-  font-size: 12px;
-  color: #777;
-  background-color: #ccc;
-  border-radius: 10px;
-  padding: 0 5px;
-  white-space: nowrap;
-}
-
-.subtask {
-  &.completed {
-    opacity: 0;
-    visibility: collapse;
-    transition: 1s;
+  .issue-type {
+    font-weight: 600;
   }
 
-  &.seeCompletedSubtasks {
-    opacity: 1;
-    visibility: visible;
+  .story-points {
+    padding: 0 5px;
   }
 }
 
-.toggle-completed-subtasks {
-  cursor: pointer;
+.issue-card:hover .actions {
+  opacity: 1;
 }
-</style>
 
-<style lang="scss" scoped>
-.assigned-to {
+.subtasks {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: #585861;
+
+  .subtask {
+    transition:
+      opacity 1s,
+      visibility 1s;
+
+    &.completed {
+      opacity: 0;
+      visibility: collapse;
+    }
+
+    &.seeCompletedSubtasks {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+  .subtasks__progressbar {
+    display: flex;
+    height: 5px;
+    width: 100%;
+  }
+
+  .progressbar__progress {
+    flex: 2;
+  }
+
+  .progressbar__remain {
+    flex: 1;
+    background-color: #ccc;
+  }
+
+  .toggle-completed-subtasks {
+    cursor: pointer;
+    margin-left: 5px;
+  }
+}
+
+.card__footer {
   display: flex;
   align-items: center;
-  white-space: nowrap;
-  font-size: 0.8rem;
-}
+  gap: 15px;
 
-.assignee-photo {
-  width: 17px;
+  .comments {
+    color: #898e92;
+  }
+
+  .assigned-to {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    font-size: 0.8rem;
+  }
+
+  .assignee-photo {
+    width: 24px;
+  }
 }
 </style>
