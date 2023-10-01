@@ -47,27 +47,21 @@ function viewDiscussion(discussion: any) {
 
 <template>
   <main>
-    <section class="flex-vert-lg p-lg">
-      <ul class="list">
-        <li>Timeline</li>
-        <li>Backlog</li>
-        <li>Calendar</li>
-      </ul>
-      <Collaborators />
-    </section>
     <section class="discussions-section">
-      <CreateDiscussion @created="addDiscussion" class="p-lg" />
-      <ul class="collaborators">
-        <li
-          v-for="collab of collaborators"
-          :key="collab.id"
-          class="collab"
-          @click="chatWith(collab.user)"
-        >
-          <img :src="`${envs.API_BASE_URL}/users/${collab.user.id}/photo`" />
-          <div>{{ collab.user.name }}</div>
-        </li>
-      </ul>
+      <div class="discussions-section__header">
+        <CreateDiscussion @created="addDiscussion" class="p-lg" />
+        <ul class="collaborators">
+          <li
+            v-for="collab of collaborators"
+            :key="collab.id"
+            class="collab"
+            @click="chatWith(collab.user)"
+          >
+            <img :src="`${envs.API_BASE_URL}/users/${collab.user.id}/photo`" />
+            <div>{{ collab.user.name }}</div>
+          </li>
+        </ul>
+      </div>
       <ul class="discussions">
         <li v-for="(discussion, i) in discussions" :key="discussion.id">
           <Discussion
@@ -95,6 +89,7 @@ function viewDiscussion(discussion: any) {
 <style lang="scss" scoped>
 main {
   display: flex;
+  flex: 1;
 }
 
 .create-post {
@@ -129,18 +124,27 @@ main {
   flex-direction: column;
 
   background-color: white;
-  border: 1px solid #ccc;
-  border-top: none;
-  border-bottom: none;
+  border-right: 1px solid #ccc;
+}
+
+.discussions-section {
+  border-radius: 40px 0 0 40px;
+}
+.chat-section {
+  border-radius: 0 40px 40px 0;
+}
+
+.discussions-section__header {
+  position: sticky;
+  top: 0;
+  background-color: white;
+  z-index: 1;
+  border-bottom: 1px solid #ccc;
 }
 
 .discussions {
   ul {
     border: none;
-  }
-
-  li:first-of-type {
-    border-top: 1px solid #ccc;
   }
 
   li:not(:last-of-type) {
@@ -149,7 +153,7 @@ main {
 }
 
 .bottom-item {
-  height: 20px;
+  height: 30px;
 }
 
 .chat-section {

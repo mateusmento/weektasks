@@ -3,6 +3,7 @@ import ColorfulBar from '@/lib/components/layout/ColorfulBar.vue';
 import Topbar from '@/lib/components/layout/Topbar.vue';
 import { useIssueModalStore } from '@/lib/stores/issue-modal.store';
 import Issue from '@/modules/issue/Issue.vue';
+import Collaborators from '@/modules/timeline/Collaborators.vue';
 import { vOnClickOutside } from '@vueuse/components';
 import { computed } from 'vue';
 import { RouterView, useRoute } from 'vue-router';
@@ -22,7 +23,7 @@ function closeIssue() {
     <Topbar class="app-header" />
 
     <div class="app-main">
-      <aside>
+      <aside class="flex-vert-lg p-md">
         <nav>
           <ul class="list flex-vert-md">
             <li>
@@ -44,6 +45,8 @@ function closeIssue() {
             </li>
           </ul>
         </nav>
+
+        <Collaborators />
       </aside>
 
       <RouterView />

@@ -28,7 +28,7 @@ defineProps<{
   display: flex;
   flex-direction: column;
 
-  mask-image: linear-gradient(white 80%, transparent);
+  mask-image: linear-gradient(white calc(100% - 60px), transparent);
 }
 
 .card-header {
@@ -43,9 +43,11 @@ defineProps<{
 }
 
 .card-content {
+  flex: 1;
   border-radius: 10px;
   background: #f4f9ff;
   padding: 10px;
-  flex: 1;
+  overflow-y: auto;
+  position: relative;
 }
 </style>

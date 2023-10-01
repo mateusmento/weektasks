@@ -57,12 +57,18 @@ const issueColor = computed(
       </div>
 
       <div v-if="issue.subtasks.length > 0" class="subtasks">
-        <div class="subtasks__progressbar">
-          <div
-            class="progressbar__progress"
-            :style="{ 'background-color': `var(--light-${issueColor}-bg)` }"
-          ></div>
-          <div class="progressbar__remain"></div>
+        <div class="flex-vert-sm">
+          <div class="flex-horz space-between">
+            <span>Progress</span>
+            <span>2/3</span>
+          </div>
+          <div class="subtasks__progressbar">
+            <div
+              class="progressbar__progress"
+              :style="{ 'background-color': `var(--light-${issueColor}-bg)` }"
+            ></div>
+            <div class="progressbar__remain"></div>
+          </div>
         </div>
 
         <div class="flex-vert-sm">
@@ -202,6 +208,14 @@ const issueColor = computed(
     display: flex;
     height: 5px;
     width: 100%;
+  }
+
+  .subtasks__progressbar :last-child {
+    border-radius: 0 50px 50px 0;
+  }
+
+  .subtasks__progressbar :first-child {
+    border-radius: 50px 0 0 50px;
   }
 
   .progressbar__progress {

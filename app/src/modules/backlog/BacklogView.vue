@@ -48,7 +48,7 @@ const activeProductStore = useActiveProductStore();
 .sprints-section {
   display: flex;
   flex-direction: column;
-  flex: 1;
+  flex: 5;
   gap: 20px;
   /* min-width: 650px; */
   padding-top: 60px;
@@ -68,7 +68,7 @@ const activeProductStore = useActiveProductStore();
   display: flex;
   flex-direction: column;
   gap: 20px;
-  /* flex: 1; */
+  flex: 3;
   /* width: 500px; */
   padding: 40px;
   /* margin-block: 40px; */

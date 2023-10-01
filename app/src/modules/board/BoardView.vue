@@ -133,7 +133,6 @@ async function moveDoneItems({ added }: any) {
 }
 
 .draggable {
-  height: 100%;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -172,5 +171,7 @@ async function moveDoneItems({ added }: any) {
 
 .card-list {
   flex: 1;
+  height: 100%;
+  max-height: 735px;
 }
 </style>
